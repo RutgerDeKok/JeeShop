@@ -4,6 +4,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import rsvier.entity.Cart;
@@ -19,6 +20,14 @@ public class CartResource {
     @Produces(MediaType.APPLICATION_XML)
     public List<Cart> getAddresses(){
         return cartFacade.findAll();
+    }
+    
+    
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_XML)
+    public Cart getCartById(@PathParam("id") Long id) {
+        return cartFacade.find(id);
     }
     
 }

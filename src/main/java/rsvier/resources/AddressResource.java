@@ -4,6 +4,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import rsvier.entity.Address;
@@ -19,6 +20,13 @@ public class AddressResource {
     @Produces(MediaType.APPLICATION_XML)
     public List<Address> getAddresses(){
         return addressFacade.findAll();
+    }
+    
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_XML)
+    public Address getAddressById(@PathParam("id") Long id){
+        return addressFacade.find(id);
     }
     
 }
