@@ -7,7 +7,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>JeeShop</name>
+    <name>JeeShop2</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
@@ -34,7 +34,6 @@
             <scope>provided</scope>
         </dependency>
         
-        <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.archetypes/jersey-quickstart-webapp -->
         <dependency>
             <groupId>org.glassfish.jersey.archetypes</groupId>
             <artifactId>jersey-quickstart-webapp</artifactId>

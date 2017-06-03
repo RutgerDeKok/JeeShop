@@ -9,7 +9,7 @@ import rsvier.entity.Address;
 import rsvier.entity.CartSuborder;
 import rsvier.entity.User;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-06-01T15:10:21")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-06-02T17:02:16")
 @StaticMetamodel(Cart.class)
 public class Cart_ { 
 

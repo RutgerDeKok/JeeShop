@@ -8,7 +8,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 import rsvier.entity.FinalSuborder;
 import rsvier.entity.User;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-06-01T15:10:21")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-06-02T17:02:16")
 @StaticMetamodel(Sale.class)
 public class Sale_ { 
 
