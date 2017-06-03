@@ -7,7 +7,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 import rsvier.entity.Cart;
 import rsvier.entity.User;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-06-02T17:02:16")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-06-03T13:23:09")
 @StaticMetamodel(Address.class)
 public class Address_ { 
 
