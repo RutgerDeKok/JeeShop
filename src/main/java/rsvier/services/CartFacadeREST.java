@@ -6,9 +6,8 @@
 package rsvier.services;
 
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -19,7 +18,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import rsvier.entity.Cart;
-import rsvier.session.AbstractFacade;
+import rsvier.session.CartFacade;
 
 /**
  *
@@ -27,66 +26,55 @@ import rsvier.session.AbstractFacade;
  */
 @Stateless
 @Path("/carts")
-public class CartFacadeREST extends AbstractFacade<Cart> {
+public class CartFacadeREST {
 
-    @PersistenceContext(unitName = "rsvier_jeeshop_war_1.0-SNAPSHOTPU")
-    private EntityManager em;
-
-    public CartFacadeREST() {
-        super(Cart.class);
-    }
+    @EJB
+    private CartFacade facade;
 
     @POST
-    @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Cart entity) {
-        super.create(entity);
+        facade.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Long id, Cart entity) {
-        super.edit(entity);
+        facade.edit(entity);
     }
 
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Long id) {
-        super.remove(super.find(id));
+        facade.remove(facade.find(id));
     }
 
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Cart find(@PathParam("id") Long id) {
-        return super.find(id);
+        return facade.find(id);
     }
 
     @GET
-    @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Cart> findAll() {
-        return super.findAll();
+        return facade.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Cart> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
+        return facade.findRange(new int[]{from, to});
     }
 
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
-        return String.valueOf(super.count());
+        return String.valueOf(facade.count());
     }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-    
 }
