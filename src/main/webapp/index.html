@@ -1,26 +1,10 @@
 <html>
     <head>
-        <script src ="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-        <style>
-            table {
-                border-collapse: collapse;
-                width: 100%;
-            }
-
-            th, td {
-                text-align: left;
-                padding: 8px;
-            }
-
-            tr:nth-child(even){background-color: #f2f2f2}
-
-            th {
-                background-color: #1f3d7a
-                    ;
-                color: white;
-            }
-        </style>
+        <!--<script src ="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+        <script src ="JS/jquery-3.2.1.min.js"></script>
+        <script src ="JS/products.js"></script>
+        <link href="CSS/simple.css" rel="stylesheet" />
+        
 
     </head>
 
@@ -64,22 +48,22 @@
 
         <script>
             $(document).ready(function () {
-//                 alert("starting function");
+                startProductTable();
 //                $.getJSON('http://localhost:8080/Jee-Shop/rest/products', function (data) {
-                  $.getJSON('rest/products', function (data) {
-                    var datarow = " ";
-                    $.each(data, function (key, value) {
-                        datarow += '<tr>';
-                        datarow += ' <td align=/"left/">' + value.name + ' </td>';
-                        datarow += ' <td align=/"left/">' + value.category + ' </td>';
-                        datarow += ' <td align=/"left/">' + value.brand + ' </td>';
-                        datarow += ' <td align=/"left/">' + value.price + ' </td>';
-                        datarow += ' <td align=/"left/">' + value.stockCount + ' </td>';
-                        datarow += ' <td align=/"left/">' + value.info + ' </td>';
-                        datarow += '</tr>';
-                    });
-                    $('#table_main').append(datarow);
-                });
+//                  $.getJSON('rest/products', function (data) {
+//                    var datarow = " ";
+//                    $.each(data, function (key, value) {
+//                        datarow += '<tr>';
+//                        datarow += ' <td align=/"left/">' + value.name + ' </td>';
+//                        datarow += ' <td align=/"left/">' + value.category + ' </td>';
+//                        datarow += ' <td align=/"left/">' + value.brand + ' </td>';
+//                        datarow += ' <td align=/"left/">' + value.price + ' </td>';
+//                        datarow += ' <td align=/"left/">' + value.stockCount + ' </td>';
+//                        datarow += ' <td align=/"left/">' + value.info + ' </td>';
+//                        datarow += '</tr>';
+//                    });
+//                    $('#table_main').append(datarow);
+//                });
             });
         </script>
 
