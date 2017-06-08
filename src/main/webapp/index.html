@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <script src ="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+            
+        
+        
+    </head>
+    
+    <body>
+        <h2>Jersey RESTful Web Application!</h2>
+        <p><a href="rest/users">Users</a>
+        <p><a href="rest/products">Products</a>
+        <p><a href="rest/carts">Carts</a>
+        <p><a href="rest/cartsuborders">Cart Sub Orders</a>
+        <p><a href="rest/sales">Sales</a>
+        <p><a href="rest/finalsuborders">Final Sub Orders</a>
+
+
+        <p><a href="rest/addresses">Addresses</a></p>
+
+        <br>
+
+        <table id="table_main" class="display" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th align="left">Naam</th>
+                    <th align="left">Categorie</th>
+                    <th align="left">Merk</th>
+                    <th align="left">Prijs</th>
+                    <th align="left">Voorraad</th>
+                    <th align="left">Informatie</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th align="left">Naam</th>
+                    <th align="left">Categorie</th>
+                    <th align="left">Merk</th>
+                    <th align="left">Prijs</th>
+                    <th align="left">Voorraad</th>
+                    <th align="left">Informatie</th>
+     
+                </tr>
+            </tfoot>
+        </table>
+
+        <script>
+            $(document).ready(function () {
+//                 alert("starting function");
+                $.getJSON('http://localhost:8080/Jee-Shop/rest/products', function (data) {
+                    var datarow = " ";
+                    $.each(data, function (key, value) {
+                        datarow += '<tr>';
+                        datarow += ' <td align=/"left/">' + value.name + ' </td>';
+                        datarow += ' <td align=/"left/">' + value.category + ' </td>';
+                        datarow += ' <td align=/"left/">' + value.brand + ' </td>';
+                        datarow += ' <td align=/"left/">' + value.price + ' </td>';
+                        datarow += ' <td align=/"left/">' + value.stockCount + ' </td>';
+                        datarow += ' <td align=/"left/">' + value.info + ' </td>';
+                        datarow += '</tr>';
+                    });
+                    $('#table_main').append(datarow);
+                });
+            });
+        </script>
+
+    </body>
+</html>
