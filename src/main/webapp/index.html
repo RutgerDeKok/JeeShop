@@ -1,11 +1,29 @@
 <html>
     <head>
         <script src ="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-            
-        
-        
+
+        <style>
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            th, td {
+                text-align: left;
+                padding: 8px;
+            }
+
+            tr:nth-child(even){background-color: #f2f2f2}
+
+            th {
+                background-color: #1f3d7a
+                    ;
+                color: white;
+            }
+        </style>
+
     </head>
-    
+
     <body>
         <h2>Jersey RESTful Web Application!</h2>
         <p><a href="rest/users">Users</a>
@@ -39,7 +57,7 @@
                     <th align="left">Prijs</th>
                     <th align="left">Voorraad</th>
                     <th align="left">Informatie</th>
-     
+
                 </tr>
             </tfoot>
         </table>
@@ -47,7 +65,8 @@
         <script>
             $(document).ready(function () {
 //                 alert("starting function");
-                $.getJSON('http://localhost:8080/Jee-Shop/rest/products', function (data) {
+//                $.getJSON('http://localhost:8080/Jee-Shop/rest/products', function (data) {
+                  $.getJSON('rest/products', function (data) {
                     var datarow = " ";
                     $.each(data, function (key, value) {
                         datarow += '<tr>';
