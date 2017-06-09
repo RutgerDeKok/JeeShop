@@ -11,6 +11,8 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -54,6 +56,7 @@ public class Product implements Serializable {
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "category")
+    @Enumerated(EnumType.STRING)
     private ProductCategory category;
     @Size(max = 255)
     @Column(name = "info")
