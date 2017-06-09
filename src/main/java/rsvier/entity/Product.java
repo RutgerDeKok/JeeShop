@@ -54,7 +54,7 @@ public class Product implements Serializable {
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "category")
-    private String category;
+    private ProductCategory category;
     @Size(max = 255)
     @Column(name = "info")
     private String info;
@@ -82,7 +82,7 @@ public class Product implements Serializable {
         this.id = id;
     }
 
-    public Product(Long id, String category, String name, BigDecimal price, int stockCount) {
+    public Product(Long id, ProductCategory category, String name, BigDecimal price, int stockCount) {
         this.id = id;
         this.category = category;
         this.name = name;
@@ -105,12 +105,13 @@ public class Product implements Serializable {
     public void setBrand(String brand) {
         this.brand = brand;
     }
-
-    public String getCategory() {
+    
+    
+    public ProductCategory getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(ProductCategory category) {
         this.category = category;
     }
 
