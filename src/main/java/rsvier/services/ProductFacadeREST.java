@@ -5,6 +5,7 @@
  */
 package rsvier.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -18,12 +19,11 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import rsvier.entity.Product;
+import rsvier.entity.ProductCategory;
 import rsvier.session.ProductFacade;
+import rsvier.entity.EnumWrap;
 
-/**
- *
- * @author HP
- */
+
 @Stateless
 @Path("/products")
 public class ProductFacadeREST {
@@ -75,7 +75,151 @@ public class ProductFacadeREST {
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
+        System.out.println("count methode");
         return String.valueOf(facade.count());
     }
 
+    @GET
+    @Path("categories")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<EnumWrap> getCategories() {
+        System.out.println("getting categories");
+        List<EnumWrap> categoryList = new ArrayList<>();
+        int i = 0;
+        for (ProductCategory cat : ProductCategory.values()) {
+            categoryList.add(new EnumWrap(cat.name(), cat.getNaamNed()));
+            System.out.println(cat.getNaamNed());
+            i++;
+        }
+        System.out.println(categoryList);
+        return categoryList;
+    }
+
+//        @GET
+//    @Path("categories")
+//    @Produces(MediaType.APPLICATION_XML)
+//    public ProductCategory[] getCategories() {
+//        System.out.println("getting categories");
+//        ProductCategory[] categoryMap = new ProductCategory[ProductCategory.values().length];
+//        int i=0;
+//        for (ProductCategory cat : ProductCategory.values()) {
+//            categoryMap[i]=cat;
+//            i++;
+//        }
+//        System.out.println(categoryMap);
+//        return categoryMap;
+//    }
+//    @GET
+//    @Path("categories")
+//    @Produces(MediaType.APPLICATION_XML)
+//    public Map<String, String> getCategories() {
+//        System.out.println("getting categories");
+//        Map<String, String> categoryMap = new HashMap<>();
+//        for(ProductCategory cat:ProductCategory.values()){
+//            
+//            categoryMap.put(cat.name(), cat.getNL());
+//        }
+//        System.out.println(categoryMap);
+//        return categoryMap;
+//    }
+//    @GET
+//    @Path("categories")
+//    @Produces(MediaType.APPLICATION_XML)
+//    public Response getCategories() {
+//        System.out.println("getting categories");
+//
+//        Map<String, String> categoryMap = new HashMap<>();
+//        for (ProductCategory cat : ProductCategory.values()) {
+//
+//            categoryMap.put(cat.name(), cat.getNL());
+//        }
+//        System.out.println(categoryMap);
+//
+//        GenericEntity< Map<String, String>> entity;
+//
+//        entity = new GenericEntity< Map<String, String>>(categoryMap) {
+//        };
+//        
+//        Response response = Response.ok(entity).build();
+//        System.out.println(response);
+//
+//        return response;
+//    }
+//        @GET
+//    @Path("categories")
+//    @Produces(MediaType.APPLICATION_XML)
+//    public ProductCategoryMap getCategories() {
+//        System.out.println("getting categories");
+//        ProductCategoryMap categoryMap = new ProductCategoryMap();
+//        for(ProductCategory cat:ProductCategory.values()){
+//            
+//            ProductCategoryMap.put(cat.name(), cat.getNL());
+//        }
+//        System.out.println(categoryMap);
+//        return categoryMap;
+//    }
+//    
+//}
+//       @GET
+//    @Path("categories")
+//    @Produces(MediaType.APPLICATION_XML)
+//    public List<ProductCategory> getCategories() {
+//        System.out.println("getting categories");
+//        List<ProductCategory>categoryMap = new ArrayList<ProductCategory>();
+//        int i=0;
+//        for (ProductCategory cat : ProductCategory.values()) {
+//            categoryMap.add(cat);
+//            i++;
+//        }
+//        System.out.println(categoryMap);
+//        return categoryMap;
+//    }
+//    @GET
+//    @Path("categories")
+////    @Produces(MediaType.APPLICATION_JSON)
+//    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+//    public JSONObject getCategories() {
+//        System.out.println("getting categories");
+//       
+//        Map<String, String> map = new HashMap<>();
+//        for (ProductCategory cat : ProductCategory.values()) {
+//
+//            map.put(cat.name(), cat.getNL());
+//        }
+////        Map<String, String> map = new HashMap<>();
+////        map.put("one","hello");
+////        map.put("two","world");
+//        JSONObject job = new JSONObject(map);
+////        job.put("res",map);
+//        System.out.println("map = "+map);
+//        System.out.println("JSONObject = "+job);
+//        return job;
+//    }
+//     @GET
+//    @Path("categories")
+//    @Produces(MediaType.APPLICATION_XML)
+//    public MyMap<String, String> getCategories() {
+//        System.out.println("getting categories");
+//        MyMap<String, String> categoryMap = new MyMap<> ();
+//        for(ProductCategory cat:ProductCategory.values()){
+//            
+//            categoryMap.put(cat.name(), cat.getNL());
+//        }
+//        System.out.println(categoryMap);
+//        return categoryMap;
+//    }
+//    @GET
+//    @Path("categories")
+//    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+//        public List<String> getCategories() {
+//        System.out.println("getting categories");
+//        List<String> categoryList = new ArrayList<>();
+//        for(ProductCategory cat:ProductCategory.values()){
+//            
+//            categoryList.add(cat.name());
+//            categoryList.add(cat.getNL());
+//        }
+//        System.out.println(categoryList);
+//        return categoryList;
+//    }
 }
