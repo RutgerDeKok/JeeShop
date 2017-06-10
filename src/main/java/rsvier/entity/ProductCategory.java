@@ -1,47 +1,42 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package rsvier.entity;
 
 //import javax.xml.bind.annotation.XmlEnum;
+
+import com.fasterxml.jackson.annotation.JsonValue;
+import javax.xml.bind.annotation.XmlRootElement;
+
 //import com.fasterxml.jackson.annotation.JsonCreator;
 //import com.fasterxml.jackson.annotation.JsonValue;
-
 //import javax.xml.bind.annotation.XmlEnumValue;
 //import javax.xml.bind.annotation.XmlType;
-/**
- *
- * @author HP
- */
+
 //@XmlType(name = "category")
 //@XmlEnum
+@XmlRootElement
 public enum ProductCategory {
 
-//	@XmlEnumValue(value = "Medium-Hard")
     MEDIUM_HARD("Medium-Hard"),
-    //	@XmlEnumValue(value = "Zacht-Schimmel")
     SOFT_MOLD("Zacht-Schimmel"),
-    //	@XmlEnumValue(value = "Blauw")
     BLUE("Blauw"),
-    //	@XmlEnumValue(value = "Roomkaas")
     CREAM("Roomkaas"),
-    //	@XmlEnumValue(value = "Geiten")
     GOAT("Geiten"),
-    //	@XmlEnumValue(value = "Alles")
     ALL("Alles");
 
-    private final String naamNL;
+    private final String naamNed;
 
-    private ProductCategory(String naamNL) {
-        this.naamNL = naamNL;
+    private ProductCategory(String naamNed) {
+        this.naamNed = naamNed;
     }
 
 //    @JsonValue
-    public String getNL() {
-        return naamNL;
+    public String getNaamNed() {
+        return naamNed;
     }
+
+//    @Override
+//    public String toString() {
+//        return naamNL;
+//    }
 
 //    @JsonCreator
 //    public static ProductCategory create(String val) {
@@ -53,7 +48,6 @@ public enum ProductCategory {
 //        }
 //        return ALL;
 //    }
-
 }
 
 /* examples

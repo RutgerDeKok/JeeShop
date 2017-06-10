@@ -1,11 +1,39 @@
+function getCategories() {
+
+    $.getJSON('rest/products/categories', function (data) {
+        categories = data;
+//        alert("categories" + categories);
+        return categories;
+    });
+
+}
+
+function getCategory(cat) {
+//    alert("cat is" + cat);
+    var result = "";
+    $.each(categories, function (key, value) {
+
+        if (value.name === cat) {
+            result = value.readableName;
+        }
+
+    });
+//    alert("result is: " + result);
+    return result;
+
+}
+
+
 function startProductTable() {
-//  $.getJSON('http://localhost:8080/Jee-Shop/rest/products', function (data) {
+
+    getCategories();
     $.getJSON('rest/products', function (data) {
         var datarow = " ";
         $.each(data, function (key, value) {
             datarow += '<tr>';
             datarow += ' <td align=/"left/">' + value.name + ' </td>';
-            datarow += ' <td align=/"left/">' + value.category + ' </td>';
+//          datarow += ' <td align=/"left/">' + value.category + ' </td>';
+            datarow += ' <td align=/"left/">' + getCategory(value.category) + ' </td>';
             datarow += ' <td align=/"left/">' + value.brand + ' </td>';
             datarow += ' <td align=/"left/">' + value.price + ' </td>';
             datarow += ' <td align=/"left/">' + value.stockCount + ' </td>';
@@ -14,10 +42,21 @@ function startProductTable() {
         });
         $('#table_main').append(datarow);
     });
-}/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+}
+
+
+function displayCategories() {
+
+    $.getJSON('rest/products/categories', function (data) {
+        var textline = " ";
+        $.each(data, function (key, value) {
+            textline += value.name + ' : ' + value.readableName + ' <br>';
+        });
+        $('#test_p').text("").append(textline);
+        ;
+    });
+
+}
+
 
 

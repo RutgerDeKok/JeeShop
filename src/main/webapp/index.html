@@ -4,7 +4,7 @@
         <script src ="JS/jquery-3.2.1.min.js"></script>
         <script src ="JS/products.js"></script>
         <link href="CSS/simple.css" rel="stylesheet" />
-        
+
 
     </head>
 
@@ -45,27 +45,19 @@
                 </tr>
             </tfoot>
         </table>
+        
+        <p id="test_p">test</p>
 
         <script>
             $(document).ready(function () {
                 startProductTable();
-//                $.getJSON('http://localhost:8080/Jee-Shop/rest/products', function (data) {
-//                  $.getJSON('rest/products', function (data) {
-//                    var datarow = " ";
-//                    $.each(data, function (key, value) {
-//                        datarow += '<tr>';
-//                        datarow += ' <td align=/"left/">' + value.name + ' </td>';
-//                        datarow += ' <td align=/"left/">' + value.category + ' </td>';
-//                        datarow += ' <td align=/"left/">' + value.brand + ' </td>';
-//                        datarow += ' <td align=/"left/">' + value.price + ' </td>';
-//                        datarow += ' <td align=/"left/">' + value.stockCount + ' </td>';
-//                        datarow += ' <td align=/"left/">' + value.info + ' </td>';
-//                        datarow += '</tr>';
-//                    });
-//                    $('#table_main').append(datarow);
-//                });
+
+                displayCategories();
+
             });
         </script>
+
+        
 
     </body>
 </html>
