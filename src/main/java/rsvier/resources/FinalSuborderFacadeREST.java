@@ -6,6 +6,8 @@
 package rsvier.resources;
 
 import java.util.List;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -26,6 +28,7 @@ import rsvier.persistence.FinalSuborderFacade;
  */
 @Stateless
 @Path("/finalsuborders")
+@RolesAllowed( {"EMPLOYEE","ADMIN"} )
 public class FinalSuborderFacadeREST{
     
     @EJB
@@ -33,6 +36,7 @@ public class FinalSuborderFacadeREST{
 
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @PermitAll
     public void create(FinalSuborder entity) {
         facade.create(entity);
     }
@@ -52,13 +56,15 @@ public class FinalSuborderFacadeREST{
 
     @GET
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})    
+    @PermitAll
     public FinalSuborder find(@PathParam("id") Long id) {
         return facade.find(id);
     }
 
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @PermitAll
     public List<FinalSuborder> findAll() {
         return facade.findAll();
     }
@@ -66,6 +72,7 @@ public class FinalSuborderFacadeREST{
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @PermitAll
     public List<FinalSuborder> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return facade.findRange(new int[]{from, to});
     }
@@ -73,9 +80,9 @@ public class FinalSuborderFacadeREST{
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
+    @PermitAll
     public String countREST() {
         return String.valueOf(facade.count());
     }
-
     
 }

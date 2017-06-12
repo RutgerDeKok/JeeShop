@@ -6,6 +6,7 @@
 package rsvier.resources;
 
 import java.util.List;
+import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -26,6 +27,7 @@ import rsvier.persistence.CartFacade;
  */
 @Stateless
 @Path("/carts")
+@PermitAll
 public class CartFacadeREST {
 
     @EJB
@@ -75,6 +77,21 @@ public class CartFacadeREST {
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
         return String.valueOf(facade.count());
+    }
+    
+    @Path("{id}/addresses")
+    public AddressFacadeREST getBillingAddress() {
+        return new AddressFacadeREST();
+    }
+    
+    @Path("{id}/suborders")
+    public CartSuborderFacadeREST getCartSubOrders() {
+        return new CartSuborderFacadeREST();
+    }
+    
+    @Path("{id}/sales")
+    public SaleFacadeREST getSale() {
+        return new SaleFacadeREST();
     }
 
 }
