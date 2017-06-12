@@ -5,6 +5,7 @@
  */
 package rsvier.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -17,7 +18,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import rsvier.entity.EnumWrap;
 import rsvier.entity.User;
+import rsvier.entity.UserType;
 import rsvier.session.UserFacade;
 
 /**
@@ -75,6 +78,21 @@ public class UserFacadeREST{
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
         return String.valueOf(facade.count());
+    }
+    
+    
+    @GET
+    @Path("types")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<EnumWrap> getCategories() {
+        System.out.println("getting categories");
+        List<EnumWrap> categoryList = new ArrayList<>();
+
+        for (UserType cat : UserType.values()) {
+            categoryList.add(new EnumWrap(cat.name(), cat.getNaamNed(), cat.getKortNed()));
+        }
+        System.out.println(categoryList);
+        return categoryList;
     }
 
     
