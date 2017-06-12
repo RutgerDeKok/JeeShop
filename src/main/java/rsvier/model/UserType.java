@@ -1,4 +1,4 @@
-package rsvier.entity;
+package rsvier.model;
 
 
 public enum UserType {

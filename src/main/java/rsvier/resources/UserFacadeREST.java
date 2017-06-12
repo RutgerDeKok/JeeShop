@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package rsvier.resources;
 
 import java.util.ArrayList;
@@ -18,7 +14,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import rsvier.entity.EnumWrap;
+import rsvier.model.EnumWrap;
 import rsvier.model.User;
 import rsvier.model.UserType;
 import rsvier.persistence.UserFacade;
@@ -85,11 +81,11 @@ public class UserFacadeREST{
     @Path("types")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<EnumWrap> getCategories() {
-        System.out.println("getting categories");
+        System.out.println("getting types");
         List<EnumWrap> categoryList = new ArrayList<>();
 
-        for (UserType cat : UserType.values()) {
-            categoryList.add(new EnumWrap(cat.name(), cat.getNaamNed(), cat.getKortNed()));
+        for (UserType type : UserType.values()) {
+            categoryList.add(new EnumWrap(type.name(), type.getNaamNed(), type.getKortNed()));
         }
         System.out.println(categoryList);
         return categoryList;
