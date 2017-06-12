@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rsvier.services;
+package rsvier.resources;
 
 import java.util.List;
 import javax.ejb.EJB;
@@ -17,30 +17,30 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import rsvier.entity.FinalSuborder;
-import rsvier.session.FinalSuborderFacade;
+import rsvier.model.Cart;
+import rsvier.persistence.CartFacade;
 
 /**
  *
  * @author HP
  */
 @Stateless
-@Path("/finalsuborders")
-public class FinalSuborderFacadeREST{
-    
+@Path("/carts")
+public class CartFacadeREST {
+
     @EJB
-    FinalSuborderFacade facade;
+    private CartFacade facade;
 
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(FinalSuborder entity) {
+    public void create(Cart entity) {
         facade.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Long id, FinalSuborder entity) {
+    public void edit(@PathParam("id") Long id, Cart entity) {
         facade.edit(entity);
     }
 
@@ -53,20 +53,20 @@ public class FinalSuborderFacadeREST{
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public FinalSuborder find(@PathParam("id") Long id) {
+    public Cart find(@PathParam("id") Long id) {
         return facade.find(id);
     }
 
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<FinalSuborder> findAll() {
+    public List<Cart> findAll() {
         return facade.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<FinalSuborder> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Cart> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return facade.findRange(new int[]{from, to});
     }
 
@@ -77,5 +77,4 @@ public class FinalSuborderFacadeREST{
         return String.valueOf(facade.count());
     }
 
-    
 }

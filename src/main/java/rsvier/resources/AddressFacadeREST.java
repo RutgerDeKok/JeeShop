@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rsvier.services;
+package rsvier.resources;
 
 import java.util.List;
 import javax.ejb.EJB;
@@ -17,30 +17,31 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import rsvier.entity.Cart;
-import rsvier.session.CartFacade;
+import rsvier.model.Address;
+import rsvier.persistence.AddressFacade;
 
 /**
  *
  * @author HP
  */
 @Stateless
-@Path("/carts")
-public class CartFacadeREST {
-
+@Path("/addresses")
+public class AddressFacadeREST{ 
+      
     @EJB
-    private CartFacade facade;
+    private AddressFacade facade;
+    
 
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Cart entity) {
+    public void create(Address entity) {
         facade.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Long id, Cart entity) {
+    public void edit(@PathParam("id") Long id, Address entity) {
         facade.edit(entity);
     }
 
@@ -53,20 +54,20 @@ public class CartFacadeREST {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Cart find(@PathParam("id") Long id) {
+    public Address find(@PathParam("id") Long id) {
         return facade.find(id);
     }
 
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Cart> findAll() {
+    public List<Address> findAll() {
         return facade.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Cart> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Address> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return facade.findRange(new int[]{from, to});
     }
 
@@ -76,5 +77,5 @@ public class CartFacadeREST {
     public String countREST() {
         return String.valueOf(facade.count());
     }
-
+    
 }

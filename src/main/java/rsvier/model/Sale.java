@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rsvier.entity;
+package rsvier.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -13,6 +14,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -27,20 +31,21 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author HP
  */
 @Entity
-@Table(name = "addresses")
+@Table(name = "orders")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Address.findAll", query = "SELECT a FROM Address a")
-    , @NamedQuery(name = "Address.findById", query = "SELECT a FROM Address a WHERE a.id = :id")
-    , @NamedQuery(name = "Address.findByCity", query = "SELECT a FROM Address a WHERE a.city = :city")
-    , @NamedQuery(name = "Address.findByFamilyName", query = "SELECT a FROM Address a WHERE a.familyName = :familyName")
-    , @NamedQuery(name = "Address.findByFirstName", query = "SELECT a FROM Address a WHERE a.firstName = :firstName")
-    , @NamedQuery(name = "Address.findByInsertion", query = "SELECT a FROM Address a WHERE a.insertion = :insertion")
-    , @NamedQuery(name = "Address.findByNumAddition", query = "SELECT a FROM Address a WHERE a.numAddition = :numAddition")
-    , @NamedQuery(name = "Address.findByNumber", query = "SELECT a FROM Address a WHERE a.number = :number")
-    , @NamedQuery(name = "Address.findByStreet", query = "SELECT a FROM Address a WHERE a.street = :street")
-    , @NamedQuery(name = "Address.findByZipCode", query = "SELECT a FROM Address a WHERE a.zipCode = :zipCode")})
-public class Address implements Serializable {
+    @NamedQuery(name = "Sale.findAll", query = "SELECT s FROM Sale s")
+    , @NamedQuery(name = "Sale.findById", query = "SELECT s FROM Sale s WHERE s.id = :id")
+    , @NamedQuery(name = "Sale.findByCity", query = "SELECT s FROM Sale s WHERE s.city = :city")
+    , @NamedQuery(name = "Sale.findByFamilyName", query = "SELECT s FROM Sale s WHERE s.familyName = :familyName")
+    , @NamedQuery(name = "Sale.findByFirstName", query = "SELECT s FROM Sale s WHERE s.firstName = :firstName")
+    , @NamedQuery(name = "Sale.findByInsertion", query = "SELECT s FROM Sale s WHERE s.insertion = :insertion")
+    , @NamedQuery(name = "Sale.findByNumAddition", query = "SELECT s FROM Sale s WHERE s.numAddition = :numAddition")
+    , @NamedQuery(name = "Sale.findByNumber", query = "SELECT s FROM Sale s WHERE s.number = :number")
+    , @NamedQuery(name = "Sale.findByStreet", query = "SELECT s FROM Sale s WHERE s.street = :street")
+    , @NamedQuery(name = "Sale.findByTotalPrice", query = "SELECT s FROM Sale s WHERE s.totalPrice = :totalPrice")
+    , @NamedQuery(name = "Sale.findByZipCode", query = "SELECT s FROM Sale s WHERE s.zipCode = :zipCode")})
+public class Sale implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -58,9 +63,7 @@ public class Address implements Serializable {
     @Size(min = 1, max = 10)
     @Column(name = "family_name")
     private String familyName;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @Size(max = 255)
     @Column(name = "first_name")
     private String firstName;
     @Size(max = 50)
@@ -71,32 +74,41 @@ public class Address implements Serializable {
     private String numAddition;
     @Column(name = "number")
     private Integer number;
+    @Lob
+    @Column(name = "order_date")
+    private byte[] orderDate;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "street")
     private String street;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "total_price")
+    private BigDecimal totalPrice;
     @Size(max = 10)
     @Column(name = "zip_code")
     private String zipCode;
-    @OneToMany(mappedBy = "deliveryAddressId")
-    private List<Cart> cartList;
-    @OneToMany(mappedBy = "billingAddressId")
-    private List<User> userList;
+    @OneToMany(mappedBy = "orderId")
+    private List<FinalSuborder> finalSuborderList;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne
+    private User userId;
 
-    public Address() {
+    public Sale() {
     }
 
-    public Address(Long id) {
+    public Sale(Long id) {
         this.id = id;
     }
 
-    public Address(Long id, String city, String familyName, String firstName, String street) {
+    public Sale(Long id, String city, String familyName, String street, BigDecimal totalPrice) {
         this.id = id;
         this.city = city;
         this.familyName = familyName;
-        this.firstName = firstName;
         this.street = street;
+        this.totalPrice = totalPrice;
     }
 
     public Long getId() {
@@ -155,12 +167,28 @@ public class Address implements Serializable {
         this.number = number;
     }
 
+    public byte[] getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(byte[] orderDate) {
+        this.orderDate = orderDate;
+    }
+
     public String getStreet() {
         return street;
     }
 
     public void setStreet(String street) {
         this.street = street;
+    }
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public String getZipCode() {
@@ -172,21 +200,20 @@ public class Address implements Serializable {
     }
 
     @XmlTransient
-    public List<Cart> getCartList() {
-        return cartList;
+    public List<FinalSuborder> getFinalSuborderList() {
+        return finalSuborderList;
     }
 
-    public void setCartList(List<Cart> cartList) {
-        this.cartList = cartList;
+    public void setFinalSuborderList(List<FinalSuborder> finalSuborderList) {
+        this.finalSuborderList = finalSuborderList;
     }
 
-    @XmlTransient
-    public List<User> getUserList() {
-        return userList;
+    public User getUserId() {
+        return userId;
     }
 
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -199,10 +226,10 @@ public class Address implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Address)) {
+        if (!(object instanceof Sale)) {
             return false;
         }
-        Address other = (Address) object;
+        Sale other = (Sale) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -211,7 +238,7 @@ public class Address implements Serializable {
 
     @Override
     public String toString() {
-        return "rsvier.entity.Address[ id=" + id + " ]";
+        return "rsvier.entity.Sale[ id=" + id + " ]";
     }
     
 }

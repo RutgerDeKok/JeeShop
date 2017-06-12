@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rsvier.services;
+package rsvier.resources;
 
 import java.util.List;
 import javax.ejb.EJB;
@@ -17,8 +17,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import rsvier.entity.CartSuborder;
-import rsvier.session.CartSuborderFacade;
+import rsvier.model.CartSuborder;
+import rsvier.persistence.CartSuborderFacade;
 
 /**
  *

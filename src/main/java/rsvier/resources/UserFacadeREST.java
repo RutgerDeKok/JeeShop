@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rsvier.services;
+package rsvier.resources;
 
 import java.util.List;
 import javax.ejb.EJB;
@@ -17,31 +17,30 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import rsvier.entity.Address;
-import rsvier.session.AddressFacade;
+import rsvier.model.User;
+import rsvier.persistence.UserFacade;
 
 /**
  *
  * @author HP
  */
 @Stateless
-@Path("/addresses")
-public class AddressFacadeREST{ 
-      
+@Path("/users")
+public class UserFacadeREST{
+
     @EJB
-    private AddressFacade facade;
-    
+    UserFacade facade;
 
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Address entity) {
+    public void create(User entity) {
         facade.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Long id, Address entity) {
+    public void edit(@PathParam("id") Long id, User entity) {
         facade.edit(entity);
     }
 
@@ -54,20 +53,20 @@ public class AddressFacadeREST{
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Address find(@PathParam("id") Long id) {
+    public User find(@PathParam("id") Long id) {
         return facade.find(id);
     }
 
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Address> findAll() {
+    public List<User> findAll() {
         return facade.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Address> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<User> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return facade.findRange(new int[]{from, to});
     }
 
@@ -77,5 +76,6 @@ public class AddressFacadeREST{
     public String countREST() {
         return String.valueOf(facade.count());
     }
+
     
 }

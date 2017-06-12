@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rsvier.session;
+package rsvier.persistence;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import rsvier.entity.User;
+import rsvier.model.User;
 
 /**
  *

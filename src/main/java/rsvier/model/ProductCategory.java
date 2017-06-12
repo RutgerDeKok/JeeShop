@@ -1,4 +1,4 @@
-package rsvier.entity;
+package rsvier.model;
 
 //import javax.xml.bind.annotation.XmlEnum;
 

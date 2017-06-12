@@ -1,4 +1,4 @@
-package rsvier.entity;
+package rsvier.model;
 
 import java.io.Serializable;
 import javax.xml.bind.annotation.XmlRootElement;

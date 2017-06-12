@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rsvier.session;
+package rsvier.persistence;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import rsvier.entity.Sale;
+import rsvier.model.Product;
 
 /**
  *
  * @author HP
  */
 @Stateless
-public class SaleFacade extends AbstractFacade<Sale> {
+public class ProductFacade extends AbstractFacade<Product> {
 
     @PersistenceContext(unitName = "rsvier_jeeshop_war_1.0-SNAPSHOTPU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class SaleFacade extends AbstractFacade<Sale> {
         return em;
     }
 
-    public SaleFacade() {
-        super(Sale.class);
+    public ProductFacade() {
+        super(Product.class);
     }
     
 }
