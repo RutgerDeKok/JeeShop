@@ -8,16 +8,10 @@
         <init-param>
             <param-name>jersey.config.server.provider.packages</param-name>
             <param-value>rsvier.resources</param-value>
+<!--            <param-value>rsvier.services</param-value>-->
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
-    <resource-ref>
-        <description>Connects to database for JeeShop application</description>
-        <res-ref-name>jdbc/kaasRest</res-ref-name>
-        <res-type>javax.sql.DataSource</res-type>
-        <res-auth>Container</res-auth>
-        <res-sharing-scope>Shareable</res-sharing-scope>
-    </resource-ref>
     <servlet-mapping>
         <servlet-name>Jersey Web Application</servlet-name>
         <url-pattern>/rest/*</url-pattern>
