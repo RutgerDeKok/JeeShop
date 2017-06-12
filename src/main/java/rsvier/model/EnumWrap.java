@@ -3,21 +3,12 @@ package rsvier.model;
 import java.io.Serializable;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author HP
- */
 @XmlRootElement
 public class EnumWrap implements Serializable { 
     
     private String name;
     private String readableName;
+    private String shortName;
     
     public EnumWrap(){
     }
@@ -26,6 +17,12 @@ public class EnumWrap implements Serializable {
     public EnumWrap(String name, String readableName){
         this.name = name;
         this.readableName = readableName;
+    }
+    
+     public EnumWrap(String name, String readableName, String shortName){
+        this.name = name;
+        this.readableName = readableName;
+        this.shortName = shortName;
     }
 
     public String getName(){
@@ -36,6 +33,10 @@ public class EnumWrap implements Serializable {
         return readableName;
     }
     
+    public String getShortName(){
+        return shortName;
+    }
+    
     public void setName(String name){
         this.name = name;
     }
@@ -44,6 +45,9 @@ public class EnumWrap implements Serializable {
         this.readableName = readableName;
     }
     
+     public void setShortName(String shortName){
+        this.shortName = shortName;
+    }
     
     
 }

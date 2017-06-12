@@ -85,11 +85,8 @@ public class ProductFacadeREST {
     public List<EnumWrap> getCategories() {
         System.out.println("getting categories");
         List<EnumWrap> categoryList = new ArrayList<>();
-        int i = 0;
         for (ProductCategory cat : ProductCategory.values()) {
             categoryList.add(new EnumWrap(cat.name(), cat.getNaamNed()));
-            System.out.println(cat.getNaamNed());
-            i++;
         }
         System.out.println(categoryList);
         return categoryList;
@@ -222,4 +219,23 @@ public class ProductFacadeREST {
 //        System.out.println(categoryList);
 //        return categoryList;
 //    }
+    
+    
+//    @GET
+//    @Path("cattest")
+//    @Produces( MediaType.APPLICATION_JSON)
+//    public JSONArray getCategoriesTest() {
+//        System.out.println("getting categories");
+//        JSONArray categoryList = new JSONArray();
+//      
+//        for (ProductCategory cat : ProductCategory.values()) {
+//            JSONObject obj = new JSONObject("{\"name\":\""+ cat.name()+"\",\"readableName\":\""+cat.getNaamNed()+"\"}");
+//            categoryList.put(obj);
+//        }
+//       
+//        System.out.println(categoryList);
+//        return categoryList;
+//    }
+    
+   
 }
