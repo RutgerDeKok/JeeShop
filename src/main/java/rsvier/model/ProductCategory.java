@@ -10,9 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 //import javax.xml.bind.annotation.XmlEnumValue;
 //import javax.xml.bind.annotation.XmlType;
 
-//@XmlType(name = "category")
-//@XmlEnum
-@XmlRootElement
+
 public enum ProductCategory {
 
     MEDIUM_HARD("Medium-Hard"),

@@ -39,16 +39,19 @@ function startProductTable() {
             datarow += ' <td align=/"left/">' + value.price + ' </td>';
             datarow += ' <td align=/"left/">' + value.stockCount + ' </td>';
             datarow += ' <td align=/"left/">' + value.info + ' </td>';
-            datarow += ' <td align=/"left/" onclick=\"editRow(' + rowindex +','+ value.id+ ')\"> Edit </td> </tr>';
+            datarow += ' <td align=/"left/" onclick=\"editRow(' + rowindex + ',' + value.id + ')\"> Edit </td> </tr>';
             rowindex++;
         });
         $('#table_main').append(datarow);
     });
 }
 
-function editRow(index,id) {
-    alert("editRow = " +index+ " id = "+id);
-    window.location.href = "rest/products/"+id;
+function editRow(index, id) {
+    alert("editRow = " + index + " id = " + id);
+//    window.location.href = "rest/products/" + id;
+    setupEditProduct(id);
+    window.location.href = "edit-product.html";
+  
 }
 
 
@@ -61,6 +64,19 @@ function displayCategories() {
         });
         $('#test_p').text("").append(textline);
         ;
+    });
+
+}
+
+
+function setupEditProduct(id) {
+    $('#postProduct').action = "/rest/products/" + id;
+    $.getJSON('rest/products/' + id, function (data) {
+        var product = data[0];
+
+        $('#nameId').val(product.name);
+        $('#brandId').val(product.brand);
+
     });
 
 }
