@@ -12,4 +12,3 @@
     </jdbc-connection-pool>
     <jdbc-resource enabled="true" jndi-name="java:app/webshop_jee" object-type="user" pool-name="mysql_webshop_jee_rootPool"/>
 </resources>
-<!--gj-->

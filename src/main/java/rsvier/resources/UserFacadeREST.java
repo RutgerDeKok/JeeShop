@@ -3,6 +3,7 @@ package rsvier.resources;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -25,6 +26,7 @@ import rsvier.persistence.UserFacade;
  */
 @Stateless
 @Path("/users")
+@PermitAll
 public class UserFacadeREST{
 
     @EJB
@@ -75,21 +77,26 @@ public class UserFacadeREST{
     public String countREST() {
         return String.valueOf(facade.count());
     }
-
     
     @GET
     @Path("types")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<EnumWrap> getCategories() {
-        System.out.println("getting types");
         List<EnumWrap> categoryList = new ArrayList<>();
-
         for (UserType type : UserType.values()) {
             categoryList.add(new EnumWrap(type.name(), type.getNaamNed(), type.getKortNed()));
         }
-        System.out.println(categoryList);
         return categoryList;
     }
-
+    
+    @Path("{id}/addresses")
+    public AddressFacadeREST getAddresses() {
+        return new AddressFacadeREST();
+    }
+    
+    @Path("{id}/carts")
+    public CartFacadeREST getCart() {
+        return new CartFacadeREST();
+    }
     
 }

@@ -1,2 +1,8 @@
 /target/
 src/main/resources/setup/glassfish-resources\.xml
+
+src/main/webapp/WEB-INF/web\.xml
+
+pom\.xml
+
+src/main/webapp/WEB-INF/glassfish-resources\.xml

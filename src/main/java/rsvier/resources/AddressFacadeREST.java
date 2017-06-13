@@ -6,6 +6,8 @@
 package rsvier.resources;
 
 import java.util.List;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -26,11 +28,11 @@ import rsvier.persistence.AddressFacade;
  */
 @Stateless
 @Path("/addresses")
+@PermitAll
 public class AddressFacadeREST{ 
       
     @EJB
-    private AddressFacade facade;
-    
+    private AddressFacade facade;    
 
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})

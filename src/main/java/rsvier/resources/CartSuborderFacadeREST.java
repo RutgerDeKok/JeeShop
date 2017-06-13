@@ -6,6 +6,7 @@
 package rsvier.resources;
 
 import java.util.List;
+import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -26,6 +27,7 @@ import rsvier.persistence.CartSuborderFacade;
  */
 @Stateless
 @Path("/cartsuborders")
+@PermitAll
 public class CartSuborderFacadeREST{
 
     @EJB
@@ -76,6 +78,5 @@ public class CartSuborderFacadeREST{
     public String countREST() {
         return String.valueOf(facade.count());
     }
-
     
 }
