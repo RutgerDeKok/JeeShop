@@ -30,6 +30,7 @@ function startProductTable() {
     $.getJSON('rest/products', function (data) {
         var datarow = " ";
         var rowindex = 0;
+//        alert("first row is"+data.products[0]);
         $.each(data, function (key, value) {
             datarow += '<tr>';
             datarow += ' <td align=/"left/">' + value.name + ' </td>';
@@ -47,11 +48,11 @@ function startProductTable() {
 }
 
 function editRow(index, id) {
-    alert("editRow = " + index + " id = " + id);
+//    alert("editRow = " + index + " id = " + id);
 //    window.location.href = "rest/products/" + id;
-    setupEditProduct(id);
-    window.location.href = "edit-product.html";
-  
+//    setupEditProduct(id);
+    window.location.href = "edit-product.html?" + id;
+
 }
 
 
@@ -69,15 +70,35 @@ function displayCategories() {
 }
 
 
-function setupEditProduct(id) {
-    $('#postProduct').action = "/rest/products/" + id;
-    $.getJSON('rest/products/' + id, function (data) {
-        var product = data[0];
+function setupEditProduct() {
+    var id = window.location.search.substring(1);
+ 
+    $('#productForm').action = "rest/products/" + id;
+
+//    prefill the imput boxes with available product data
+    $.getJSON('rest/products/' + id, function (product) {
 
         $('#nameId').val(product.name);
         $('#brandId').val(product.brand);
+        $('#priceId').val(product.price);
+        $('#stockId').val(product.stockCount);
+        $('#infoId').val(product.info);
+
+        var select = $('#categoryId');
+        $.getJSON('rest/products/categories', function (data) {
+            $.each(data, function (key, value) {
+
+                if (product.category === value.name) {
+                    $('<option value="' + value.name + '" selected="selected">' + value.readableName + '</option>').appendTo(select);
+                } else {
+                    $('<option value="' + value.name + '">' + value.readableName + '</option>').appendTo(select);
+                }
+            });
+        });
+
 
     });
+
 
 }
 

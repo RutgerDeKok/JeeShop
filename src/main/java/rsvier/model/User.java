@@ -48,7 +48,7 @@ public class User implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Size(max = 255)
+//    @Size(max = 255)
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private UserType type;
