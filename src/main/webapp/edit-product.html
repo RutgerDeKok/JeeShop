@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <title>Edit Product</title>
+        <!--<script src ="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+        <script src ="JS/jquery-3.2.1.min.js"></script>
+        <script src ="JS/products.js"></script>
+        <link href="CSS/simple.css" rel="stylesheet" />
+
+
+    </head>
+
+    <body>
+        <h2>Pas product aan</h2>
+
+
+        <div>
+
+            <h3>Gegevens:</h3>
+            <form id="productForm" >
+                <label  hidden><b>Id </b></label> <input id="IdId" type="text"
+                                                         name="id"  hidden><br /> 
+
+                <label><b>Naam </b></label> <input id="nameId" type="text"
+                                                   name="name" required><br /> 
+
+                <label><b>Merk</b></label> <input id="brandId" type="text"
+                                                  name="brand"> <br /> 
+
+                <label><b>Prijs</b></label> <input id="priceId" type="text"
+                                                   name="price"> <br /> 
+
+                <label><b>voorraad</b></label><input id="stockId" type="number"
+                                                     name="stockCount" required><br /> 
+
+                <label><b>informatie</b></label><br> <input id="infoId" type="text"
+                                                            name="info" style="width: 800px" ><br />
+
+                <label><b>Categorie</b></label> <select id="categoryId"
+                                                        name="category" required> 
+
+
+                </select><br />
+
+                <br>
+                <br>
+
+                <button type="submit">'  OK  '</button>
+            </form> 
+        </div>
+
+        <script>
+//            window.onload = function () {
+            $(document).ready(function () {
+                setupEditProduct();
+
+            });
+
+            $(document).on("submit", "form#productForm", function (event) {
+                event.preventDefault();
+                 putProduct();
+            });
+        </script>
+
+
+    </body>
+</html>
+

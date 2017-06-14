@@ -1,15 +1,14 @@
 <html>
     <head>
+        <title>Kaas Shop</title>
         <!--<script src ="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
         <script src ="JS/jquery-3.2.1.min.js"></script>
         <script src ="JS/products.js"></script>
         <link href="CSS/simple.css" rel="stylesheet" />
-
-
     </head>
 
     <body>
-        <h2>Jersey RESTful Web Application!</h2>
+        <h2>De Online Kaaswinkel!</h2>
         <p><a href="rest/users">Users</a>
         <p><a href="rest/products">Products</a>
         <p><a href="rest/carts">Carts</a>
@@ -31,6 +30,7 @@
                     <th align="left">Prijs</th>
                     <th align="left">Voorraad</th>
                     <th align="left">Informatie</th>
+                    <th align="left">Edit</th>
                 </tr>
             </thead>
             <tfoot>
@@ -41,6 +41,7 @@
                     <th align="left">Prijs</th>
                     <th align="left">Voorraad</th>
                     <th align="left">Informatie</th>
+                    <th align="left">Edit</th>
 
                 </tr>
             </tfoot>
@@ -51,9 +52,7 @@
         <script>
             $(document).ready(function () {
                 startProductTable();
-
                 displayCategories();
-
             });
         </script>
 

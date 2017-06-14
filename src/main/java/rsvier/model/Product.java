@@ -54,7 +54,7 @@ public class Product implements Serializable {
     private String brand;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+//    @Size(min = 1, max = 50)
     @Column(name = "category")
     @Enumerated(EnumType.STRING)
     private ProductCategory category;

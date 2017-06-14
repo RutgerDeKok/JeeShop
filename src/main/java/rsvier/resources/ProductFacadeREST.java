@@ -37,6 +37,7 @@ public class ProductFacadeREST {
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Product entity) {
+        System.out.println("Put method called");
         facade.create(entity);
     }
 
@@ -44,6 +45,7 @@ public class ProductFacadeREST {
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Long id, Product entity) {
+        System.out.println("Put method called");
         facade.edit(entity);
     }
 

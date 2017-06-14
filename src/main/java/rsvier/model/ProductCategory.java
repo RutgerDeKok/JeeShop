@@ -1,17 +1,7 @@
 package rsvier.model;
 
-//import javax.xml.bind.annotation.XmlEnum;
-
-import com.fasterxml.jackson.annotation.JsonValue;
 import javax.xml.bind.annotation.XmlRootElement;
 
-//import com.fasterxml.jackson.annotation.JsonCreator;
-//import com.fasterxml.jackson.annotation.JsonValue;
-//import javax.xml.bind.annotation.XmlEnumValue;
-//import javax.xml.bind.annotation.XmlType;
-
-//@XmlType(name = "category")
-//@XmlEnum
 @XmlRootElement
 public enum ProductCategory {
 
