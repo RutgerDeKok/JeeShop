@@ -28,7 +28,7 @@ import rsvier.persistence.SaleFacade;
  */
 @Stateless
 @Path("/sales")
-@RolesAllowed( {"EMPLOYEE","ADMIN"} )
+//@RolesAllowed( {"EMPLOYEE","ADMIN"} )
 public class SaleFacadeREST {
 
     @EJB
@@ -36,7 +36,7 @@ public class SaleFacadeREST {
 
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @PermitAll
+//    @PermitAll
     public void create(Sale entity) {
         facade.create(entity);
     }
