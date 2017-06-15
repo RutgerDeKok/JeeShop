@@ -48,9 +48,7 @@ function startProductTable() {
 }
 
 function editRow(index, id) {
-//    alert("editRow = " + index + " id = " + id);
-//    window.location.href = "rest/products/" + id;
-//    setupEditProduct(id);
+//   index not used at the moment
     window.location.href = "edit-product.html?" + id;
 
 }
@@ -108,13 +106,20 @@ function putProduct() {
 
     var dataObject = {};
 
-    dataObject.id = $('#IdId').val();
-    dataObject.name = $('#nameId').val();
-    dataObject.brand = $('#brandId').val();
-    dataObject.price = $('#priceId').val();
-    dataObject.stockCount = $('#stockId').val();
-    dataObject.info = $('#infoId').val();
-    dataObject.category = $('#categoryId').val();
+//    dataObject.id = $('#IdId').val();
+//    dataObject.name = $('#nameId').val();
+//    dataObject.brand = $('#brandId').val();
+//    dataObject.price = $('#priceId').val();
+//    dataObject.stockCount = $('#stockId').val();
+//    dataObject.info = $('#infoId').val();
+//    dataObject.category = $('#categoryId').val();
+
+    var form = $('#productForm').serializeArray();
+    $.each(form,
+            function (i, v) {
+                alert("name: "+v.name + ", value: "+v.value);
+                dataObject[v.name] = v.value;
+            });
 
     var jsonData = JSON.stringify(dataObject);
 
@@ -125,7 +130,7 @@ function putProduct() {
 //      dataType: "json", alleen nodig als return data wordt 
         contentType: "application/json",
         success: function () {
- 
+
             window.location.href = "index.html";
         },
         error: function () {
