@@ -101,8 +101,10 @@ function setupEditProduct() {
 
 
 
-function putProduct() {
-    //    var dataObject = {brand: "AH", category: "CREAM", id: 3, info: "zeer romige roomkaas!", name: "Boersjaan", price: 3.5, stockCount: 5};
+function putPostProduct() {
+//    var dataObject = {brand: "AH", category: "CREAM", id: 3, info: "zeer romige roomkaas!", name: "Boersjaan", price: 3.5, stockCount: 5};
+//    var dataObject = {brand: "Bagger", category: "BLUE", info: "Echt smerig!", name: "Smorgus", price: 1.12 , stockCount: 5};
+
 
     var dataObject = {};
 
@@ -118,33 +120,51 @@ function putProduct() {
     $.each(form,
             function (i, v) {
 //                alert("name: "+v.name + ", value: "+v.value);
-                dataObject[v.name] = v.value;
+                if (v.value !== "") {
+                    dataObject[v.name] = v.value;
+                }
             });
 
     var jsonData = JSON.stringify(dataObject);
+    var id = dataObject.id;
+//    alert("id= " + id);
 
-    $.ajax({
-        type: "PUT",
-        url: "rest/products/" + dataObject.id,
-        data: jsonData,
-//      dataType: "json", alleen nodig als return data wordt 
-        contentType: "application/json",
-        success: function () {
+    if (id !== undefined) {
+//        alert("PUT");
+        $.ajax({
+            type: "PUT",
+            url: "rest/products/" + id,
+            data: jsonData,
+//            dataType: "json", alleen nodig als return data wordt 
+            contentType: "application/json",
+            success: function () {
 
-            window.location.href = "index.html";
-        },
-        error: function () {
-            alert("Error!!!" + jsonData);
-        }
+                window.location.href = "index.html";
+            },
+            error: function () {
+                alert("Error, "+ jsonData);
+            }
+        });
+    } else {
+//        alert("POST");
+        $.ajax({
+            type: "POST",
+            url: "rest/products/",
+            data: jsonData,
+    //      dataType: "json", alleen nodig als return data wordt 
+            contentType: "application/json",
+            success: function () {
 
-    });
+                window.location.href = "index.html";
+            },
+            error: function () {
+                alert("Error, " + jsonData);
+            }
+        });
+    }
 
 }
 
-
-//function noenter() {
-//    return !(window.event && window.event.keyCode == 13);
-//}
 
 
 

@@ -37,7 +37,7 @@ public class ProductFacadeREST {
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Product entity) {
-        System.out.println("Put method called");
+        System.out.println("Post method called");
         facade.create(entity);
     }
 
