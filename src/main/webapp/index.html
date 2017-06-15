@@ -7,18 +7,20 @@
     </head>
 
     <body>
-        <h2>De Online Kaaswinkel!</h2>
-        <p><a href="rest/users">Users</a>
-        <p><a href="rest/products">Products</a>
-        <p><a href="rest/carts">Carts</a>
-        <p><a href="rest/cartsuborders">Cart Sub Orders</a>
-        <p><a href="rest/sales">Sales</a>
-        <p><a href="rest/finalsuborders">Final Sub Orders</a>
-
-
-        <p><a href="rest/addresses">Addresses</a></p>
-
-        <br>
+        <h2 class="title">De Online Kaaswinkel!</h2>
+        <br/><br/><br/><br/>
+        
+        
+        <div id="bodyRestLinks">
+        <a href="rest/users"><p class="restLinks">Users</p></a>
+        <a href="rest/products"><p class="restLinks">Products</p></a>
+        <a href="rest/carts"><p class="restLinks">Carts</p></a>
+        <a href="rest/cartsuborders"> <p class="restLinks">Cart Sub Orders</p></a>
+        <a href="rest/sales"><p class="restLinks">Sales</p></a>
+        <a href="rest/finalsuborders"><p class="restLinks">Final Sub Orders</p></a>
+        <a href="rest/addresses"><p class="restLinks">Addresses</p></a>
+        </div>
+        <br/><br/><br/><br/>
 
         <table id="table_main" class="display" cellspacing="0" width="100%">
             <thead>
@@ -29,10 +31,10 @@
                     <th align="left">Prijs</th>
                     <th align="left">Voorraad</th>
                     <th align="left">Informatie</th>
-                    <th align="left">Edit</th>
+                    <th align="left"><a href="/">Edit</a></th>
                 </tr>
             </thead>
-            <tfoot>
+<!--            <tfoot>
                 <tr>
                     <th align="left">Naam</th>
                     <th align="left">Categorie</th>
@@ -40,13 +42,16 @@
                     <th align="left">Prijs</th>
                     <th align="left">Voorraad</th>
                     <th align="left">Informatie</th>
-                    <th align="left">Edit</th>
+                    <th align="left"><a href="/">Edit</a></th>
 
                 </tr>
-            </tfoot>
+            </tfoot>-->
         </table>
+        <br/><br/><br/>
         
-        <p id="test_p">testa</p>
+        <div id="categorieTabel"> Categorieen </div>
+             
+        <p id="categories">EenCategorie</p>
 
         <script>
             $(document).ready(function () {

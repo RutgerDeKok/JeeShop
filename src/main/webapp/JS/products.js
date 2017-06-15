@@ -57,11 +57,11 @@ function editRow(index, id) {
 function displayCategories() {
 
     $.getJSON('rest/products/categories', function (data) {
-        var textline = " ";
+        var textline = "";
         $.each(data, function (key, value) {
-            textline += value.name + ' : ' + value.readableName + ' <br>';
+            textline += '<p class="cheeseCategorie">' + value.name + ' : ' + value.readableName + ' </p>';
         });
-        $('#test_p').text("").append(textline);
+        $('#categories').text("").append(textline);
         ;
     });
 
