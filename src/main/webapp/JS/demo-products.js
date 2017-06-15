@@ -9,9 +9,9 @@ function startProductTable() {
             datarow += '<td id="category">' + getCategory(value.category) + ' </td>';
             datarow += '<td id="brand">' + value.brand + ' </td>';
             datarow += '<td id="price">' + value.price + ' </td>';
-            datarow += '<td id="stock">' + value.stockCount + ' </td>';
+            datarow += '<td id="stockCount">' + value.stockCount + ' </td>';
             datarow += '<td id="info">' + value.info + ' </td>';
-            datarow += '<td id="editSave"><button onclick=\"editRow(this)\">Edit</button></td></tr>';
+            datarow += '<td id="editSave"><button id="edit" onclick=\"editRow(this)\">Edit</button></td></tr>';
         });
         datarow += '</tbody>';
         $('#productsTable').append(datarow);
@@ -38,24 +38,10 @@ function getCategory(cat) {
 function editRow(button) {
     button.parentNode.parentNode.className = 'highlight';
     button.parentNode.parentNode.setAttribute("contenteditable","true");
-    button.parentNode.innerHTML = '<button onclick=\"saveRow(this)\">Save</button>';    
+    button.parentNode.innerHTML = '<button id="save">Save</button>';    
 }
 
 function saveRow(button) {
-    // get info from row
-//    var tbl = $(button.parentNode.parentNode).get().map(function(row) {
-//        return $(row).find('td').get().map(function(cell) {
-//            return $(cell).attr("id") + ":" + $(cell).html();
-//        });
-//    });
-//    alert (tbl);
-var editableProduct = "";
-    $cells = button.parentNode.parentNode.find("td");
-        $cells.each(function(cellContent) {
-            editableProduct += $(this).attr("id") + ":" + $(this).text();
-        });
-    alert (editableProduct);
-    
 //    velden product:
 //            id
 //            brand
@@ -64,7 +50,36 @@ var editableProduct = "";
 //            name
 //            stockCount
     // convert row to json
+    // 
+    $("#save").click(function(){
+        var data = [];
+//        var el = document.getElementById("id");
+//        alert(el.getAttribute("id"));
+        $("#productsTable").find('tr.highlight').each(function(rowIndex, row) {
+            var cols = [];
+            $(this).find('td').not(':last').each(function(colIndex, col) {                      
+                cols.push($(this).text().trim());
+            });
+            data.push(cols);            
+        });
+        alert(data);
+        return data;
+    });
+    // 
     // send json to rest
+    // 
+    //    $.ajax({
+    //            type: "PUT",
+    //            url: "rest/products/" + dataObject.id,
+    //            data: dataObject,
+    //            contentType: "application/json",
+    //            success: function () {
+    //                alert("Succes!");
+    //            },
+    //            error: function () {
+    //                alert("Error, "+ dataObject);
+    //            }
+    //     }); 
     // remove highlight
     // show edit button instead of save again
 }
