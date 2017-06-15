@@ -117,7 +117,7 @@ function putProduct() {
     var form = $('#productForm').serializeArray();
     $.each(form,
             function (i, v) {
-                alert("name: "+v.name + ", value: "+v.value);
+//                alert("name: "+v.name + ", value: "+v.value);
                 dataObject[v.name] = v.value;
             });
 
