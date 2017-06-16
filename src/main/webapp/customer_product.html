@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <title>Winkel</title>
+        <script src ="JS/jquery-3.2.1.min.js"></script>
+        <script src ="JS/products.js"></script>
+        <link href="CSS/simple.css" rel="stylesheet" />
+    </head>
+
+    <body>
+        <h2 class="title">De Online Kaaswinkel! (for customers)</h2>
+       
+        <button> <a href="customer_cart.html">naar Cart</a></button>
+        <button> <a href="index.html">Naar Werknemers Pagina</a></button>
+        <table id="table_main" class="display" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th align="left">Naam</th>
+                    <th align="left">Categorie</th>
+                    <th align="left">Merk</th>
+                    <th align="left">Prijs</th>
+                    <th align="left">Voorraad</th>
+                    <th align="left">Informatie</th>
+                   
+                </tr>
+            </thead>           
+        </table>
+        
+        <script>
+            $(document).ready(function () {
+                console.log(window.location.href  == "http://localhost:8080/JeeShop3/customer_product.html");
+                startProductTable();
+                 
+            });
+        </script>
+
+        
+
+    </body>
+</html>

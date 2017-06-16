@@ -61,6 +61,24 @@ th {
     color: white;
 }
 
+.editKnop{
+   
+    text-align: center;
+
+    color: rgb(0,0,0);
+    background-color: #1f3d7a;
+    -webkit-box-shadow: rgb(30,30,30) 5px 5px 5px;
+    -webkit-border-radius: 10px;
+   color: whitesmoke;
+   text-align: center;
+   -webkit-transition: -webkit-box-shadow 0.3s;
+    
+}
+
+.editKnop:hover{
+       -webkit-box-shadow: rgb(30,30,30) 10px 10px 10px;
+       
+}
 .cheeseCategorie {
     padding: 7px;
      margin: auto;

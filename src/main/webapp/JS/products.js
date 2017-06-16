@@ -25,11 +25,13 @@ function getCategory(cat) {
 
 
 function startProductTable() {
-
+    
+    
     getCategories();
     $.getJSON('rest/products', function (data) {
         var datarow = " ";
         var rowindex = 0;
+        
 //        alert("first row is"+data.products[0]);
         $.each(data, function (key, value) {
             datarow += '<tr>';
@@ -40,7 +42,10 @@ function startProductTable() {
             datarow += ' <td align=/"left/">' + value.price + ' </td>';
             datarow += ' <td align=/"left/">' + value.stockCount + ' </td>';
             datarow += ' <td align=/"left/">' + value.info + ' </td>';
-            datarow += ' <td align=/"left/" onclick=\"editRow(' + rowindex + ',' + value.id + ')\"> Edit </td> </tr>';
+            if (window.location.href  !== "http://localhost:8080/JeeShop3/customer_product.html"){ 
+            datarow += ' <td align=/"left/" onclick=\"editRow(' + rowindex + ',' + value.id + ')\"> <div class=/"editKnop/"> Edit <div></td>';
+            } 
+            datarow += '</tr>';
             rowindex++;
         });
         $('#table_main').append(datarow);
