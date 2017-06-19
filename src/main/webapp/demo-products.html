@@ -1,48 +1,61 @@
 <html>
     <head>
-        <title>Kaas Shop</title>
+        <title >Kaas Shop</title>
         <script src ="JS/jquery-3.2.1.min.js"></script>
         <script src ="JS/demo-products.js"></script>
         <link href="CSS/simple.css" rel="stylesheet" />
+        <link href="CSS/grid.css" rel="stylesheet" />
     </head>
     <body>
-        <h2>De Online Kaaswinkel!</h2>
-        <p><a href="rest/users">Users</a>
-        <p><a href="rest/products">Products</a>
-        <p><a href="rest/carts">Carts</a>
-        <p><a href="rest/cartsuborders">Cart Sub Orders</a>
-        <p><a href="rest/sales">Sales</a>
-        <p><a href="rest/finalsuborders">Final Sub Orders</a>
-        <p><a href="rest/addresses">Addresses</a></p>
-        <br>
-        <table id="productsTable" class="display" cellspacing="0" width="100%">
-            <thead>
-                <tr>
-                    <th hidden>Id</th>
-                    <th>Naam</th>
-                    <th>Categorie</th>
-                    <th>Merk</th>
-                    <th>Prijs</th>
-                    <th>Voorraad</th>
-                    <th>Informatie</th>
-                    <th>Edit</th>
-                </tr>
-            </thead>
-            <tfoot>
-                <tr>
-                    <th hidden>Id</th>
-                    <th>Naam</th>
-                    <th>Categorie</th>
-                    <th>Merk</th>
-                    <th>Prijs</th>
-                    <th>Voorraad</th>
-                    <th>Informatie</th>
-                    <th>Edit</th>
-                </tr>
-            </tfoot>
-        </table>
+        
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2 align="center">De Online Kaaswinkel!</h2>
+                </div>
+            </div>
+                      
+            <div class="row">
+                <div class="col-2">
+                     hier komen de filter knoppen 
+                </div>
+                <div class="col-1">
+                        test
+                </div>
+                <div class="col-9">
+                    <table id="productsTable" class="display" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th hidden>Id</th>
+                                <th>Naam</th>
+                                <th>Categorie</th>
+                                <th>Merk</th>
+                                <th>Prijs</th>
+                                <th>Voorraad</th>
+                                <th>Informatie</th>
+                                <th>Edit</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th hidden>Id</th>
+                                <th>Naam</th>
+                                <th>Categorie</th>
+                                <th>Merk</th>
+                                <th>Prijs</th>
+                                <th>Voorraad</th>
+                                <th>Informatie</th>
+                                <th>Edit</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 startProductTable();
             });
         </script>

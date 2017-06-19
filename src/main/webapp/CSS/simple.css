@@ -41,7 +41,7 @@ body {
 table {
      margin: auto;
     border-collapse: collapse;
-    width: 50%;
+    /*width: 500%;*/
     background: rgb(150,150,150);
 }
 

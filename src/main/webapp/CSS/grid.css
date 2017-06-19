@@ -1,0 +1,124 @@
+/* ==== GRID SYSTEM ==== 
+
+A parent container class contains the grid. Within the container are rows. 
+Row classes denote rows of content, which can be filled with up to 12 columns. 
+Columns must be nested within a row. 
+
+To define your column width, declare how many columns you want your content to
+take up on desktop and large screens. For example, if your content should take
+up 6 out of 12 columns (or half the container), your class name will be .col-6.
+
+If you don’t want columns to expand on mobile devices and small screens, 
+simply add -sm to the end of your column class name. For example, if you want 
+to have two blocks of content floating side-by-side on small screens, each 
+would be given the class name .col-6-sm.
+
+example:
+
+   <div class="container">
+      <div class="row">
+        <div class="col-3">
+          <!-- This content will take up 3/12 (or 1/4) of the container -->
+        </div>
+        <div class="col-3">
+          <!-- This content will take up 3/12 (or 1/4) of the container -->
+        </div>
+        <div class="col-6">
+          <!-- This content will take up 6/12 (or 1/2) of the container -->
+        </div>
+      </div>
+    </div>
+
+*/
+
+/* UNIVERSAL */
+
+/* temporary border for all divs to see the layout*/
+
+
+
+.container {
+    width: 97%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.row {
+    position: relative;
+    width: 100%;
+}
+
+.row [class^="col"] {
+    float: left;
+    margin: 0.5%;
+    min-height: 0.125rem;
+}
+
+.col-1,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-7,
+.col-8,
+.col-9,
+.col-10,
+.col-11,
+.col-12 {
+    width: 95%;
+}
+
+
+/*@media only screen and (min-width: 45em) {   720px */
+.col-1 {
+    width: 7.21%;
+}
+
+.col-2 {
+    width: 15.53%;
+}
+
+.col-3 {
+    width: 23.83%;
+}
+
+.col-4 {
+    width: 32.19%;
+}
+
+.col-5 {
+    width: 40.52%;
+}
+
+.col-6 {
+    width: 48.85%;
+}
+
+.col-7 {
+    width: 57.18%;
+}
+
+.col-8 {
+    width: 65.52%;
+}
+
+.col-9 {
+    width: 73.85%;
+}
+
+.col-10 {
+    width: 82.18%;
+}
+
+.col-11 {
+    width: 90.52%;
+}
+
+.col-12 {
+    width: 98.85%;
+}
+
+.hidden-sm {
+    display: block;
+}
