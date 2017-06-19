@@ -110,14 +110,14 @@ function saveRow(button, index) {
         data: jsonData,
         contentType: "application/json",
         success: function () {
-            alert("Succes!");
+            console.log("Save Succesful!");
         },
         error: function () {
             alert("Error, " + dataObject);
         }
     });
 
-    button.parentNode.innerHTML = '<button id="edit" onclick="editRow(thi s ,' + index + ')">Edit</button>';
+    button.parentNode.innerHTML = '<button id="edit" onclick="editRow(this ,' + index + ')">Edit</button>';
 // show edit button instead of save again
 }
 
