@@ -9,30 +9,35 @@ and open the template in the editor.
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src ="JS/cookies.js"></script>
+        <script src ="JS/jquery.js"></script>
+        <script src ="JS/navbar.js"></script>
     </head>
     <body>
-        <div class='topnavbar'>
-            <a href='#home'>Home</a>
-            <a href='#products'>Producten</a>
-            <a href='#cart'>Winkelwagen</a>
-            <div style='display:none' id='logout'>
-                <a href='#logout'>Uitloggen</a>
-            </div>
-            <div style='display:inline-block' id='login'>
-                <a href='#login'>Inloggen</a>
-                <a href='#register'>Aanmelden</a>
-            </div>
+        <div class="navbar">
+            <nav>
+                <ul>
+                    <li id="login">
+                        <a id="dropdown-trigger" href="#">
+                            Log in <span>&#x25BC;</span>
+                        </a>
+                        <div id="dropdown" style='display:none'>
+                            <form>
+                                <fieldset id="inputs">
+                                    <input id="username" type="email" name="Email" placeholder="Uw emailadres" required>   
+                                    <input id="password" type="password" name="Password" placeholder="Wachtwoord" required>
+                                </fieldset>
+                                <fieldset id="actions">
+                                    <input type="submit" id="submit" value="Log in">
+                                    <label><input type="checkbox" checked="checked">Onthoud mij</label>
+                                </fieldset>
+                            </form>
+                        </div>                     
+                    </li>
+                    <li id="signup">
+                        <a href="">Aanmelden</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
-        <script>
-            function toggleLogout() {
-                if (getCookie(username) !== "") {
-                    var x = document.getElementById("logout");
-                    x.style.display = 'inline-block';
-                    var x = document.getElementById("login");
-                    x.style.display = 'none';
-                }
-            }
-        </script>
     </body>
 </html>
