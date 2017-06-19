@@ -1,9 +1,9 @@
 function startProductTable() {
     getCategories();
     $.getJSON('rest/products', function (data) {
-        var datarow = "";
+        var datarow = "<tbody>";
         $.each(data, function (index, value) {
-            datarow += '<tbody><tr>';
+            datarow += '<tr>';
             datarow += '<td id="id" hidden>' + value.id + '</td>';
             datarow += '<td id="name">' + value.name + ' </td>';
             datarow += '<td id="category"><span id="catSpan' + index + '">' + getCategory(value.category) + '</span>';
