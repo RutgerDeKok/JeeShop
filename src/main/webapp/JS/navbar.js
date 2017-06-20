@@ -16,32 +16,35 @@ $(document).ready(function(){
         });
 });
 
-$(document).ready(function(){
-   $('#login-submit').click(function() {
-      var form = document.getElementById("login") ;
-      form.submit();
-      $.ajax({
-        url: '/rest/users',
-        type: 'post',
-        dataType: 'json',
-        data: $('#login').serialize(),
-        success: function(data) {                   
-                 }
-      });
-   }); 
-});
-
+//$(document).ready(function(){
+//   $('#login-submit').click(function() {
+//      var form = document.getElementById("login") ;
+//      form.submit();
+//      $.ajax({
+//        url: '/rest/users',
+//        type: 'post',
+//        dataType: 'json',
+//        data: $('#login').serialize(),
+//        success: function(data) {                   
+//                 }
+//      });
+//   }); 
+//});
+//
 $(document).ready(function(){
    $('#signup-submit').click(function(e) {
+       console.log("Functie start");
        e.preventDefault();
 //     var form = document.getElementById("signup") ;
 //      form.submit();
     console.log(JSON.stringify($('#signup').serialize()));
+    
+    console.log($('#signup').serialize());
       $.ajax({
         url: '/rest/users',
-        type: 'post',
-        dataType: 'json',
-        data: JSON.stringify($('#signup').serialize()),
+        type: 'POST',
+        contentType: "application/json", 
+        data: $('#signup').serialize(),
         success: function(data) {
             console.log("Succes");
         },
