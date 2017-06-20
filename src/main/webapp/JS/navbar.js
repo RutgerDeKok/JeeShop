@@ -32,8 +32,9 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
-   $('#signup-submit').click(function() {
-//      var form = document.getElementById("signup") ;
+   $('#signup-submit').click(function(e) {
+       e.preventDefault();
+//     var form = document.getElementById("signup") ;
 //      form.submit();
     console.log(JSON.stringify($('#signup').serialize()));
       $.ajax({
