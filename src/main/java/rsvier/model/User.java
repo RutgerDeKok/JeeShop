@@ -53,10 +53,10 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private UserType type;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 255)
+    //@Size(max = 255)
     @Column(name = "email")
     private String email;
-    @Size(max = 255)
+    //@Size(max = 255)
     @Column(name = "pass_hash")
     private String passHash;
     @Basic(optional = false)

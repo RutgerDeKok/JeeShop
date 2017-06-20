@@ -22,8 +22,8 @@ and open the template in the editor.
                         </a>
                         <div id="login-dropdown" style='display:none'>
                             <form id="login" action="rest/users/login" method="post">                                <fieldset id="login-inputs">
-                                    <input id="login-username" type="email" name="Email" placeholder="Uw emailadres" required>   
-                                    <input id="login-password" type="password" name="Password" placeholder="Wachtwoord" required>
+                                    <input id="login-username" type="email" name="email" placeholder="Uw emailadres" required>   
+                                    <input id="login-password" type="password" name="passHash" placeholder="Wachtwoord" required>
                                 </fieldset>
                                 <fieldset id="login-actions">
                                     <input type="submit" id="login-submit" value="Log in">
@@ -39,9 +39,10 @@ and open the template in the editor.
                         <div id="signup-dropdown" style='display:none'>
                             <form id="signup" action="rest/users" method="post">
                                 <fieldset id="signup-inputs">
-                                    <input id="signup-username" type="email" name="Email" placeholder="Uw emailadres" required>   
-                                    <input id="signup-password1" type="password" name="Password1" placeholder="Wachtwoord" required>
-                                    <input id="signup-password2" type="password" name="Password2" placeholder="Herhaal wachtwoord" required>
+                                    <input id="signup-username" type="email" name="email" placeholder="Uw emailadres" required>   
+                                    <input id="signup-password" type="password" name="passHash" placeholder="Wachtwoord" required>
+                                    <input id="signup-passconf" type="password" name="passConf" placeholder="Herhaal wachtwoord" required>
+                                    <input id="signup-enabled" type="text" name="enabled" value="1" hidden>
                                 </fieldset>
                                 <fieldset id="signup-actions">
                                     <input type="submit" id="signup-submit" value="Aanmelden">

@@ -1,56 +1,95 @@
 $(document).ready(function(){
     $('#login-trigger').click(function() {
-        $(this).next('#login-dropdown').slideToggle();
-        $(this).toggleClass('active');             
-        if ($(this).hasClass('active')) $(this).find('span').html('&#x25B2;');
-            else $(this).find('span').html('&#x25BC;');
-        });
+        slideDown($(this));
+        slideUp($(document).find('#signup-dropdown'));
+    });
 });
 
 $(document).ready(function(){
     $('#signup-trigger').click(function() {
-        $(this).next('#signup-dropdown').slideToggle();
-        $(this).toggleClass('active');             
-        if ($(this).hasClass('active')) $(this).find('span').html('&#x25B2;');
-            else $(this).find('span').html('&#x25BC;');
-        });
+        slideDown($(this));
+        slideUp($(document).find('#login-dropdown'));
+    });
 });
 
-//$(document).ready(function(){
-//   $('#login-submit').click(function() {
-//      var form = document.getElementById("login") ;
-//      form.submit();
-//      $.ajax({
-//        url: '/rest/users',
-//        type: 'post',
-//        dataType: 'json',
-//        data: $('#login').serialize(),
-//        success: function(data) {                   
-//                 }
-//      });
-//   }); 
-//});
-//
+function isActive(element) {
+    if (element.hasClass('active')) {
+        element.find('span').html('&#x25B2;');
+    } else {
+        element.find('span').html('&#x25BC;');
+    };
+}
+
+function slideDown(element) {
+    if (element.is('#login-trigger')) {
+        element.next('#login-dropdown').slideToggle();  
+        console.log(element);
+    }
+    else {
+        element.next('#signup-dropdown').slideToggle();
+        console.log(element);
+    }
+    element.toggleClass('active');
+    isActive(element);
+}
+
+function slideUp(element) {
+    var trigger = "";
+    if (element.is('#login-dropdown')) {
+        trigger = $(document).find('#login-trigger');        
+        console.log(trigger);
+    }
+    else {
+        trigger = $(document).find('#signup-trigger');
+        console.log(trigger);
+    }
+    trigger.toggleClass('active'); 
+    isActive(trigger);
+    element.slideUp();
+}
+
 $(document).ready(function(){
-   $('#signup-submit').click(function(e) {
-       console.log("Functie start");
-       e.preventDefault();
-//     var form = document.getElementById("signup") ;
-//      form.submit();
-    console.log(JSON.stringify($('#signup').serialize()));
-    
-    console.log($('#signup').serialize());
-      $.ajax({
-        url: '/rest/users',
+    $('#login-submit').click(function(e) {
+        e.preventDefault();
+        var jsonData = JSON.stringify($('#login').serializeArray()
+            .reduce(function(dataObject, field) { 
+                dataObject[field.name] = field.value; return dataObject; 
+            }, 
+        {}));
+        $.ajax({
+        url: '/JeeShop/rest/users/login',
         type: 'POST',
-        contentType: "application/json", 
-        data: $('#signup').serialize(),
+        contentType: "application/json; charset=utf-8", 
+        data: jsonData,
         success: function(data) {
             console.log("Succes");
         },
         error: function(data) {
             console.log("Error");
         }           
-      });
+        });
+   }); 
+});
+
+$(document).ready(function(){
+    $('#signup-submit').click(function(e) {
+        e.preventDefault();
+        var jsonData = JSON.stringify($('#signup').serializeArray()
+            .reduce(function(dataObject, field) { 
+                dataObject[field.name] = field.value; return dataObject; 
+            }, 
+        {}));
+        $.ajax({
+        url: '/JeeShop/rest/users',
+        type: 'POST',
+        contentType: "application/json; charset=utf-8", 
+        data: jsonData,
+        success: function(data) {
+            console.log("Succes");
+        },
+        error: function(data) {
+            console.log("Error");
+        }           
+        });
    }); 
 });

@@ -102,9 +102,9 @@ public class UserFacadeREST{
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/login")
-    public void doLogin(User user) {
-        System.out.println(user.getEmail());
-        System.out.println(user.getPassHash());
+    public boolean doLogin(User login) {
+        User db = facade.findByEmail(login.getEmail());
+        return (db.getPassHash().equals(login.getPassHash()));
     }
     
 }
