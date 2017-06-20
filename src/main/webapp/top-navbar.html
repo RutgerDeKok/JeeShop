@@ -16,25 +16,39 @@ and open the template in the editor.
         <div class="navbar">
             <nav>
                 <ul>
-                    <li id="login">
-                        <a id="dropdown-trigger" href="#">
+                    <li>
+                        <a id="login-trigger" href="#">
                             Log in <span>&#x25BC;</span>
                         </a>
-                        <div id="dropdown" style='display:none'>
-                            <form>
-                                <fieldset id="inputs">
-                                    <input id="username" type="email" name="Email" placeholder="Uw emailadres" required>   
-                                    <input id="password" type="password" name="Password" placeholder="Wachtwoord" required>
+                        <div id="login-dropdown" style='display:none'>
+                            <form id="login"> <!-- action="rest/users/login" method="post"> -->
+                                <fieldset id="login-inputs">
+                                    <input id="login-username" type="email" name="Email" placeholder="Uw emailadres" required>   
+                                    <input id="login-password" type="password" name="Password" placeholder="Wachtwoord" required>
                                 </fieldset>
-                                <fieldset id="actions">
-                                    <input type="submit" id="submit" value="Log in">
+                                <fieldset id="login-actions">
+                                    <input type="submit" id="login-submit" value="Log in">
                                     <label><input type="checkbox" checked="checked">Onthoud mij</label>
                                 </fieldset>
                             </form>
                         </div>                     
                     </li>
-                    <li id="signup">
-                        <a href="">Aanmelden</a>
+                    <li>
+                        <a id="signup-trigger" href="#">
+                            Aanmelden <span>&#x25BC;</span>
+                        </a>
+                        <div id="signup-dropdown" style='display:none'>
+                            <form id="signup"> <!--  action="rest/users" method="post"> -->
+                                <fieldset id="signup-inputs">
+                                    <input id="signup-username" type="email" name="Email" placeholder="Uw emailadres" required>   
+                                    <input id="signup-password1" type="password" name="Password1" placeholder="Wachtwoord" required>
+                                    <input id="signup-password2" type="password" name="Password2" placeholder="Herhaal wachtwoord" required>
+                                </fieldset>
+                                <fieldset id="signup-actions">
+                                    <input type="submit" id="signup-submit" value="Aanmelden">
+                                </fieldset>
+                            </form>
+                        </div>   
                     </li>
                 </ul>
             </nav>

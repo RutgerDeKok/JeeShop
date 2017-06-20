@@ -99,4 +99,12 @@ public class UserFacadeREST{
         return new CartFacadeREST();
     }
     
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/login")
+    public void doLogin(User user) {
+        System.out.println(user.getEmail());
+        System.out.println(user.getPassHash());
+    }
+    
 }
