@@ -37,8 +37,9 @@
                     var rowindex = 0;
                     
                     $.each(data, function (key, value) {
+                        if(value.cartId){
                         datarow += ' <tr>';
-                        datarow += ' <td align=/"left/">' + value.cartId.id + ' </td>';
+                        datarow += ' <td align=/"left/">' + value.id + ' </td>';
                         datarow += ' <td align=/"left/">' + value.subTotal + ' </td>';
                         datarow += ' <td align=/"left/">' + value.cartId.userId.email + ' </td>';
                         datarow += ' <td align=/"left/">' + value.cartId.deliveryAddressId.zipCode 
@@ -49,6 +50,7 @@
                         
                         datarow += ' <td align=/"left/" onclick=\"deleteRow(' + value.id + ')\"> <div style="text-align:center; color:red;"> X <div></td> </tr>';
                         rowindex++;
+                    }
                     });
                     $('#table_main').append(datarow);
                 });

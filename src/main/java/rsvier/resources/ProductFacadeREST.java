@@ -28,6 +28,7 @@ import rsvier.model.EnumWrap;
 
 @Stateless
 @Path("/products")
+
 //@RolesAllowed( {"EMPLOYEE","ADMIN"} )
 public class ProductFacadeREST {
 
@@ -35,6 +36,7 @@ public class ProductFacadeREST {
     ProductFacade facade;
 
     @POST
+    @PermitAll
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Product entity) {
         System.out.println("Post method called");
@@ -42,6 +44,7 @@ public class ProductFacadeREST {
     }
 
     @PUT
+    @PermitAll
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Long id, Product entity) {
@@ -50,6 +53,7 @@ public class ProductFacadeREST {
     }
 
     @DELETE
+    @PermitAll
     @Path("{id}")
     public void remove(@PathParam("id") Long id) {
         facade.remove(facade.find(id));
