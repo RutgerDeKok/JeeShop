@@ -174,18 +174,5 @@ public class User implements Serializable {
         return "rsvier.entity.User[ id=" + id + " ]";
     }
 
-    /**
-     * @return the jwt
-     */
-    public String getJwt() {
-        return jwt;
-    }
-
-    /**
-     * @param jwt the jwt to set
-     */
-    public void setJwt(String jwt) {
-        this.jwt = jwt;
-    }
     
 }

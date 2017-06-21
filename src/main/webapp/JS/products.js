@@ -44,7 +44,10 @@ function startProductTable() {
             datarow += ' <td align=/"left/">' + value.info + ' </td>';
             if (window.location.href  !== "http://localhost:8080/JeeShop3/customer_product.html"){ 
             datarow += ' <td align=/"left/" onclick=\"editRow(' + rowindex + ',' + value.id + ')\"> <button> Edit </button></td>';
-            } 
+            }
+            else{
+                datarow += ' <td align=/"left/" onclick=\"addRow(' + rowindex + ',' + value.id + ')\"> <button> Voeg Toe </button></td>';
+            }
             datarow += '</tr>';
             rowindex++;
         });

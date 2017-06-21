@@ -106,12 +106,11 @@ public class UserFacadeREST{
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/login")
     public boolean doLogin(User login) {        
-        login.setJwt(authToken.createToken());
-        // ophalen key uit cookie
+       
         
         
         User db = facade.findByEmail(login.getEmail());
-        authToken.verifyToken(login);
+        authToken.verifyToken(db.getEmail(),db.getEmail());
         return (db.getPassHash().equals(login.getPassHash()));
         
     }
