@@ -51,12 +51,10 @@
        
         <script>
             var id = 3;
-            var datarow = " ";
-            
+ 
               $(document).ready(function () {
-                  datarow = " ";
+             
                  startCartInfoTable(id);
-                 datarow = " ";
                  startSubOrderTable(id);
                 });
            
@@ -64,20 +62,18 @@
                
                 id = $("#IdId").val();
                 startCartInfoTable(id);
-                datarow = " ";
                  startSubOrderTable(id);
-                 datarow = " ";
                 
             });
          
 
             function startCartInfoTable(id){
- 
-             datarow = " ";
+               $(".table_info_content").remove();  
+             var datarow = " ";
                 $.getJSON('rest/carts/'+ id, function (cartData) {
                         cartsData = cartData;
                         
-                        datarow += ' <tr>';
+                        datarow += ' <tr class="table_info_content">';
                         datarow += ' <td align=/"left/">' + cartsData.userId.email + ' </td>';//
                         datarow += ' <td align=/"left/">' + cartsData.deliveryAddressId.firstName + ' </td>';
                         datarow += ' <td align=/"left/">' + cartsData.deliveryAddressId.familyName + ' </td>';
@@ -89,33 +85,39 @@
 
                         datarow += '</tr>';
                         
-            $('#table_Cart_info').append(datarow);
+            $('#table_Cart_info').append(datarow) ;
                     });
  
                
         }
             function startSubOrderTable(id){
-                 datarow = " ";
+                
+                $(".table_content").remove();
+                 $("#footer").remove();
+                 var datarowSubOrder = " ";
+                
                 $.getJSON('rest/cartsuborders', function (data) {
                    
                     var rowindex = 0;
                     var totalPrijs = 0;
                    
                     $.each(data, function (key, value) {
+                       console.log( value.cartId.totalPrice);
                          
-                      if (value.cartId && value.cartId.id === id){
-                        datarow += ' <tr>';
-                        datarow += ' <td align=/"left/">' + value.id + ' </td>';
-                        datarow += ' <td align=/"left/">' + value.subTotal + ' </td>';
-                        datarow += ' <td align=/"left/">' + value.productId.name + ' </td>';
-                        datarow += ' <td align=/"left/">' + value.quantity + ' </td>';
-                        datarow += ' <td align=/"left/">' + value.productId.price + ' </td>';
-                        datarow += ' <td align=/"left/" onclick=\"deleteRow(' + value.id + ')\"> <div style="text-align:center; color:red;"> X <div></td> </tr>';
+                      if (value.cartId && value.cartId.id===id  ){
+                          
+                        datarowSubOrder += ' <tr class="table_content">';
+                        datarowSubOrder += ' <td align=/"left/">' + value.id + ' </td>';
+                        datarowSubOrder += ' <td align=/"left/">' + value.subTotal + ' </td>';
+                        datarowSubOrder += ' <td align=/"left/">' + value.productId.name + ' </td>';
+                        datarowSubOrder += ' <td align=/"left/">' + value.quantity + ' </td>';
+                        datarowSubOrder += ' <td align=/"left/">' + value.productId.price + ' </td>';
+                        datarowSubOrder += ' <td align=/"left/" onclick=\"deleteRow(' + value.id + ')\"> <div style="text-align:center; color:red;"> X <div></td> </tr>';
                         rowindex++;
                         totalPrijs+= value.subTotal;
                        }
                     });
-                    $('#table_main').append(datarow);
+                    $('#table_main').append(datarowSubOrder);
                     $("#footer").append(totalPrijs);
                 });
          
