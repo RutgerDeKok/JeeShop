@@ -109,10 +109,13 @@ public class UserFacadeREST {
     public Response doLogin(User login) {   
         User db = facade.findByEmail(login.getEmail());
         if (db.getPassHash().equals(login.getPassHash())) {
+            System.out.println("Succesvolle authenticatie");
             return Response.ok().entity(login).cookie(new NewCookie("cookieResponse", "cookieValueInReturn")).build();
         } else {
+            System.out.println("Onsuccesvolle authenticatie");
             return Response.status(404).build();
         }
+        System.out.println("Wat doe je hier??");
     }    
         // geef cookie mee met de token
 //        login.setJwt(authToken.createToken());

@@ -64,13 +64,14 @@ $(document).ready(function(){
         $.ajax({
         url: '/JeeShop/rest/users/login',
         type: 'POST',
-        contentType: "application/json; charset=utf-8", 
+        contentType: "application/json; charset=utf-8",
+        dataType: "application/json; charset=utf-8",
         data: jsonData,
         success: function(data) {
-            console.log("Succes");
+            console.log("Succes: " + data);
         },
         error: function(data) {
-            console.log("Error");
+            console.log("Error: " + data);
         }           
         });
    }); 
