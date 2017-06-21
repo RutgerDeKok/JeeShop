@@ -70,8 +70,6 @@ public class User implements Serializable {
     @JoinColumn(name = "billing_address_id", referencedColumnName = "id")
     @ManyToOne
     private Address billingAddressId;
-    @Column(name = "jwt")
-    private String jwt;
 
     public User() {
     }

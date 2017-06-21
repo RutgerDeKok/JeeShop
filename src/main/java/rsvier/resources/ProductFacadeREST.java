@@ -28,7 +28,6 @@ import rsvier.model.EnumWrap;
 
 @Stateless
 @Path("/products")
-
 //@RolesAllowed( {"EMPLOYEE","ADMIN"} )
 public class ProductFacadeREST {
 
