@@ -15,6 +15,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.NewCookie;
+import javax.ws.rs.core.Response;
 import rsvier.model.AuthToken;
 import rsvier.model.EnumWrap;
 import rsvier.model.User;
@@ -28,7 +30,7 @@ import rsvier.persistence.UserFacade;
 @Stateless
 @Path("/users")
 @PermitAll
-public class UserFacadeREST{
+public class UserFacadeREST {
 
     @EJB
     UserFacade facade;
@@ -102,10 +104,16 @@ public class UserFacadeREST{
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/login")
-    public boolean doLogin(User login) {   
+    public Response doLogin(User login) {   
         User db = facade.findByEmail(login.getEmail());
-        return (db.getPassHash().equals(login.getPassHash()));
+        if (db.getPassHash().equals(login.getPassHash())) {
+            return Response.ok().entity(login).cookie(new NewCookie("cookieResponse", "cookieValueInReturn")).build();
+        } else {
+            return Response.status(404).build();
+        }
+    }    
         // geef cookie mee met de token
 //        login.setJwt(authToken.createToken());
 //        // ophalen key uit cookie
@@ -115,6 +123,6 @@ public class UserFacadeREST{
 //        authToken.verifyToken(login);
         
         
-    }
+
     
 }
