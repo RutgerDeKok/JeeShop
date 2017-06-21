@@ -1,4 +1,3 @@
-
 package rsvier.resources;
 
 import java.util.ArrayList;
@@ -39,7 +38,6 @@ public class UserFacadeREST{
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(User entity) {
-        entity.setJwt(authToken.createToken());
         facade.create(entity);
     }
 
@@ -107,7 +105,11 @@ public class UserFacadeREST{
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/login")
-    public boolean doLogin(User login) {
+    public boolean doLogin(User login) {        
+        login.setJwt(authToken.createToken());
+        // ophalen key uit cookie
+        
+        
         User db = facade.findByEmail(login.getEmail());
         authToken.verifyToken(login);
         return (db.getPassHash().equals(login.getPassHash()));

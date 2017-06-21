@@ -9,10 +9,12 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.crypto.MacProvider;
 import java.security.Key;
+import javax.ejb.Singleton;
 /**
  *
  * @author J
  */
+@Singleton
 public class AuthToken {
     
     Key key;
@@ -29,8 +31,8 @@ public class AuthToken {
         return jwtString;
     }
     
-    public boolean verifyToken(User user) {
-        return Jwts.parser().setSigningKey(key).parseClaimsJws(user.getJwt()).getBody().getSubject().equals(user.getEmail()); 
+    public boolean verifyToken(String jwtToken, String userEmail) {
+        return Jwts.parser().setSigningKey(key).parseClaimsJws(jwtToken).getBody().getSubject().equals(userEmail); 
         //Will throw `SignatureException` if signature validation fails.
     }
     
