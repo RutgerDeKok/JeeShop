@@ -9,10 +9,30 @@ and open the template in the editor.
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src ="JS/adresses.js"></script>
+        <script src ="JS/jquery.js"></script>
+        <link href="CSS/simple.css" rel="stylesheet" />
     </head>
     <body>
+         <h2 class="title">Addressen!</h2>
+        <br/><br/><br/><br/>
+
+        <button> <a href="index.html">naar hoofdscherm</a></button>
         <div>Display user's address</div>
-            
+            <table id="table_main" class="display" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th align="left">firstName</th>
+                    <th align="left">Insertion</th>
+                    <th align="left">LastName</th>
+                    <th align="left">Street</th>
+                    <th align="left">Nummbr</th>
+                    <th align="left">Addition</th>
+                    <th align="left">city</th>
+                    <th align="left">Zipcode</th>
+                </tr>
+            </thead>
+            </table> 
         <div>Display cart's address</div>
             
         <div>Edit user's address</div>
@@ -22,6 +42,11 @@ and open the template in the editor.
         <div>New user's address</div>
             
         <div>New cart's address</div>
-                    
+        <script>
+            $(document).ready(function(){
+        startAddressesTable();
+    } );
+            
+        </script>    
     </body>
 </html>
