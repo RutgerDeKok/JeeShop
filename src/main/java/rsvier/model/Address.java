@@ -6,7 +6,6 @@
 package rsvier.model;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,12 +14,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -43,48 +40,53 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Address implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "city")
     private String city;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 10)
     @Column(name = "family_name")
     private String familyName;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "first_name")
     private String firstName;
+    
     @Size(max = 50)
     @Column(name = "insertion")
     private String insertion;
+    
     @Size(max = 10)
     @Column(name = "num_addition")
     private String numAddition;
+    
     @Column(name = "number")
     private Integer number;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "street")
     private String street;
+    
     @Size(max = 10)
     @Column(name = "zip_code")
     private String zipCode;
-    @OneToMany(mappedBy = "deliveryAddressId")
-    private List<Cart> cartList;
-    @OneToMany(mappedBy = "billingAddressId")
-    private List<User> userList;
-
-    public Address() {
+    
+      public Address() {
     }
 
     public Address(Long id) {
@@ -169,24 +171,6 @@ public class Address implements Serializable {
 
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
-    }
-
-    @XmlTransient
-    public List<Cart> getCartList() {
-        return cartList;
-    }
-
-    public void setCartList(List<Cart> cartList) {
-        this.cartList = cartList;
-    }
-
-    @XmlTransient
-    public List<User> getUserList() {
-        return userList;
-    }
-
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
     }
 
     @Override
