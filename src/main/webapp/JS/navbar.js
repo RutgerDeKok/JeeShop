@@ -2,13 +2,15 @@ $(document).ready(function(){
     $('#login-trigger').click(function() {
         slideDown($(this));
         slideUp($(document).find('#signup-dropdown'));
+        isActive($(this));        
     });
 });
 
 $(document).ready(function(){
     $('#signup-trigger').click(function() {
         slideDown($(this));
-        slideUp($(document).find('#login-dropdown'));
+        slideUp($(document).find('#login-dropdown'));        
+        isActive($(this));
     });
 });
 
@@ -30,7 +32,7 @@ function slideDown(element) {
         console.log(element);
     }
     element.toggleClass('active');
-    isActive(element);
+//    isActive(element);
 }
 
 function slideUp(element) {
@@ -43,9 +45,12 @@ function slideUp(element) {
         trigger = $(document).find('#signup-trigger');
         console.log(trigger);
     }
-    trigger.toggleClass('active'); 
+    if (trigger.hasClass('active')) {        
+        trigger.toggleClass('active'); 
+//        isActive(trigger);
+        element.slideUp();
+    }
     isActive(trigger);
-    element.slideUp();
 }
 
 $(document).ready(function(){

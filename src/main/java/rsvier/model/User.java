@@ -70,6 +70,8 @@ public class User implements Serializable {
     @JoinColumn(name = "billing_address_id", referencedColumnName = "id")
     @ManyToOne
     private Address billingAddressId;
+    @Column(name = "jwt")
+    private String jwt;
 
     public User() {
     }
@@ -172,6 +174,20 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "rsvier.entity.User[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the jwt
+     */
+    public String getJwt() {
+        return jwt;
+    }
+
+    /**
+     * @param jwt the jwt to set
+     */
+    public void setJwt(String jwt) {
+        this.jwt = jwt;
     }
     
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -15,6 +16,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import rsvier.model.AuthToken;
 import rsvier.model.EnumWrap;
 import rsvier.model.User;
 import rsvier.model.UserType;
@@ -31,10 +33,13 @@ public class UserFacadeREST{
 
     @EJB
     UserFacade facade;
+    @Inject
+    AuthToken authToken;
 
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(User entity) {
+        entity.setJwt(authToken.createToken());
         facade.create(entity);
     }
 
@@ -104,7 +109,9 @@ public class UserFacadeREST{
     @Path("/login")
     public boolean doLogin(User login) {
         User db = facade.findByEmail(login.getEmail());
+        authToken.verifyToken(login);
         return (db.getPassHash().equals(login.getPassHash()));
+        
     }
     
 }
