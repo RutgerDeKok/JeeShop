@@ -6,15 +6,15 @@
     background: rgb(150,150,150);
     width: 400px;
     padding: 30px;
-    
+
 }
 body {
     background: rgba(0,100,150,0.5);
-    
+
 }
 
 #bodyRestLinks{
-     margin: auto;
+    margin: auto;
     text-align: center;
     color: black;
 }
@@ -28,18 +28,18 @@ body {
     background-color: #1f3d7a;
     -webkit-box-shadow: rgb(30,30,30) 5px 5px 5px;
     -webkit-border-radius: 10px;
-   color: whitesmoke;
-   text-align: center;
-   -webkit-transition: -webkit-box-shadow 0.3s;
-    
+    color: whitesmoke;
+    text-align: center;
+    -webkit-transition: -webkit-box-shadow 0.3s;
+
 }
-    .restLinks:hover{
-       -webkit-box-shadow: rgb(30,30,30) 10px 10px 10px;
-       
-   }
+.restLinks:hover{
+    -webkit-box-shadow: rgb(30,30,30) 10px 10px 10px;
+
+}
 
 table {
-     margin: auto;
+    margin: auto;
     border-collapse: collapse;
     /*width: 500%;*/
     background: rgb(190,190,190);
@@ -50,11 +50,11 @@ th, td {
     padding: 8px;
 }
 
-.highlight {
-    background-color: lightblue;
+tr:nth-child(even){background-color: #f2f2f2}
+
+.highlight { background-color: lightblue!important;
 }
 
-tr:nth-child(even){background-color: #f2f2f2}
 
 th {
     background-color: #1f3d7a;
@@ -62,33 +62,33 @@ th {
 }
 
 .editKnop{
-   
+
     text-align: center;
 
     color: rgb(0,0,0);
     background-color: #1f3d7a;
     -webkit-box-shadow: rgb(30,30,30) 5px 5px 5px;
     -webkit-border-radius: 10px;
-   color: whitesmoke;
-   text-align: center;
-   -webkit-transition: -webkit-box-shadow 0.3s;
-    
+    color: whitesmoke;
+    text-align: center;
+    -webkit-transition: -webkit-box-shadow 0.3s;
+
 }
 
 .editKnop:hover{
-       -webkit-box-shadow: rgb(30,30,30) 10px 10px 10px;
-       
+    -webkit-box-shadow: rgb(30,30,30) 10px 10px 10px;
+
 }
 .cheeseCategorie {
     padding: 7px;
-     margin: auto;
+    margin: auto;
     border-collapse: collapse;
     width: 50%;
     background: rgb(200,200,200);
     border: 1px solid black;
 }
 #categorieTabel{
-    
-     margin: auto;
+
+    margin: auto;
 }
 
