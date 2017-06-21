@@ -1,4 +1,14 @@
+function getCategories() {
+    $.getJSON('rest/products/categories', function (data) {
+        categories = data;
+        return categories;
+    });
+}
+
+
 function startProductTable() {
+
+
     getCategories();
     $.getJSON('rest/products', function (data) {
         var datarow = "<tbody>";
@@ -17,6 +27,7 @@ function startProductTable() {
         datarow += '</tbody>';
         $('#productsTable').append(datarow);
     });
+
 }
 
 
@@ -43,12 +54,8 @@ function editRow(button, index) {
 
 }
 
-function getCategories() {
-    $.getJSON('rest/products/categories', function (data) {
-        categories = data;
-        return categories;
-    });
-}
+
+
 
 function getCategory(cat) {
     var result = "";
@@ -119,6 +126,46 @@ function saveRow(button, index) {
 
     button.parentNode.innerHTML = '<button id="edit" onclick="editRow(this ,' + index + ')">Edit</button>';
 // show edit button instead of save again
+}
+
+function displayCatFilters() {
+    catFilter = window.location.search.substring(1);
+
+    $.getJSON('rest/products/categories', function (data) {
+        var textline = "";
+        var filterExists = false;
+        $.each(data, function (key, value) {
+            if (value.name === catFilter) {
+                filterExists = true;
+                textline += '<input type="radio" value="' + value.name + '" id="rad' + value.name + ' name = "catfilter" checked="checked" />';
+                textline += getCategory(value.name) + '<br>';
+            } else {
+                textline += '<input type="radio" value="' + value.name + '" id="rad' + value.name + '" name = "catfilter" />';
+                textline += getCategory(value.name) + '<br>';
+            }
+        });
+
+        $('#categories').text("").append(textline);
+        if (!filterExists) {
+            catFilter = "ALL";
+//            window.location.href = "demo-products.html?ALL";
+//            document.getElementById('#radAll').checked = true;
+             $('#radALL').attr ( "checked",true);
+        }
+        ;
+    });
+
+    function filterProducts() {
+        alert("filter products function");
+    }
+
+    $(document).on("change", "input[type='radio']", function (event) {
+//       var selection =  event.target.values();
+        var selection = $("input[name='catfilter']:checked").val();
+        window.location.href = "demo-products.html?"+selection;
+//        alert("Ik doe iets! "+ selection);
+    });
+
 }
 
 
