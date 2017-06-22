@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -56,12 +57,16 @@ public class CartSuborder implements Serializable {
     @Column(name = "sub_total")
     private BigDecimal subTotal;
     
+//    @Basic(optional = false)
+       
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
     @ManyToOne
     private Cart cartId;
-        
-    @JoinColumn(name = "products_id")
-    @OneToOne (cascade=CascadeType.ALL)
+       
+    @Basic(optional = false)
+//    @Column(name = "product_id")
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    @OneToOne 
     private Product productId;
 
     public CartSuborder() {

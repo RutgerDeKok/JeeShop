@@ -37,8 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id")
     , @NamedQuery(name = "User.findByType", query = "SELECT u FROM User u WHERE u.type = :type")
     , @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")
-    , @NamedQuery(name = "User.findByPassHash", query = "SELECT u FROM User u WHERE u.passHash = :passHash")
-    , @NamedQuery(name = "User.findByEnabled", query = "SELECT u FROM User u WHERE u.enabled = :enabled")})
+    , @NamedQuery(name = "User.findByPassHash", query = "SELECT u FROM User u WHERE u.passHash = :passHash")})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -61,14 +60,7 @@ public class User implements Serializable {
     
     @Column(name = "pass_hash")
     private String passHash;
-    
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "enabled")
-    private Character enabled;
-    
-    @OneToMany(mappedBy = "userId")
-    private List<Cart> cartList;
+        
     
     @OneToMany(mappedBy = "userId")
     private List<Sale> saleList;
@@ -86,7 +78,6 @@ public class User implements Serializable {
 
     public User(Long id, Character enabled) {
         this.id = id;
-        this.enabled = enabled;
     }
 
     public Long getId() {
@@ -112,23 +103,6 @@ public class User implements Serializable {
 
     public void setPassHash(String passHash) {
         this.passHash = passHash;
-    }
-
-    public Character getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Character enabled) {
-        this.enabled = enabled;
-    }
-
-    @XmlTransient
-    public List<Cart> getCartList() {
-        return cartList;
-    }
-
-    public void setCartList(List<Cart> cartList) {
-        this.cartList = cartList;
     }
 
     @XmlTransient

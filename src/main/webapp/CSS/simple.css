@@ -79,6 +79,7 @@ th {
     -webkit-box-shadow: rgb(30,30,30) 10px 10px 10px;
 
 }
+
 .cheeseCategorie {
     padding: 7px;
     margin: auto;
@@ -92,3 +93,7 @@ th {
     margin: auto;
 }
 
+label{
+    font-size: 120%;
+
+}
