@@ -115,7 +115,6 @@ public class UserFacadeREST {
             System.out.println("Onsuccesvolle authenticatie");
             return Response.status(404).build();
         }
-        System.out.println("Wat doe je hier??");
     }    
         // geef cookie mee met de token
 //        login.setJwt(authToken.createToken());
