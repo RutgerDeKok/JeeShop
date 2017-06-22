@@ -106,10 +106,7 @@ public class UserFacadeREST {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/login")
-<<<<<<< HEAD
-    public boolean doLogin(User login) {        
-       
-=======
+
     public Response doLogin(User login) {   
         User db = facade.findByEmail(login.getEmail());
         if (db.getPassHash().equals(login.getPassHash())) {
@@ -125,17 +122,9 @@ public class UserFacadeREST {
 //        // ophalen key uit cookie
 //        
 //        
->>>>>>> FixedOneToOneRelations
         
 //        authToken.verifyToken(login);
-        
-<<<<<<< HEAD
-        User db = facade.findByEmail(login.getEmail());
-        authToken.verifyToken(db.getEmail(),db.getEmail());
-        return (db.getPassHash().equals(login.getPassHash()));
-=======
->>>>>>> FixedOneToOneRelations
-        
+ 
 
     
 }

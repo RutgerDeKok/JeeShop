@@ -147,9 +147,7 @@ public class User implements Serializable {
         return "rsvier.entity.User[ id=" + id + " ]";
     }
 
-<<<<<<< HEAD
-    
-=======
+
     public UserType getType() {
         return type;
     }
@@ -159,5 +157,5 @@ public class User implements Serializable {
     }
 
      
->>>>>>> FixedOneToOneRelations
+
 }

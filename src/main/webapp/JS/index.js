@@ -49,7 +49,7 @@ function startProductTable() {
             datarow += ' <td align=/"left/">' + value.price + ' </td>';
             datarow += ' <td align=/"left/">' + value.stockCount + ' </td>';
             datarow += ' <td align=/"left/">' + value.info + ' </td>';
-            datarow += ' <td align=/"left/" onclick=\"addProduct(' + rowindex + ',' + value.id + ')\"><strong>Voeg toe</strong></td>';
+            datarow += ' <td align=/"left/" onclick=\"addProduct(' + rowindex + ',' + value.id + ',' + value.price + ')\"><strong>Voeg toe</strong></td>';
             datarow += '</tr>';
             rowindex++;
         });
@@ -57,8 +57,47 @@ function startProductTable() {
     });
 }
 
-function addProduct(index, id) {
-      alert("add product with index: "+index+", and id: "+id);
+function addProduct(index, productId, prijs) {
+    
+       var cartId = $("#IdId").val();
+       
+        console.log("hier zijn er dan");
+        var jsonData;
+//           $.ajax({
+//            type: "GET",
+//            url: "rest/products/" + productId,
+//            contentType: "application/json",
+//            succes: function(product){
+//                console.log("gelukt 1");
+                jsonData = {"quantity" : "1",
+                        "subTotal": prijs,
+                        "cartId" : cartId,
+                        "productId" : productId
+                        };
+//                   },
+//                   
+//             error: function () {
+//                   console.log("fail 1");
+//                      
+//                   }  
+//           });       
+                $.ajax({
+                   type: "POST",
+                   url: "rest/cartsuborders/",
+                   data: JSON.stringify(jsonData),
+                   contentType: "application/json",
+                   success: function () {
+
+                       alert("gelukt");
+                   },
+                   error: function () {
+                       console.log("fail 2");
+                   }
+               });
+            
+        
+           
+       
 //    window.location.href = "edit-product.html?" + id;
 }
 
