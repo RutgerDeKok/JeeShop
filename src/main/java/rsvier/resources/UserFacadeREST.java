@@ -17,7 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
-import rsvier.model.AuthToken;
+import rsvier.security.AuthToken;
 import rsvier.model.EnumWrap;
 import rsvier.model.User;
 import rsvier.model.UserType;
@@ -104,7 +104,7 @@ public class UserFacadeREST {
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
     @Path("/login")
 <<<<<<< HEAD
     public boolean doLogin(User login) {        
@@ -114,12 +114,11 @@ public class UserFacadeREST {
         User db = facade.findByEmail(login.getEmail());
         if (db.getPassHash().equals(login.getPassHash())) {
             System.out.println("Succesvolle authenticatie");
-            return Response.ok().entity(login).cookie(new NewCookie("cookieResponse", "cookieValueInReturn")).build();
+            return Response.ok().cookie(new NewCookie("cookieResponse", "cookieValueInReturn")).build();
         } else {
             System.out.println("Onsuccesvolle authenticatie");
             return Response.status(404).build();
         }
-        System.out.println("Wat doe je hier??");
     }    
         // geef cookie mee met de token
 //        login.setJwt(authToken.createToken());

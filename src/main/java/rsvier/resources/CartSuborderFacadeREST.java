@@ -62,6 +62,9 @@ public class CartSuborderFacadeREST{
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<CartSuborder> findAll() {
+//        List<CartSuborder>  test = facade.findAll();
+//        System.out.println(test.get(0));
+//          return test;
         return facade.findAll();
     }
 

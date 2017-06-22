@@ -1,3 +1,9 @@
+$(document).ready(function () {
+    startProductTable();
+    displayCatFilters();
+});
+
+
 function getCategories() {
     $.getJSON('rest/products/categories', function (data) {
         categories = data;
@@ -39,7 +45,7 @@ function editRow(button, index) {
 //    button.parentNode.parentNode.find('.categorytext').hide();
     var $catSpan = $(document.getElementById('catSpan' + index));
     var $catSel = $(document.getElementById('catSel' + index));
-    
+
     //opties toevoegen aan <select> menu
     $catSel.html(' ');
     $.each(categories, function (i, cat) {
@@ -150,23 +156,25 @@ function displayCatFilters() {
             catFilter = "ALL";
 //            window.location.href = "demo-products.html?ALL";
 //            document.getElementById('#radAll').checked = true;
-             $('#radALL').attr ( "checked",true);
+            $('#radALL').attr("checked", true);
         }
-        ;
     });
-
-    function filterProducts() {
-        alert("filter products function");
-    }
-
-    $(document).on("change", "input[type='radio']", function (event) {
-//       var selection =  event.target.values();
-        var selection = $("input[name='catfilter']:checked").val();
-        window.location.href = "demo-products.html?"+selection;
-//        alert("Ik doe iets! "+ selection);
-    });
-
 }
+
+
+function filterProducts() {
+    alert("filter products function");
+}
+
+
+$(document).on("change", "input[type='radio']", function (event) {
+//       var selection =  event.target.values();
+    var selection = $("input[name='catfilter']:checked").val();
+    window.location.href = "demo-products.html?" + selection;
+//        alert("Ik doe iets! "+ selection);
+});
+
+
 
 
 

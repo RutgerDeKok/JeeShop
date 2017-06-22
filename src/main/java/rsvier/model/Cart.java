@@ -12,6 +12,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
@@ -49,7 +50,7 @@ public class Cart implements Serializable {
     private BigDecimal totalPrice;
     
     @OneToOne (cascade=CascadeType.ALL)
-    @JoinColumn(name = "users_id")
+    @JoinColumn(name = "user_id")
     private User userId;
     
     @OneToOne (cascade=CascadeType.ALL)
