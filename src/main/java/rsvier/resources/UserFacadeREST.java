@@ -15,6 +15,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.NewCookie;
+import javax.ws.rs.core.Response;
 import rsvier.model.AuthToken;
 import rsvier.model.EnumWrap;
 import rsvier.model.User;
@@ -28,12 +30,10 @@ import rsvier.persistence.UserFacade;
 @Stateless
 @Path("/users")
 @PermitAll
-public class UserFacadeREST{
+public class UserFacadeREST {
 
     @EJB
     UserFacade facade;
-    @Inject
-    AuthToken authToken;
 
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -104,15 +104,39 @@ public class UserFacadeREST{
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/login")
+<<<<<<< HEAD
     public boolean doLogin(User login) {        
        
+=======
+    public Response doLogin(User login) {   
+        User db = facade.findByEmail(login.getEmail());
+        if (db.getPassHash().equals(login.getPassHash())) {
+            System.out.println("Succesvolle authenticatie");
+            return Response.ok().entity(login).cookie(new NewCookie("cookieResponse", "cookieValueInReturn")).build();
+        } else {
+            System.out.println("Onsuccesvolle authenticatie");
+            return Response.status(404).build();
+        }
+        System.out.println("Wat doe je hier??");
+    }    
+        // geef cookie mee met de token
+//        login.setJwt(authToken.createToken());
+//        // ophalen key uit cookie
+//        
+//        
+>>>>>>> FixedOneToOneRelations
         
+//        authToken.verifyToken(login);
         
+<<<<<<< HEAD
         User db = facade.findByEmail(login.getEmail());
         authToken.verifyToken(db.getEmail(),db.getEmail());
         return (db.getPassHash().equals(login.getPassHash()));
+=======
+>>>>>>> FixedOneToOneRelations
         
-    }
+
     
 }

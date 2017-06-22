@@ -41,35 +41,43 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class FinalSuborder implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
+    
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "item_price")
     private BigDecimal itemPrice;
+    
     @Size(max = 50)
     @Column(name = "prd_brand")
     private String prdBrand;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "prd_category")
     private String prdCategory;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "prd_name")
     private String prdName;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "quantity")
     private int quantity;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "sub_total")
     private BigDecimal subTotal;
+    
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     @ManyToOne
     private Sale orderId;

@@ -46,52 +46,65 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Sale.findByTotalPrice", query = "SELECT s FROM Sale s WHERE s.totalPrice = :totalPrice")
     , @NamedQuery(name = "Sale.findByZipCode", query = "SELECT s FROM Sale s WHERE s.zipCode = :zipCode")})
 public class Sale implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
+
+    @Lob
+    @Column(name = "order_date")
+    private byte[] orderDate;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "city")
     private String city;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 10)
     @Column(name = "family_name")
     private String familyName;
+    
     @Size(max = 255)
     @Column(name = "first_name")
     private String firstName;
+    
     @Size(max = 50)
     @Column(name = "insertion")
     private String insertion;
+    
     @Size(max = 10)
     @Column(name = "num_addition")
     private String numAddition;
+    
     @Column(name = "number")
     private Integer number;
-    @Lob
-    @Column(name = "order_date")
-    private byte[] orderDate;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "street")
     private String street;
+    
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Column(name = "total_price")
     private BigDecimal totalPrice;
+    
     @Size(max = 10)
     @Column(name = "zip_code")
     private String zipCode;
+    
     @OneToMany(mappedBy = "orderId")
     private List<FinalSuborder> finalSuborderList;
+    
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne
     private User userId;
@@ -240,5 +253,7 @@ public class Sale implements Serializable {
     public String toString() {
         return "rsvier.entity.Sale[ id=" + id + " ]";
     }
+
+
     
 }

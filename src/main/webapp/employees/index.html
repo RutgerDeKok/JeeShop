@@ -1,10 +1,10 @@
 <html>
     <head>
         <title >Kaas Shop</title>
-        <script src ="JS/jquery.js"></script>
-        <script src ="JS/demo-products.js"></script>
-        <link href="CSS/simple.css" rel="stylesheet" />
-        <link href="CSS/grid.css" rel="stylesheet" />
+        <script src ="../JS/jquery.js"></script>
+        <script src ="../JS/demo-products.js"></script>
+        <link href="../CSS/simple.css" rel="stylesheet" />
+        <link href="../CSS/grid.css" rel="stylesheet" />
     </head>
     <body>
         
@@ -18,12 +18,14 @@
                       
             <div class="row">
                 <div class="col-2">
-                     hier komen de filter knoppen 
+
+                    <form id="categories" >lijst</form>
+
                 </div>
-                <div class="col-1">
-                        test
-                </div>
-                <div class="col-9">
+                <!--                <div class="col-1">
+                                   
+                                </div>-->
+                <div class="col-10">
                     <table id="productsTable" class="display" cellspacing="0" width="100%">
                         <thead>
                             <tr>
@@ -54,9 +56,12 @@
             </div>
         </div>
 
+
+
         <script>
             $(document).ready(function () {
                 startProductTable();
+                displayCatFilters();
             });
         </script>
     </body>
