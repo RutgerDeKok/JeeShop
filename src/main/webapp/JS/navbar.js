@@ -68,6 +68,7 @@ $(document).ready(function(){
         dataType: "application/json; charset=utf-8",
         data: jsonData,
         success: function(data) {
+            console.log($(document.cookie));
             console.log("Succes: " + data);
         },
         error: function(data) {
