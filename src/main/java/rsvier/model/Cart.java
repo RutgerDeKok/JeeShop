@@ -9,14 +9,16 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -34,22 +36,27 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Cart.findById", query = "SELECT c FROM Cart c WHERE c.id = :id")
     , @NamedQuery(name = "Cart.findByTotalPrice", query = "SELECT c FROM Cart c WHERE c.totalPrice = :totalPrice")})
 public class Cart implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
+
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
     private Long id;
+    
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "total_price")
     private BigDecimal totalPrice;
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @ManyToOne
+    
+    @OneToOne (cascade=CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private User userId;
-    @JoinColumn(name = "delivery_address_id", referencedColumnName = "id")
-    @ManyToOne
+    
+    @OneToOne (cascade=CascadeType.ALL)
+    @JoinColumn(name = "address_id")
     private Address deliveryAddressId;
+    
     @OneToMany(mappedBy = "cartId")
     private List<CartSuborder> cartSuborderList;
 
@@ -125,5 +132,6 @@ public class Cart implements Serializable {
     public String toString() {
         return "rsvier.entity.Cart[ id=" + id + " ]";
     }
-    
+
+      
 }

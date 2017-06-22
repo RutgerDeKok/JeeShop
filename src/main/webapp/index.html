@@ -2,70 +2,78 @@
     <head>
         <title>Kaas Shop</title>
         <script src ="JS/jquery.js"></script>
-        <script src ="JS/products.js"></script>
+        <script src ="JS/index.js"></script>
+        <link href="CSS/grid.css" rel="stylesheet" />
         <link href="CSS/simple.css" rel="stylesheet" />
     </head>
 
     <body>
-        <h2 class="title">De Online Kaaswinkel!</h2>
-        <br/><br/><br/><br/>
-        
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="title">De Online Kaaswinkel!</h2><br>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-2">
+
+                    <h2>&emsp; Categorie: </h2><br>
+                    
+
+                    <form id="categories" >lijst</form>
+                    <br>
+                    <a href="rest/users"><p  >Users</p></a>
+            <a href="rest/products"><p  >Products</p></a>
+            <a href="rest/carts"><p  >Carts</p></a>
+            <a href="rest/cartsuborders"> <p  >Cart Sub Orders</p></a>
+            <a href="rest/sales"><p  >Sales</p></a>
+            <a href="rest/finalsuborders"><p  >Final Sub Orders</p></a>
+            <a href="rest/addresses"><p  >Addresses</p></a>
+            <a href="rest/products/categories"><p  >Product Categories</p></a>
+            <a href="rest/users/types"><p  >User Types</p></a>
+
+                </div>
+                <!--                <div class="col-1">
+                                   
+                                </div>-->
+                <div class="col-10">
+                    <table id="productsTable" class="display" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Naam</th>
+                                <th>Categorie</th>
+                                <th>Merk</th>
+                                <th>Prijs</th>
+                                <th>Voorraad</th>
+                                <th>Informatie</th>
+                                <th>Voeg toe aan winkelwagen</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Naam</th>
+                                <th>Categorie</th>
+                                <th>Merk</th>
+                                <th>Prijs</th>
+                                <th>Voorraad</th>
+                                <th>Informatie</th>
+                                <th>Voeg toe aan winkelwagen</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>     
+
+
+        <br/><br/>
+
         <button> <a href="customer_cart.html">naar Cart</a></button>
         <button> <a href="customer_product.html">naar CustomerProductePage</a></button>
         <button> <a href="addresses.html">naar addresses</a></button>
-        <div id="bodyRestLinks">
-        <a href="rest/users"><p class="restLinks">Users</p></a>
-        <a href="rest/products"><p class="restLinks">Products</p></a>
-        <a href="rest/carts"><p class="restLinks">Carts</p></a>
-        <a href="rest/cartsuborders"> <p class="restLinks">Cart Sub Orders</p></a>
-        <a href="rest/sales"><p class="restLinks">Sales</p></a>
-        <a href="rest/finalsuborders"><p class="restLinks">Final Sub Orders</p></a>
-        <a href="rest/addresses"><p class="restLinks">Addresses</p></a>
-        </div>
-        <br/><br/><br/><br/>
-        <div>
-        <table id="table_main" class="display" cellspacing="0" width="100%">
-            <thead>
-                <tr>
-                    <th align="left">Naam</th>
-                    <th align="left">Categorie</th>
-                    <th align="left">Merk</th>
-                    <th align="left">Prijs</th>
-                    <th align="left">Voorraad</th>
-                    <th align="left">Informatie</th>
-                    <th align="left">Edit</th>
-                </tr>
-            </thead>
-<!--            <tfoot>
-                <tr>
-                    <th align="left">Naam</th>
-                    <th align="left">Categorie</th>
-                    <th align="left">Merk</th>
-                    <th align="left">Prijs</th>
-                    <th align="left">Voorraad</th>
-                    <th align="left">Informatie</th>
-                    <th align="left"><a href="/">Edit</a></th>
-
-                </tr>
-            </tfoot>-->
-        </table>
-        </div>
-
-        <button type="button" onclick="location.href = 'edit-product.html'">Nieuw Product</button>
-        
-        <div id="categorieTabel"> Categorieen </div>
-             
-        <p id="categories">EenCategorie</p>
-
-        <script>
-            $(document).ready(function () {
-              
-                startProductTable();
-                displayCategories();
-            });
-        </script>
-
-        
-
+     
     </body>
 </html>

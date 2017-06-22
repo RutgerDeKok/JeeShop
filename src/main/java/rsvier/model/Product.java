@@ -42,41 +42,46 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Product.findByPrice", query = "SELECT p FROM Product p WHERE p.price = :price")
     , @NamedQuery(name = "Product.findByStockCount", query = "SELECT p FROM Product p WHERE p.stockCount = :stockCount")})
 public class Product implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
+    
     @Size(max = 50)
     @Column(name = "brand")
     private String brand;
-    @Basic(optional = false)
-    @NotNull
-//    @Size(min = 1, max = 50)
-    @Column(name = "category")
-    @Enumerated(EnumType.STRING)
-    private ProductCategory category;
+    
     @Size(max = 255)
     @Column(name = "info")
     private String info;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "name")
     private String name;
+    
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Column(name = "price")
     private BigDecimal price;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "category")
+    @Enumerated(EnumType.STRING)
+    private ProductCategory category;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "stock_count")
     private int stockCount;
-    @OneToMany(mappedBy = "productId")
-    private List<CartSuborder> cartSuborderList;
+    
 
     public Product() {
     }
@@ -109,15 +114,6 @@ public class Product implements Serializable {
         this.brand = brand;
     }
     
-    
-    public ProductCategory getCategory() {
-        return category;
-    }
-
-    public void setCategory(ProductCategory category) {
-        this.category = category;
-    }
-
     public String getInfo() {
         return info;
     }
@@ -150,14 +146,6 @@ public class Product implements Serializable {
         this.stockCount = stockCount;
     }
 
-    @XmlTransient
-    public List<CartSuborder> getCartSuborderList() {
-        return cartSuborderList;
-    }
-
-    public void setCartSuborderList(List<CartSuborder> cartSuborderList) {
-        this.cartSuborderList = cartSuborderList;
-    }
 
     @Override
     public int hashCode() {
@@ -182,6 +170,14 @@ public class Product implements Serializable {
     @Override
     public String toString() {
         return "rsvier.entity.Product[ id=" + id + " ]";
+    }
+
+    public ProductCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(ProductCategory category) {
+        this.category = category;
     }
     
 }

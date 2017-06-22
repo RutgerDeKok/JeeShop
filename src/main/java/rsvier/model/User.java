@@ -16,13 +16,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -38,37 +37,36 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id")
     , @NamedQuery(name = "User.findByType", query = "SELECT u FROM User u WHERE u.type = :type")
     , @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")
-    , @NamedQuery(name = "User.findByPassHash", query = "SELECT u FROM User u WHERE u.passHash = :passHash")
-    , @NamedQuery(name = "User.findByEnabled", query = "SELECT u FROM User u WHERE u.enabled = :enabled")})
+    , @NamedQuery(name = "User.findByPassHash", query = "SELECT u FROM User u WHERE u.passHash = :passHash")})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-//    @Size(max = 255)
+    
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private UserType type;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     //@Size(max = 255)
+     
     @Column(name = "email")
     private String email;
     //@Size(max = 255)
+    
     @Column(name = "pass_hash")
     private String passHash;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "enabled")
-    private Character enabled;
-    @OneToMany(mappedBy = "userId")
-    private List<Cart> cartList;
+        
+    
     @OneToMany(mappedBy = "userId")
     private List<Sale> saleList;
-    @JoinColumn(name = "billing_address_id", referencedColumnName = "id")
-    @ManyToOne
+    
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    @OneToOne
     private Address billingAddressId;
 
     public User() {
@@ -80,7 +78,6 @@ public class User implements Serializable {
 
     public User(Long id, Character enabled) {
         this.id = id;
-        this.enabled = enabled;
     }
 
     public Long getId() {
@@ -91,13 +88,6 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public UserType getType() {
-        return type;
-    }
-
-    public void setType(UserType type) {
-        this.type = type;
-    }
 
     public String getEmail() {
         return email;
@@ -113,23 +103,6 @@ public class User implements Serializable {
 
     public void setPassHash(String passHash) {
         this.passHash = passHash;
-    }
-
-    public Character getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Character enabled) {
-        this.enabled = enabled;
-    }
-
-    @XmlTransient
-    public List<Cart> getCartList() {
-        return cartList;
-    }
-
-    public void setCartList(List<Cart> cartList) {
-        this.cartList = cartList;
     }
 
     @XmlTransient
@@ -173,5 +146,14 @@ public class User implements Serializable {
     public String toString() {
         return "rsvier.entity.User[ id=" + id + " ]";
     }
-    
+
+    public UserType getType() {
+        return type;
+    }
+
+    public void setType(UserType type) {
+        this.type = type;
+    }
+
+     
 }
