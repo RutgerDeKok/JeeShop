@@ -39,34 +39,36 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class CartSuborder implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "quantity")
     private int quantity;
-    
+
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Column(name = "sub_total")
     private BigDecimal subTotal;
-    
+
 //    @Basic(optional = false)
-       
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
     @ManyToOne
     private Cart cartId;
-       
-    @Basic(optional = false)
-//    @Column(name = "product_id")
+
+////    @Basic(optional = false)
+////    @Column(name = "product_id")
+//    @JoinColumn(name = "product_id", referencedColumnName = "id")
+//    @OneToOne 
+//    private Product productId;
     @JoinColumn(name = "product_id", referencedColumnName = "id")
-    @OneToOne 
+    @OneToOne(optional = false)
     private Product productId;
 
     public CartSuborder() {
@@ -146,5 +148,5 @@ public class CartSuborder implements Serializable {
     public String toString() {
         return "rsvier.entity.CartSuborder[ id=" + id + " ]";
     }
-  
+
 }
