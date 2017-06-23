@@ -59,7 +59,7 @@ public class CartSuborder implements Serializable {
 
 //    @Basic(optional = false)
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
-    @ManyToOne(cascade= CascadeType.PERSIST)
+    @ManyToOne
     private Cart cart;
 
 ////    @Basic(optional = false)
@@ -68,7 +68,7 @@ public class CartSuborder implements Serializable {
 //    @OneToOne 
 //    private Product productId;
     @JoinColumn(name = "product_id", referencedColumnName = "id")
-    @OneToOne(cascade=CascadeType.PERSIST)
+    @OneToOne
     private Product product;
 
     public CartSuborder() {

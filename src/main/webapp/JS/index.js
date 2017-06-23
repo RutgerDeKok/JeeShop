@@ -63,12 +63,22 @@ function addProduct(index, productId, prijs) {
         cartUrl = "rest/carts/" + cartId;
         $.getJSON(productUrl, function(product) {
             $.getJSON(cartUrl, function(cart) {
-                var jsonData = {"cartsuborder":{"quantity" : "1",
-                        "subTotal": prijs,
-                        "cart" : cart,
-                        "product" : product
-                        }};
+                console.log("Cart id:");
+                console.log(cart);
+                var jsonData = 
+//                        {"cartsuborder":{"quantity" : "1",
+//                        "subTotal": prijs,
+//                        "cart" : cart,
+//                        "product" : product
+//                        }};
+                        { "cart":cart,
+                          "id":"0",  
+                          "product":product,
+                          "quantity":"1",
+                          "subTotal":prijs }
+                      console.log("JSON string van cartsuborder");
                         console.log(JSON.stringify(jsonData));
+                        
                 $.ajax({
                    type: "POST",
                    url: "rest/cartsuborders",

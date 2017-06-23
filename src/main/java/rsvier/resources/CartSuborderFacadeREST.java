@@ -54,13 +54,13 @@ public class CartSuborderFacadeREST{
 
     @GET
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces(MediaType.APPLICATION_JSON)
     public CartSuborder find(@PathParam("id") Long id) {
         return facade.find(id);
     }
 
     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces(MediaType.APPLICATION_JSON)
     public List<CartSuborder> findAll() {
 //        List<CartSuborder>  test = facade.findAll();
 //        System.out.println(test.get(0));
