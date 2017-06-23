@@ -37,7 +37,8 @@ public class UserFacadeREST {
 
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(User entity) {
+    public void create(User entity) {        
+        // entity.setPassHash(entity.getPassHash().hashPassword());
         facade.create(entity);
     }
 
