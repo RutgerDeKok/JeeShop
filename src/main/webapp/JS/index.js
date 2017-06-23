@@ -58,32 +58,28 @@ function startProductTable() {
 }
 
 function addProduct(index, productId, prijs) {
-    
+       var product;
        var cartId = $("#IdId").val();
-       
+     
         console.log("hier zijn er dan");
         var jsonData;
-//           $.ajax({
-//            type: "GET",
-//            url: "rest/products/" + productId,
-//            contentType: "application/json",
-//            succes: function(product){
-//                console.log("gelukt 1");
-                jsonData = {"quantity" : "1",
+        var productUrl = "rest/products/" + productId;
+        var cartUrl = "rest/carts/" + cartId;
+        
+                $.when(
+                    $.getJSON(productUrl),
+                    $.getJSON(cartUrl)
+                    ).done(function(product, cart) {
+                        
+                    jsonData = {"quantity" : "1",
                         "subTotal": prijs,
-                        "cartId" : cartId,
-                        "productId" : productId
+                        "cartId" : cart,
+                        "productId" : product
                         };
-//                   },
-//                   
-//             error: function () {
-//                   console.log("fail 1");
-//                      
-//                   }  
-//           });       
-                $.ajax({
+                        
+           $.ajax({
                    type: "POST",
-                   url: "rest/cartsuborders/",
+                   url: "rest/cartsuborders",
                    data: JSON.stringify(jsonData),
                    contentType: "application/json",
                    success: function () {
@@ -91,15 +87,38 @@ function addProduct(index, productId, prijs) {
                        alert("gelukt");
                    },
                    error: function () {
-                       console.log("fail 2");
+                       console.log(jsonDATA);
+                       console.log(" /n/n/n");
+                       console.log(JSON.stringify(jsonData));
                    }
-               });
+               });    
+                });
+
+        }
+//           $.ajax({
+//            type: "GET",
+//            url: "rest/products/" + productId,
+//            contentType: "application/json",
+//            succes: function(productDB){
+//                product = productDB;
+//            }
+            
+               
+                
+//                   },
+//                   
+//             error: function () {
+//                   console.log("fail 1");
+//                      
+//                   }  
+//           });       
+               
             
         
            
        
 //    window.location.href = "edit-product.html?" + id;
-}
+
 
 
 //function displayCategories() {

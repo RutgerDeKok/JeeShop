@@ -42,24 +42,24 @@ public class CartSuborder implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
+   // @Basic(optional = false)
     @Column(name = "id")
     private Long id;
 
-    @Basic(optional = false)
+    //@Basic(optional = false)
     @NotNull
     @Column(name = "quantity")
     private int quantity;
 
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Basic(optional = false)
+    //@Basic(optional = false)
     @NotNull
     @Column(name = "sub_total")
     private BigDecimal subTotal;
 
 //    @Basic(optional = false)
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(cascade= CascadeType.PERSIST)
     private Cart cartId;
 
 ////    @Basic(optional = false)
@@ -68,7 +68,7 @@ public class CartSuborder implements Serializable {
 //    @OneToOne 
 //    private Product productId;
     @JoinColumn(name = "product_id", referencedColumnName = "id")
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, cascade=CascadeType.PERSIST)
     private Product productId;
 
     public CartSuborder() {

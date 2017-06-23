@@ -57,7 +57,7 @@ public class Cart implements Serializable {
     @JoinColumn(name = "address_id")
     private Address deliveryAddressId;
     
-    @OneToMany(mappedBy = "cartId")
+    @OneToMany(mappedBy = "cartId", cascade=CascadeType.ALL)
     private List<CartSuborder> cartSuborderList;
 
     public Cart() {
