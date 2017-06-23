@@ -56,7 +56,7 @@ $(document).ready(function(){
             }, 
         {}));
         $.ajax({
-        url: '/JeeShop/rest/users/login',
+        url: 'rest/users/login',
         type: 'POST',
         contentType: "application/json; charset=utf-8",
         //dataType: "application/json; charset=utf-8",
@@ -82,7 +82,7 @@ $(document).ready(function(){
             }, 
         {}));
         $.ajax({
-        url: '/JeeShop/rest/users',
+        url: 'rest/users',
         type: 'POST',
         contentType: "application/json; charset=utf-8", 
         data: jsonData,
