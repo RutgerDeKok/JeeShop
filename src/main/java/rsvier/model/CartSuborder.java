@@ -60,7 +60,7 @@ public class CartSuborder implements Serializable {
 //    @Basic(optional = false)
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
     @ManyToOne(cascade= CascadeType.PERSIST)
-    private Cart cartId;
+    private Cart cart;
 
 ////    @Basic(optional = false)
 ////    @Column(name = "product_id")
@@ -68,8 +68,8 @@ public class CartSuborder implements Serializable {
 //    @OneToOne 
 //    private Product productId;
     @JoinColumn(name = "product_id", referencedColumnName = "id")
-    @OneToOne(optional = false, cascade=CascadeType.PERSIST)
-    private Product productId;
+    @OneToOne(cascade=CascadeType.PERSIST)
+    private Product product;
 
     public CartSuborder() {
     }
@@ -108,20 +108,20 @@ public class CartSuborder implements Serializable {
         this.subTotal = subTotal;
     }
 
-    public Cart getCartId() {
-        return cartId;
+    public Cart getCart() {
+        return cart;
     }
 
-    public void setCartId(Cart cartId) {
-        this.cartId = cartId;
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
-    public Product getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(Product productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     @Override

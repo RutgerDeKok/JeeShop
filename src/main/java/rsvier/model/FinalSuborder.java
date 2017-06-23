@@ -80,7 +80,7 @@ public class FinalSuborder implements Serializable {
     
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     @ManyToOne
-    private Sale orderId;
+    private Sale order;
 
     public FinalSuborder() {
     }
@@ -153,12 +153,12 @@ public class FinalSuborder implements Serializable {
         this.subTotal = subTotal;
     }
 
-    public Sale getOrderId() {
-        return orderId;
+    public Sale getOrder() {
+        return order;
     }
 
-    public void setOrderId(Sale orderId) {
-        this.orderId = orderId;
+    public void setOrder(Sale order) {
+        this.order = order;
     }
 
     @Override

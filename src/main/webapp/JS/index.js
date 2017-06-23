@@ -57,27 +57,19 @@ function startProductTable() {
     });
 }
 
-function addProduct(index, productId, prijs) {
-       var product;
+function addProduct(index, productId, prijs) {       
        var cartId = $("#IdId").val();
-     
-        console.log("hier zijn er dan");
-        var jsonData;
-        var productUrl = "rest/products/" + productId;
-        var cartUrl = "rest/carts/" + cartId;
-        
-                $.when(
-                    $.getJSON(productUrl),
-                    $.getJSON(cartUrl)
-                    ).done(function(product, cart) {
-                        
-                    jsonData = {"quantity" : "1",
+        productUrl = "rest/products/" + productId;
+        cartUrl = "rest/carts/" + cartId;
+        $.getJSON(productUrl, function(product) {
+            $.getJSON(cartUrl, function(cart) {
+                var jsonData = {"cartsuborder":{"quantity" : "1",
                         "subTotal": prijs,
-                        "cartId" : cart,
-                        "productId" : product
-                        };
-                        
-           $.ajax({
+                        "cart" : cart,
+                        "product" : product
+                        }};
+                        console.log(JSON.stringify(jsonData));
+                $.ajax({
                    type: "POST",
                    url: "rest/cartsuborders",
                    data: JSON.stringify(jsonData),
@@ -87,14 +79,30 @@ function addProduct(index, productId, prijs) {
                        alert("gelukt");
                    },
                    error: function () {
-                       console.log(jsonDATA);
+                       console.log(jsonData);
                        console.log(" /n/n/n");
                        console.log(JSON.stringify(jsonData));
                    }
-               });    
-                });
+               });
+            });   
+        });
+}    
+//                $.when(
+//                    $.getJSON(productUrl),
+//                    $.getJSON(cartUrl)
+//                    ).done(function(product, cart) {
+//                        
+//                    jsonData = {"cartsuborder":{"quantity" : "1",
+//                        "subTotal": prijs,
+//                        "cart" : cart,
+//                        "product" : product
+//                        }};
+//                        console.log(JSON.stringify(jsonData));
+                        
+              
+                
 
-        }
+        
 //           $.ajax({
 //            type: "GET",
 //            url: "rest/products/" + productId,
