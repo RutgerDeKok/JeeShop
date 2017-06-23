@@ -1,11 +1,15 @@
 $(document).ready(function () {
+    $.get("../top-navbar.html", function (data) {
+        $("#nav-placeholder").replaceWith(data);
+    });
+    
     startProductTable();
     displayCatFilters();
 });
 
 
 function getCategories() {
-    $.getJSON('rest/products/categories', function (data) {
+    $.getJSON('../rest/products/categories', function (data) {
         categories = data;
         return categories;
     });
@@ -16,7 +20,7 @@ function startProductTable() {
 
 
     getCategories();
-    $.getJSON('rest/products', function (data) {
+    $.getJSON('../rest/products', function (data) {
         var datarow = "<tbody>";
         $.each(data, function (index, value) {
             datarow += '<tr>';
@@ -119,7 +123,7 @@ function saveRow(button, index) {
     //    alert("json: "+JSON.stringify(dataObject));
     $.ajax({
         type: "PUT",
-        url: "rest/products/" + id,
+        url: "../rest/products/" + id,
         data: jsonData,
         contentType: "application/json",
         success: function () {
@@ -137,7 +141,7 @@ function saveRow(button, index) {
 function displayCatFilters() {
     catFilter = window.location.search.substring(1);
 
-    $.getJSON('rest/products/categories', function (data) {
+    $.getJSON('../rest/products/categories', function (data) {
         var textline = "";
         var filterExists = false;
         $.each(data, function (key, value) {
@@ -170,7 +174,7 @@ function filterProducts() {
 $(document).on("change", "input[type='radio']", function (event) {
 //       var selection =  event.target.values();
     var selection = $("input[name='catfilter']:checked").val();
-    window.location.href = "demo-products.html?" + selection;
+    window.location.href = "products.html?" + selection;
 //        alert("Ik doe iets! "+ selection);
 });
 
