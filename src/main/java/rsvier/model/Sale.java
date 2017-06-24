@@ -102,12 +102,12 @@ public class Sale implements Serializable {
     @Column(name = "zip_code")
     private String zipCode;
     
-    @OneToMany(mappedBy = "orderId")
+    @OneToMany(mappedBy = "order")
     private List<FinalSuborder> finalSuborderList;
     
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne
-    private User userId;
+    private User user;
 
     public Sale() {
     }
@@ -221,12 +221,12 @@ public class Sale implements Serializable {
         this.finalSuborderList = finalSuborderList;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

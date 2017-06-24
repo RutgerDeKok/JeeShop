@@ -107,6 +107,7 @@ public class UserFacadeREST {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/login")
+
     public Response doLogin(User login) {   
         User db = facade.findByEmail(login.getEmail());
         if (db.getPassHash().equals(login.getPassHash())) {
@@ -124,8 +125,7 @@ public class UserFacadeREST {
 //        
         
 //        authToken.verifyToken(login);
-        
-        
+ 
 
     
 }

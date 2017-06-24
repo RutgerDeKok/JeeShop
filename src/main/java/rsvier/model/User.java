@@ -21,7 +21,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -62,12 +61,12 @@ public class User implements Serializable {
     private String passHash;
         
     
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(mappedBy = "user")
     private List<Sale> saleList;
     
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     @OneToOne
-    private Address billingAddressId;
+    private Address billingAddress;
 
     public User() {
     }
@@ -114,12 +113,12 @@ public class User implements Serializable {
         this.saleList = saleList;
     }
 
-    public Address getBillingAddressId() {
-        return billingAddressId;
+    public Address getBillingAddress() {
+        return billingAddress;
     }
 
-    public void setBillingAddressId(Address billingAddressId) {
-        this.billingAddressId = billingAddressId;
+    public void setBillingAddress(Address billingAddress) {
+        this.billingAddress = billingAddress;
     }
 
     @Override
@@ -147,6 +146,7 @@ public class User implements Serializable {
         return "rsvier.entity.User[ id=" + id + " ]";
     }
 
+
     public UserType getType() {
         return type;
     }
@@ -156,4 +156,5 @@ public class User implements Serializable {
     }
 
      
+
 }

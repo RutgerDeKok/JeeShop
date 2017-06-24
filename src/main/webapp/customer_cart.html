@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title>Kaas Shop</title>
@@ -10,62 +11,127 @@
         <h2 class="title">Customer Cart</h2>
         <br/><br/><br/><br/>
         
+        <form id="cartForm">
+                <label><b>Welke Cart Wil je </b></label> <input id="IdId" type="text"
+                                                         name="id" /><br /> 
+</form>
+                <button id="submitButton"> zet Cart </button>
         
       
         <button> <a href="index.html">Naar hoofdscherm</a></button>
+        
+         <table id="table_Cart_info" class="display" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                   <!-- <th align="left">Email</th>-->
+                    <th align="left">Voornaam</th>   
+                    <th align="left">achternaam</th>
+                    <th align="left">Street</th>
+                    <th align="left">Number</th>
+                    <th align="left">City</th>
+                    <th align="left">Postcode</th>
+                </tr>
+            </thead>
         <br/><br/><br/><br/>
         <table id="table_main" class="display" cellspacing="0" width="100%">
             <thead>
                 <tr>
                     <th align="left">Id</th>
-                    <th align="left">TotalPrice</th>
-                    <th align="left">Email</th>
-                    <th align="left">AfleverAddresId</th>
+                    <th align="left">SubOrderPrijs</th>   
                     <th align="left">Product</th>
                     <th align="left">Aantal</th>
+                    <th align="left">ProductPrijs</th>
                     <th align="left">Verwijderen</th>
                 </tr>
             </thead>
+           <tfoot>
+                 <th align="left" id="footer">TotaalPrijs: </th>
+            </tfoot>
 
-        </table>
+        </table> 
        
         <script>
-            $(document).ready(function () {
-                   
-                $.getJSON('rest/cartsuborders', function (data) {
-                    var datarow = " ";
-                    var rowindex = 0;
-                    
-                    $.each(data, function (key, value) {
-                        if(value.cartId){
-                        datarow += ' <tr>';
-                        datarow += ' <td align=/"left/">' + value.id + ' </td>';
-                        datarow += ' <td align=/"left/">' + value.subTotal + ' </td>';
-                        datarow += ' <td align=/"left/">' + value.cartId.userId.email + ' </td>';
-                        datarow += ' <td align=/"left/">' + value.cartId.deliveryAddressId.zipCode 
-                                   + ' ' + value.cartId.deliveryAddressId.number 
-                                   + ' ' + value.cartId.deliveryAddressId.numAddition + '</td>';
-                        datarow += ' <td align=/"left/">' + value.productId.name + ' </td>';
-                        datarow += ' <td align=/"left/">' + value.productId.quantity + ' </td>';
-                        
-                        datarow += ' <td align=/"left/" onclick=\"deleteRow(' + value.id + ')\"> <div style="text-align:center; color:red;"> X <div></td> </tr>';
-                        rowindex++;
-                    }
-                    });
-                    $('#table_main').append(datarow);
+            var id = 3;
+ 
+              $(document).ready(function () {
+             
+                 startCartInfoTable(id);
+                 startSubOrderTable(id);
                 });
+           
+            $("#submitButton").click(function(){
+               
+                id = $("#IdId").val();
+               
+                 startSubOrderTable(id);
+                  startCartInfoTable(id);
+                
             });
+         
+
+            function startCartInfoTable(id){
+               $(".table_info_content").remove();  
+             var datarow = " ";
+             
+                $.getJSON('rest/carts/'+ id, function (cartData) {
+                        cartsData = cartData;
+                        
+                        datarow += ' <tr class="table_info_content">';
+                        //datarow += ' <td align=/"left/">' + cartData.userId.email + ' </td>';//
+                        datarow += ' <td align=/"left/">' + cartData.deliveryAddress.firstName + ' </td>';
+                        datarow += ' <td align=/"left/">' + cartData.deliveryAddress.familyName + ' </td>';
+                        datarow += ' <td align=/"left/">' + cartData.deliveryAddress.street + ' </td>';
+                        datarow += ' <td align=/"left/">' + cartData.deliveryAddress.number + ' </td>';
+                        datarow += ' <td align=/"left/">' + cartData.deliveryAddress.city + ' </td>';
+                        datarow += ' <td align=/"left/">' + cartData.deliveryAddress.zipCode + ' </td>';
+
+                        datarow += '</tr>';
+                        
+            $('#table_Cart_info').append(datarow) ;
+                    });
+ 
+               
+        }
+            function startSubOrderTable(id){
+                
+                $(".table_content").remove();
+
+                 var datarowSubOrder = " ";
+                
+                $.getJSON('rest/cartsuborders', function (data) {
+                   
+                    var totalPrijs = 0;
+                    $.each(data, function (key, value) {
+                        
+                      
+                      if (value.cart && value.cart.id==id  ){
+                        datarowSubOrder += ' <tr class="table_content">';
+                        datarowSubOrder += ' <td align=/"left/">' + value.id + ' </td>';
+                        datarowSubOrder += ' <td align=/"left/">' + value.subTotal + ' </td>';
+                        datarowSubOrder += ' <td align=/"left/">' + value.product.name + ' </td>';
+                        datarowSubOrder += ' <td align=/"left/">' + value.quantity + ' </td>';
+                        datarowSubOrder += ' <td align=/"left/">' + value.product.price + ' </td>';
+                        datarowSubOrder += ' <td align=/"left/" onclick=\"deleteRow(' + value.id + ',' + id + ')\"> <div style="text-align:center; color:red;"> X <div></td> </tr>';
+                        totalPrijs+= value.subTotal;
+                       
+                       }
+                    });
+                   
+                    $('#table_main').append(datarowSubOrder);
+                    $("#footer").text("TotaalPrijs: " + Math.round(totalPrijs*100)/100);
+                    
+                });
+         
+        }
             
-            
-            function deleteRow(id){
+            function deleteRow(id, cartId){
                 $.ajax({
             type: "DELETE",
             url: "rest/cartsuborders/" + id,
 //            dataType: "json", alleen nodig als return data wordt 
             contentType: "application/json",
             success: function () {
-                    console.log("nu nog verwijderen");
-                window.location.href = "index.html";
+                startSubOrderTable(cartId);
             },
             error: function () {
                console.log("mislukt,, sukkel");
@@ -74,7 +140,7 @@
                 
             }
         </script>
-
+       
         
 
     </body>

@@ -34,7 +34,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Cart.findAll", query = "SELECT c FROM Cart c")
     , @NamedQuery(name = "Cart.findById", query = "SELECT c FROM Cart c WHERE c.id = :id")
-    , @NamedQuery(name = "Cart.findByTotalPrice", query = "SELECT c FROM Cart c WHERE c.totalPrice = :totalPrice")})
+    , @NamedQuery(name = "Cart.findByTotalPrice", query = "SELECT c FROM Cart c WHERE c.totalPrice = :totalPrice")
+    , @NamedQuery(name = "Cart.findUser", query = "SELECT c FROM Cart c WHERE c.user = :user")
+})
+
 public class Cart implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -49,15 +52,15 @@ public class Cart implements Serializable {
     @Column(name = "total_price")
     private BigDecimal totalPrice;
     
-    @OneToOne (cascade=CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private User userId;
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
     
-    @OneToOne (cascade=CascadeType.ALL)
-    @JoinColumn(name = "address_id")
-    private Address deliveryAddressId;
+    @OneToOne
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    private Address deliveryAddress;
     
-    @OneToMany(mappedBy = "cartId")
+    @OneToMany(mappedBy = "cart")
     private List<CartSuborder> cartSuborderList;
 
     public Cart() {
@@ -83,20 +86,20 @@ public class Cart implements Serializable {
         this.totalPrice = totalPrice;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setUserId(User user) {
+        this.user = user;
     }
 
-    public Address getDeliveryAddressId() {
-        return deliveryAddressId;
+    public Address getDeliveryAddress() {
+        return deliveryAddress;
     }
 
-    public void setDeliveryAddressId(Address deliveryAddressId) {
-        this.deliveryAddressId = deliveryAddressId;
+    public void setDeliveryAddress(Address deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
     }
 
     @XmlTransient
