@@ -38,7 +38,6 @@ public class ProductFacadeREST {
     @PermitAll
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Product entity) {
-        System.out.println("Post method called");
         facade.create(entity);
     }
 
@@ -47,7 +46,6 @@ public class ProductFacadeREST {
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Long id, Product entity) {
-        System.out.println("Put method called");
         facade.edit(entity);
     }
 
@@ -86,7 +84,6 @@ public class ProductFacadeREST {
     @Produces(MediaType.TEXT_PLAIN)
     @PermitAll
     public String countREST() {
-        System.out.println("count methode");
         return String.valueOf(facade.count());
     }
 
@@ -95,7 +92,6 @@ public class ProductFacadeREST {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @PermitAll
     public List<EnumWrap> getCategories() {
-        System.out.println("getting categories");
         List<EnumWrap> categoryList = new ArrayList<>();
         for (ProductCategory cat : ProductCategory.values()) {
             categoryList.add(new EnumWrap(cat.name(), cat.getNaamNed()));

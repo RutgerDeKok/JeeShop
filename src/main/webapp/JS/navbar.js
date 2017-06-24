@@ -24,30 +24,24 @@ function isActive(element) {
 
 function slideDown(element) {
     if (element.is('#login-trigger')) {
-        element.next('#login-dropdown').slideToggle();  
-        console.log(element);
+        element.next('#login-dropdown').slideToggle();
     }
     else {
         element.next('#signup-dropdown').slideToggle();
-        console.log(element);
     }
     element.toggleClass('active');
-//    isActive(element);
 }
 
 function slideUp(element) {
     var trigger = "";
     if (element.is('#login-dropdown')) {
-        trigger = $(document).find('#login-trigger');        
-        console.log(trigger);
+        trigger = $(document).find('#login-trigger');     
     }
     else {
         trigger = $(document).find('#signup-trigger');
-        console.log(trigger);
     }
     if (trigger.hasClass('active')) {        
         trigger.toggleClass('active'); 
-//        isActive(trigger);
         element.slideUp();
     }
     isActive(trigger);
@@ -62,17 +56,18 @@ $(document).ready(function(){
             }, 
         {}));
         $.ajax({
-        url: '/JeeShop/rest/users/login',
+        url: 'rest/users/login',
         type: 'POST',
         contentType: "application/json; charset=utf-8",
-        dataType: "application/json; charset=utf-8",
+        //dataType: "application/json; charset=utf-8",
         data: jsonData,
         success: function(data) {
-            console.log($(document.cookie));
-            console.log("Succes: " + data);
+            console.log("Cookie: " + document.cookie);
+            console.log(data);
+            console.log("Locatie: " + location.href);
         },
         error: function(data) {
-            console.log("Error: " + data);
+            console.log(data);
         }           
         });
    }); 
@@ -87,7 +82,7 @@ $(document).ready(function(){
             }, 
         {}));
         $.ajax({
-        url: '/JeeShop/rest/users',
+        url: 'rest/users',
         type: 'POST',
         contentType: "application/json; charset=utf-8", 
         data: jsonData,

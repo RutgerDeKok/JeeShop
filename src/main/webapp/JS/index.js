@@ -1,4 +1,7 @@
 $(document).ready(function () {
+    $.get("top-navbar.html", function (data) {
+        $("#nav-placeholder").replaceWith(data);
+    });
     startProductTable();
     displayCatFilters();
 });
@@ -169,10 +172,10 @@ function displayCatFilters() {
             if (value.name === catFilter) {
                 filterExists = true;
                 textline += '<input type="radio" value="' + value.name + '" id="rad' + value.name + ' name = "catfilter" checked="checked" />';
-                textline += '<label> '+getCategory(value.name) + '</label><br>';
+                textline += '<label> ' + getCategory(value.name) + '</label><br>';
             } else {
                 textline += '<input type="radio" value="' + value.name + '" id="rad' + value.name + '" name = "catfilter" />';
-                textline += '<label> '+getCategory(value.name) + '</label><br>';
+                textline += '<label> ' + getCategory(value.name) + '</label><br>';
             }
         });
 
