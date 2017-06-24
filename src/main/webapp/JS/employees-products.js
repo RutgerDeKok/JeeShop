@@ -2,7 +2,7 @@ $(document).ready(function () {
     $.get("../top-navbar.html", function (data) {
         $("#nav-placeholder").replaceWith(data);
     });
-    
+
     startProductTable();
     displayCatFilters();
 });
@@ -18,9 +18,14 @@ function getCategories() {
 
 function startProductTable() {
 
-
     getCategories();
-    $.getJSON('../rest/products', function (data) {
+    $(".table_info_content").remove();
+    var catFilter = window.location.search.substring(1);
+    if(catFilter===""){
+        catFilter="ALL";
+    }
+
+    $.getJSON('../rest/products/cat/'+catFilter, function (data) {
         var datarow = "<tbody>";
         $.each(data, function (index, value) {
             datarow += '<tr>';
@@ -32,10 +37,29 @@ function startProductTable() {
             datarow += '<td id="price">' + value.price + ' </td>';
             datarow += '<td id="stockCount">' + value.stockCount + ' </td>';
             datarow += '<td id="info">' + value.info + ' </td>';
-            datarow += '<td id="editSave"><button id="edit" onclick="editRow(this,' + index + ')">Edit</button></td></tr>';
+            datarow += '<td id="editSave"><button id="edit" onclick="editRow(this,' + index + ')">Edit</button></td>';
+            datarow += ' <td align=/"left/" onclick=\"deleteRow(' + value.id + ')"> <div style="text-align:center; color:red;"> X <div></td> </tr>';
         });
         datarow += '</tbody>';
         $('#productsTable').append(datarow);
+    });
+
+}
+
+function deleteRow(id) {
+//    alert("deleting id: "+id);
+    $.ajax({
+        type: "DELETE",
+        url: "../rest/products/" + id,
+        contentType: "application/json",
+        success: function () {
+            console.log("Delete Succesful!");
+             
+            startProductTable() ;
+        },
+        error: function () {
+            alert("Error, ");
+        }
     });
 
 }
@@ -139,7 +163,7 @@ function saveRow(button, index) {
 }
 
 function displayCatFilters() {
-    catFilter = window.location.search.substring(1);
+    var catFilter = window.location.search.substring(1);
 
     $.getJSON('../rest/products/categories', function (data) {
         var textline = "";
@@ -166,16 +190,12 @@ function displayCatFilters() {
 }
 
 
-function filterProducts() {
-    alert("filter products function");
-}
-
 
 $(document).on("change", "input[type='radio']", function (event) {
-//       var selection =  event.target.values();
+
     var selection = $("input[name='catfilter']:checked").val();
     window.location.href = "products.html?" + selection;
-//        alert("Ik doe iets! "+ selection);
+
 });
 
 

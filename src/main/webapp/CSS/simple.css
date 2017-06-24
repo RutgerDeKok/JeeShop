@@ -38,6 +38,7 @@ body {
 
 }
 
+
 table {
     margin: auto;
     border-collapse: collapse;
@@ -96,4 +97,9 @@ th {
 label{
     font-size: 120%;
 
+}
+
+#scroll75 {
+ 	height: 75vh;
+    overflow-y: scroll;
 }
