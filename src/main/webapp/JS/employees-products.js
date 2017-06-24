@@ -20,6 +20,7 @@ function startProductTable() {
 
 
     getCategories();
+    $(".table_info_content").remove();
     $.getJSON('../rest/products', function (data) {
         var datarow = "<tbody>";
         $.each(data, function (index, value) {
@@ -50,6 +51,7 @@ function deleteRow(id) {
         contentType: "application/json",
         success: function () {
             console.log("Delete Succesful!");
+             
             startProductTable() ;
         },
         error: function () {
