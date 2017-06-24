@@ -5,10 +5,12 @@
  */
 package rsvier.persistence;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import rsvier.model.Product;
+import rsvier.model.ProductCategory;
 
 /**
  *
@@ -27,6 +29,21 @@ public class ProductFacade extends AbstractFacade<Product> {
 
     public ProductFacade() {
         super(Product.class);
+    }
+    
+    
+     public List<Product> findByCategory(ProductCategory category) {
+        System.out.println("Facade Finding Products by Category: " + category.name());
+        if (category.name().equals("ALL")) {
+            System.out.println("returning all");
+            return findAll();
+            
+        } else {
+            return em.createNamedQuery("Product.findByCategory")
+                    .setParameter("category", category)
+                    .getResultList();
+        }
+
     }
     
 }

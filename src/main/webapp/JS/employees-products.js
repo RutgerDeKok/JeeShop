@@ -2,7 +2,7 @@ $(document).ready(function () {
     $.get("../top-navbar.html", function (data) {
         $("#nav-placeholder").replaceWith(data);
     });
-    
+
     startProductTable();
     displayCatFilters();
 });
@@ -32,10 +32,29 @@ function startProductTable() {
             datarow += '<td id="price">' + value.price + ' </td>';
             datarow += '<td id="stockCount">' + value.stockCount + ' </td>';
             datarow += '<td id="info">' + value.info + ' </td>';
-            datarow += '<td id="editSave"><button id="edit" onclick="editRow(this,' + index + ')">Edit</button></td></tr>';
+            datarow += '<td id="editSave"><button id="edit" onclick="editRow(this,' + index + ')">Edit</button></td>';
+            datarow += ' <td align=/"left/" onclick=\"deleteRow(' + value.id + ')"> <div style="text-align:center; color:red;"> X <div></td> </tr>';
         });
         datarow += '</tbody>';
         $('#productsTable').append(datarow);
+    });
+
+}
+
+function deleteRow(id) {
+    alert("deleting id: "+id);
+    $.ajax({
+        type: "DELETE",
+        url: "../rest/products/" + id,
+//            dataType: "json", alleen nodig als return data wordt 
+        contentType: "application/json",
+        success: function () {
+            console.log("Delete Succesful!");
+            startProductTable() ;
+        },
+        error: function () {
+            alert("Error, ");
+        }
     });
 
 }

@@ -1,43 +1,43 @@
 <html>
     <head>
         <title>Edit Product</title>
-        <script src ="JS/jquery-3.2.1.min.js"></script>
-        <script src ="JS/products.js"></script>
-        <link href="CSS/simple.css" rel="stylesheet" />
+        <script src ="../JS/jquery.js"></script>
+        <script src ="../JS/edit-product.js"></script>
+        <link href="../CSS/form.css" rel="stylesheet" />
 
 
     </head>
 
-    <body>
-        <h2>Pas product aan</h2>
 
+
+    <body>
 
         <div>
 
-            <h3>Gegevens:</h3>
-            <form id="productForm">
-                <label  hidden><b>Id </b></label> <input id="IdId" type="text"
-                                                         name="id"  hidden><br /> 
 
-                <label><b>Naam </b></label> <input id="nameId" type="text"
+            <form id="productForm">
+                <h2>Nieuw Product Toevoegen</h2>
+
+                <label  hidden><b>id</b></label> <input id="IdId" type="text"
+                                               name="id"  hidden><br /> 
+
+                <label class="vis"><b>Naam </b></label> <input class="visin" id="nameId" type="text"
                                                    name="name" required><br /> 
 
-                <label><b>Merk</b></label> <input id="brandId" type="text"
+                <label class="vis"<b>Merk</b></label> <input class="visin" id="brandId" type="text"
                                                   name="brand"> <br /> 
 
-                <label><b>Prijs</b></label> <input id="priceId" type="text"
+                <label class="vis"<b>Prijs</b></label> <input class="visin" id="priceId" type="text"
                                                    name="price"> <br /> 
 
-                <label><b>voorraad</b></label><input id="stockId" type="number"
+                <label class="vis"<b>voorraad</b></label><input class="visin" id="stockId" type="number"
                                                      name="stockCount" required><br /> 
 
-                <label><b>informatie</b></label><br> <input id="infoId" type="text"
-                                                            name="info" style="width: 800px" ><br />
+                <label class="vis"<b>informatie</b></label> <input class="visin" id="infoId" type="text"
+                                                        name="info"  ><br />
 
-                <label><b>Categorie</b></label> <select id="categoryId"
+                <label class="vis"<b>Categorie</b></label> <select id="categoryId"
                                                         name="category" required> 
-
-
                 </select><br />
 
                 <br>
@@ -46,19 +46,6 @@
                 <button type="submit">  OK  </button>
             </form> 
         </div>
-
-        <script>
-
-            $(document).ready(function () {
-                setupEditProduct();
-
-            });
-
-            $(document).on("submit", "form#productForm", function (event) {
-                event.preventDefault();
-                 putPostProduct();
-            });
-        </script>
 
 
     </body>
