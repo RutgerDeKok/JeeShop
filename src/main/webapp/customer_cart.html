@@ -23,7 +23,7 @@
          <table id="table_Cart_info" class="display" cellspacing="0" width="100%">
             <thead>
                 <tr>
-                    <th align="left">Email</th>
+                   <!-- <th align="left">Email</th>-->
                     <th align="left">Voornaam</th>   
                     <th align="left">achternaam</th>
                     <th align="left">Street</th>
@@ -72,17 +72,18 @@
             function startCartInfoTable(id){
                $(".table_info_content").remove();  
              var datarow = " ";
+             
                 $.getJSON('rest/carts/'+ id, function (cartData) {
                         cartsData = cartData;
                         
                         datarow += ' <tr class="table_info_content">';
-                        datarow += ' <td align=/"left/">' + cartData.userId.email + ' </td>';//
-                        datarow += ' <td align=/"left/">' + cartData.deliveryAddressId.firstName + ' </td>';
-                        datarow += ' <td align=/"left/">' + cartData.deliveryAddressId.familyName + ' </td>';
-                        datarow += ' <td align=/"left/">' + cartData.deliveryAddressId.street + ' </td>';
-                        datarow += ' <td align=/"left/">' + cartData.deliveryAddressId.number + ' </td>';
-                        datarow += ' <td align=/"left/">' + cartData.deliveryAddressId.city + ' </td>';
-                        datarow += ' <td align=/"left/">' + cartData.deliveryAddressId.zipCode + ' </td>';
+                        //datarow += ' <td align=/"left/">' + cartData.userId.email + ' </td>';//
+                        datarow += ' <td align=/"left/">' + cartData.deliveryAddress.firstName + ' </td>';
+                        datarow += ' <td align=/"left/">' + cartData.deliveryAddress.familyName + ' </td>';
+                        datarow += ' <td align=/"left/">' + cartData.deliveryAddress.street + ' </td>';
+                        datarow += ' <td align=/"left/">' + cartData.deliveryAddress.number + ' </td>';
+                        datarow += ' <td align=/"left/">' + cartData.deliveryAddress.city + ' </td>';
+                        datarow += ' <td align=/"left/">' + cartData.deliveryAddress.zipCode + ' </td>';
 
                         datarow += '</tr>';
                         
@@ -93,48 +94,44 @@
         }
             function startSubOrderTable(id){
                 
-                $(".table_content").fadeOut(2000).remove();
-                 $("#footer").fadeOut(2000).remove();
+                $(".table_content").remove();
+
                  var datarowSubOrder = " ";
                 
                 $.getJSON('rest/cartsuborders', function (data) {
                    
-                    var rowindex = 0;
                     var totalPrijs = 0;
-                   
                     $.each(data, function (key, value) {
-
                         
-                      if (value.cartId && value.cartId.id==id  ){
-                          
+                      
+                      if (value.cart && value.cart.id==id  ){
                         datarowSubOrder += ' <tr class="table_content">';
                         datarowSubOrder += ' <td align=/"left/">' + value.id + ' </td>';
                         datarowSubOrder += ' <td align=/"left/">' + value.subTotal + ' </td>';
-                        datarowSubOrder += ' <td align=/"left/">' + value.productId.name + ' </td>';
+                        datarowSubOrder += ' <td align=/"left/">' + value.product.name + ' </td>';
                         datarowSubOrder += ' <td align=/"left/">' + value.quantity + ' </td>';
-                        datarowSubOrder += ' <td align=/"left/">' + value.productId.price + ' </td>';
-                        datarowSubOrder += ' <td align=/"left/" onclick=\"deleteRow(' + value.id + ')\"> <div style="text-align:center; color:red;"> X <div></td> </tr>';
-                        rowindex++;
+                        datarowSubOrder += ' <td align=/"left/">' + value.product.price + ' </td>';
+                        datarowSubOrder += ' <td align=/"left/" onclick=\"deleteRow(' + value.id + ',' + id + ')\"> <div style="text-align:center; color:red;"> X <div></td> </tr>';
                         totalPrijs+= value.subTotal;
                        
                        }
                     });
-                    
+                   
                     $('#table_main').append(datarowSubOrder);
-                    $("#footer").append("TotaalPrijs: " + totalPrijs );
+                    $("#footer").text("TotaalPrijs: " + Math.round(totalPrijs*100)/100);
+                    
                 });
          
         }
             
-            function deleteRow(id){
+            function deleteRow(id, cartId){
                 $.ajax({
             type: "DELETE",
             url: "rest/cartsuborders/" + id,
 //            dataType: "json", alleen nodig als return data wordt 
             contentType: "application/json",
             success: function () {
-                    console.log("nu nog verwijderen");
-                window.location.href = "index.html";
+                startSubOrderTable(cartId);
             },
             error: function () {
                console.log("mislukt,, sukkel");

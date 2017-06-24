@@ -49,7 +49,9 @@ function startProductTable() {
             datarow += ' <td align=/"left/">' + value.price + ' </td>';
             datarow += ' <td align=/"left/">' + value.stockCount + ' </td>';
             datarow += ' <td align=/"left/">' + value.info + ' </td>';
-            datarow += ' <td align=/"left/" onclick=\"addProduct(' + rowindex + ',' + value.id + ',' + value.price + ')\"><strong>Voeg toe</strong></td>';
+            datarow += ' <td align=/"left/" > <input class=/"quantity_field' + rowindex + ' /" type=/"number/"></input>'  
+            datarow += ' <td align=/"left/" class="/click_button/" onclick=\"addProduct(' + rowindex + ',' + value.id + ',' + value.price + ')\"><strong>Voeg toe</strong></td>';
+             
             datarow += '</tr>';
             rowindex++;
         });
@@ -59,12 +61,18 @@ function startProductTable() {
 
 function addProduct(index, productId, prijs) {       
        var cartId = $("#IdId").val();
+       var quantity = $("#quantity_field"+index).val();
+        
+        
+      // var totalPrice = quantity* prijs;
+       console.log(quantity);
+               console.log(prijs);
+                       //console.log(totalPrice);
         productUrl = "rest/products/" + productId;
         cartUrl = "rest/carts/" + cartId;
         $.getJSON(productUrl, function(product) {
             $.getJSON(cartUrl, function(cart) {
-                console.log("Cart id:");
-                console.log(cart);
+                
                 var jsonData = 
 //                        {"cartsuborder":{"quantity" : "1",
 //                        "subTotal": prijs,
@@ -74,10 +82,9 @@ function addProduct(index, productId, prijs) {
                         { "cart":cart,
                           "id":"0",  
                           "product":product,
-                          "quantity":"1",
+                          "quantity":1,
                           "subTotal":prijs }
-                      console.log("JSON string van cartsuborder");
-                        console.log(JSON.stringify(jsonData));
+                      
                         
                 $.ajax({
                    type: "POST",
@@ -86,7 +93,7 @@ function addProduct(index, productId, prijs) {
                    contentType: "application/json",
                    success: function () {
 
-                       alert("gelukt");
+                        window.location.href = "customer_cart.html?id=1";
                    },
                    error: function () {
                        console.log(jsonData);
