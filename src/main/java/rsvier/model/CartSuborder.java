@@ -7,11 +7,8 @@ package rsvier.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "CartSuborder.findAll", query = "SELECT c FROM CartSuborder c")
     , @NamedQuery(name = "CartSuborder.findById", query = "SELECT c FROM CartSuborder c WHERE c.id = :id")
     , @NamedQuery(name = "CartSuborder.findByQuantity", query = "SELECT c FROM CartSuborder c WHERE c.quantity = :quantity")
+    , @NamedQuery(name = "CartSuborder.findByProductId", query = "SELECT c FROM CartSuborder c WHERE c.product.id = :productid")
     , @NamedQuery(name = "CartSuborder.findBySubTotal", query = "SELECT c FROM CartSuborder c WHERE c.subTotal = :subTotal")})
 public class CartSuborder implements Serializable {
 
