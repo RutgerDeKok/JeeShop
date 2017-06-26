@@ -60,7 +60,7 @@ public class CartSuborderFacadeREST{
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<CartSuborder> findAll() {
 //        List<CartSuborder>  test = facade.findAll();
 //        System.out.println(test.get(0));
@@ -81,5 +81,17 @@ public class CartSuborderFacadeREST{
     public String countREST() {
         return String.valueOf(facade.count());
     }
+    
+    
+    @GET
+    @Path("/product/{productId}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @PermitAll
+    public List<CartSuborder> findByProductId(@PathParam("productId") Long productId) {
+        System.out.println("rsvier.resources.CartSuborderFacadeREST.findByProductId():"+productId);
+        return facade.findByProductId(productId);
+       
+    }
+    
     
 }

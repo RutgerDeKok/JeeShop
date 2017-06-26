@@ -5,10 +5,12 @@
  */
 package rsvier.persistence;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import rsvier.model.CartSuborder;
+import rsvier.model.Product;
 
 /**
  *
@@ -27,6 +29,14 @@ public class CartSuborderFacade extends AbstractFacade<CartSuborder> {
 
     public CartSuborderFacade() {
         super(CartSuborder.class);
+    }
+    
+     public List<CartSuborder> findByProductId(Long productId) {
+        System.out.println("Facade Finding SubOrders by Product Id: " + productId.toString());
+
+        return em.createNamedQuery("CartSuborder.findByProductId")
+                .setParameter("productid", productId)
+                .getResultList();
     }
     
 }

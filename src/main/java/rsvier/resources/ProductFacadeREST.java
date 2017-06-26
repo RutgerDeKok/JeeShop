@@ -20,10 +20,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import rsvier.model.CartSuborder;
 import rsvier.model.Product;
 import rsvier.model.ProductCategory;
 import rsvier.persistence.ProductFacade;
 import rsvier.model.EnumWrap;
+import rsvier.persistence.CartSuborderFacade;
 
 
 @Stateless
@@ -33,6 +35,8 @@ public class ProductFacadeREST {
 
     @EJB
     ProductFacade facade;
+    @EJB
+    CartSuborderFacade csoFacade;
 
     @POST
     @PermitAll
@@ -54,6 +58,14 @@ public class ProductFacadeREST {
     @Path("{id}")
     public void remove(@PathParam("id") Long id) {
         System.out.println("rsvier.resources.ProductFacadeREST.remove() id: "+id);
+        //1. delete CartSubOrders that contain product to be deleted.
+        List<CartSuborder> csoList =   csoFacade.findByProductId(id);
+        for(CartSuborder cso:csoList){
+            System.out.println("deleting sub order with id: "+cso.getId());
+            csoFacade.remove(cso);
+        }
+              
+        //2. delete product
         facade.remove(facade.find(id));
     }
 

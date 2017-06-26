@@ -19,7 +19,8 @@ function getCategories() {
 function startProductTable() {
 
     getCategories();
-    $(".table_info_content").remove();
+    
+//    $(".table_info_content").remove();
     var catFilter = window.location.search.substring(1);
     if(catFilter===""){
         catFilter="ALL";
@@ -54,7 +55,7 @@ function deleteRow(id) {
         contentType: "application/json",
         success: function () {
             console.log("Delete Succesful!");
-             
+            $('#productsTable').children('tbody').empty();
             startProductTable() ;
         },
         error: function () {
