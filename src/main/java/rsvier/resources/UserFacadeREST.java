@@ -93,6 +93,27 @@ public class UserFacadeREST {
         return categoryList;
     }
     
+     @GET
+    @Path("/type/{typeString}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @PermitAll
+    public List<User> findByType(@PathParam("typeString") String typeString) {
+
+        UserType type;
+        try{
+        type  = UserType.valueOf(typeString);
+        } catch (Exception e) {
+            System.out.println("Using default category ALL");
+            type = UserType.ALL;
+        }
+        System.out.println("type send to facade: "+type.name());
+        return facade.findByType(type);
+       
+    }
+    
+    
+    
+    
     @Path("{id}/addresses")
     public AddressFacadeREST getAddresses() {
         return new AddressFacadeREST();
@@ -118,6 +139,8 @@ public class UserFacadeREST {
             return Response.status(404).build();
         }
     }    
+    
+  
         // geef cookie mee met de token
 //        login.setJwt(authToken.createToken());
 //        // ophalen key uit cookie

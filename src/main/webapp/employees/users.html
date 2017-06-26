@@ -2,7 +2,7 @@
     <head>
         <title >Kaas Shop</title>
         <script src ="../JS/jquery.js"></script>
-        <script src ="../JS/employees-products.js"></script>
+        <script src ="../JS/employees-users.js"></script>
         <link href="../CSS/simple.css" rel="stylesheet" />
         <link href="../CSS/grid.css" rel="stylesheet" />
     </head>
@@ -15,47 +15,44 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h2 align="center">De Online Kaaswinkel!</h2>
+                    <h2 align="center">Gebruikers</h2>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-2">
 
-                    <h2>&emsp; Categorie: </h2><br>
+                    <h2>&emsp; Gebruiker Type: </h2><br>
 
 
-                    <form id="categories" >lijst</form>
+                    <form id="UserTypes" >lijst</form>
                     <br>
-                    <button type="button" onclick="location.href = 'edit-product.html'">Nieuw Product</button>
+                    <button type="button" onclick="location.href = 'edit-user.html'">Nieuwe Gebruiker</button>
 
+                  
                 </div>
                 <div class="col-10" id="scroll75" >
-                    <table id="productsTable" class="display" cellspacing="0" width="100%">
+                    <table id="usersTable" class="display" cellspacing="0" width="100%">
                         <thead>
                             <tr>
                                 <th hidden>Id</th>
+                                <th>Type</th>
+                                <th>Email</th>
                                 <th>Naam</th>
-                                <th>Categorie</th>
-                                <th>Merk</th>
-                                <th>Prijs</th>
-                                <th>Voorraad</th>
-                                <th>Informatie</th>
+                                <th>Adres gegevens</th>
                                 <th>Edit</th>
-                                <th>Verwijder</th>
+                                <th>Verwijder</th>                  
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
                                 <th hidden>Id</th>
+                                <th>Type</th>
+                                <th>Email</th>
                                 <th>Naam</th>
-                                <th>Categorie</th>
-                                <th>Merk</th>
-                                <th>Prijs</th>
-                                <th>Voorraad</th>
-                                <th>Informatie</th>
+                                <th>Adres gegevens</th>
                                 <th>Edit</th>
-                                <th>Verwijder</th>
+                                <th>Verwijder</th> 
                             </tr>
                         </tfoot>
                     </table>

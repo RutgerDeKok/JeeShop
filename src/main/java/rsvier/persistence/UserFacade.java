@@ -5,10 +5,12 @@
  */
 package rsvier.persistence;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import rsvier.model.User;
+import rsvier.model.UserType;
 
 /**
  *
@@ -33,5 +35,20 @@ public class UserFacade extends AbstractFacade<User> {
         return (User) em.createNamedQuery("User.findByEmail")
                         .setParameter("email", email).getSingleResult();
     }
+    
+     public List<User> findByType(UserType type) {
+        System.out.println("Facade Finding Users by Type: " + type.name());
+        if (type.name().equals("ALL")) {
+            System.out.println("returning all");
+            return findAll();
+            
+        } else {
+            return em.createNamedQuery("User.findByType")
+                    .setParameter("type", type)
+                    .getResultList();
+        }
+
+    }
+    
     
 }
