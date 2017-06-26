@@ -53,6 +53,7 @@ public class ProductFacadeREST {
     @PermitAll
     @Path("{id}")
     public void remove(@PathParam("id") Long id) {
+        System.out.println("rsvier.resources.ProductFacadeREST.remove() id: "+id);
         facade.remove(facade.find(id));
     }
 
@@ -98,6 +99,26 @@ public class ProductFacadeREST {
         }
         System.out.println(categoryList);
         return categoryList;
+    }
+    
+    
+    @GET
+    @Path("/cat/{categoryString}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @PermitAll
+    public List<Product> findByCategory(@PathParam("categoryString") String categoryString) {
+//        System.out.println("ProductFacadeREST.findByCategory(), categoryString: "+categoryString);
+        ProductCategory category;
+        try{
+        category  = ProductCategory.valueOf(categoryString);
+        } catch (Exception e) {
+            System.out.println("Using default category ALL");
+            category = ProductCategory.ALL;
+//            categoryString= ProductCategory.ALL.name();
+        }
+        System.out.println("category send to facade: "+category.name());
+        return facade.findByCategory(category);
+       
     }
     
 }
