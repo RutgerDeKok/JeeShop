@@ -52,8 +52,8 @@ function startProductTable() {
             datarow += ' <td align=/"left/">' + value.price + ' </td>';
             datarow += ' <td align=/"left/">' + value.stockCount + ' </td>';
             datarow += ' <td align=/"left/">' + value.info + ' </td>';
-            datarow += ' <td align=/"left/" > <input class=/"quantity_field' + rowindex + ' /" type=/"number/"></input>'  
-            datarow += ' <td align=/"left/" class="/click_button/" onclick=\"addProduct(' + rowindex + ',' + value.id + ',' + value.price + ')\"><strong>Voeg toe</strong></td>';
+            datarow += ' <td align=/"left/" > <input id="quantity_field" type="text" name="quantity"/>';  
+            datarow += ' <td align=/"left/" class="/click_button/" onclick=\"addProduct(this, ' + rowindex + ',' + value.id + ',' + value.price + ')\"><strong>Voeg toe</strong></td>';
              
             datarow += '</tr>';
             rowindex++;
@@ -62,13 +62,14 @@ function startProductTable() {
     });
 }
 
-function addProduct(index, productId, prijs) {       
+function addProduct(button, index, productId, prijs) {       
        var cartId = $("#IdId").val();
-       var quantity = $("#quantity_field"+index).val();
-        
-        
-      // var totalPrice = quantity* prijs;
-       console.log(quantity);
+
+        console.log(button);
+        tablerow = button.parentNode.getElementById('quantity_field');
+                //var quantity = $(tablerowchildren.item(6).valueOf());
+       //console.log(quantity);
+ 
                console.log(prijs);
                        //console.log(totalPrice);
         productUrl = "rest/products/" + productId;
@@ -96,7 +97,7 @@ function addProduct(index, productId, prijs) {
                    contentType: "application/json",
                    success: function () {
 
-                        window.location.href = "customer_cart.html?id=1";
+                       // window.location.href = "customer_cart.html?id=1";
                    },
                    error: function () {
                        console.log(jsonData);

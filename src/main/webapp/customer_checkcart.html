@@ -14,11 +14,11 @@
         <form id="cartForm">
                 <label><b>Welke Cart Wil je </b></label> <input id="IdId" type="text"
                                                          name="id" /><br /> 
-</form>
+                </form>
                 <button class="nice_button" id="submitButton"> zet Cart </button>
         
       
-        <button class="nice_button"> <a href="index.html">Naar hoofdscherm</a></button>
+        <button class="nice_button"> <a href="index.html">Cancel (Back to Home)</a></button>
         
          <table id="table_Cart_info" class="display" cellspacing="0" width="100%">
             <thead>
@@ -41,7 +41,6 @@
                     <th align="left">Product</th>
                     <th align="left">Aantal</th>
                     <th align="left">ProductPrijs</th>
-                    <th align="left">Verwijderen</th>
                 </tr>
             </thead>
            <tfoot>
@@ -113,7 +112,7 @@
                         datarowSubOrder += ' <td align=/"left/">' + value.product.name + ' </td>';
                         datarowSubOrder += ' <td align=/"left/">' + value.quantity + ' </td>';
                         datarowSubOrder += ' <td align=/"left/">' + value.product.price + ' </td>';
-                        datarowSubOrder += ' <td align=/"left/" onclick=\"deleteRow(' + value.id + ',' + id + ')\"> <div style="text-align:center; color:red;"> X <div></td> </tr>';
+                       
                         totalPrijs+= value.subTotal;
                        
                        }
@@ -126,21 +125,6 @@
          
         }
             
-            function deleteRow(id, cartId){
-                $.ajax({
-            type: "DELETE",
-            url: "rest/cartsuborders/" + id,
-//            dataType: "json", alleen nodig als return data wordt 
-            contentType: "application/json",
-            success: function () {
-                startSubOrderTable(cartId);
-            },
-            error: function () {
-               console.log("mislukt,, sukkel");
-            }
-        });
-                
-            }
         </script>
        
         
