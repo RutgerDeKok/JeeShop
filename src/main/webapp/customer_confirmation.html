@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <style type="text/css">
+            
+            #bodyid{
+                background:rgb(102, 255, 102);
+            }
+
+        </style>
         <title>Kaas Shop</title>
         <script src ="JS/jquery.js"></script>
         <script src ="JS/products.js"></script>
         <link href="CSS/simple.css" rel="stylesheet" />
     </head>
 
-    <body style="background:rgb(102, 255, 102)">
+    <body id="bodyid">
         <h2 class="title">Confirmation</h2>
         <br/><br/><br/><br/>
         
@@ -51,6 +58,7 @@
        
        <button id='confirmation_button'>ECHTE BEVESTIGING</button>
         <script>
+            var order_to_send;
             var id = 3;
             var totalPrijs = 0;
               $(document).ready(function () {
@@ -71,19 +79,21 @@
             $("#confirmation_button").click(function(){
                  id = $("#IdId").val();
                  
-                 subOrderToFinalOrder();
                  cartToOrder();
+                  subOrderToFinalOrder(id);   
+                 
                  
             });
             
-            function subOrderToFinalOrder(){
+        function cartToOrder(){
                 
+               id = $("#IdId").val();
                   
-        cartUrl = "rest/carts/" + id;
+        cartsUrl = "rest/carts/" + id;
         cartSubOrderUrl = "rest/cartsuborders";
         
         $.getJSON(cartSubOrderUrl, function(cartSubOrders) {
-            $.getJSON(cartUrl, function(cart) {
+            $.getJSON(cartsUrl, function(cart) {
                 console.log(id);
                 console.log(cart);
                 
@@ -97,7 +107,7 @@
                     subOrderList.push(value);
                 }
             });
-                var jsonData ={ 
+                 order_to_send ={ 
                         "city": cart.deliveryAddress.city,
                         "familyName": cart.deliveryAddress.familyName,
                         "firstName": cart.deliveryAddress.firstName,
@@ -109,9 +119,54 @@
                         "zipCode": cart.deliveryAddress.zipCode,
                         "finalSuborderList":subOrderList,
                         "user": User
-                    } 
+                    };
                        
+                    console.log(order_to_send);  
+                        
+                $.ajax({
+                   type: "POST",
+                   url: "rest/sales",
+                   data: JSON.stringify(order_to_send),
+                   contentType: "application/json",
+                   success: function () {
+                       console.log("order gelukt");
                       
+                   },
+                   error: function () {
+                       console.log(jsonData);
+                       console.log(" /n/n/n");
+                       console.log(JSON.stringify(jsonData));
+                   }
+               });
+            });   
+        });
+    });
+}
+            
+            
+            function subOrderToFinalOrder(id){
+                
+//                var userId;
+//                cartUrl = "rest/carts";
+//                $.getJSON(cartUrl, function(cart){
+//                userId = cart.id;   
+//            });
+        
+            cartSubOrderUrl = "rest/cartsuborders";
+             productUrl = "rest/products";
+        $.getJSON(cartSubOrderUrl, function(cartSubOrders) {     
+             $.each(cartSubOrders, function (key, value) {
+                if (value.cart.id == id){
+                  console.log(order_to_send); 
+                var jsonData ={ 
+                        "itemPrice": value.product.price,
+                        "prdBrand": value.product.brand,
+                        "prdCategory": value.product.category,
+                        "prdName": value.product.name,
+                        "quantity": value.quantity,
+                        "subTotal": value.subTotal,
+                        "order": order_to_send 
+                    }; 
                         
                 $.ajax({
                    type: "POST",
@@ -126,18 +181,13 @@
                        console.log(jsonData);
                        console.log(" /n/n/n");
                        console.log(JSON.stringify(jsonData));
-                   }
-               });
-            });   
-        });
-    });
-}
-            
-            
-            function cartToOrder(){
-                
-                
-            }
+                    }
+                    });
+                }   
+             });
+            });
+           }           
+           
             function startCartInfoTable(id){
                $(".table_info_content").remove();  
              var datarow = " ";
