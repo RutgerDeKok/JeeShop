@@ -5,7 +5,6 @@
  */
 package rsvier.security.scrypt;
 
-import rsvier.security.scrypt.SCrypt;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.security.SecureRandom;

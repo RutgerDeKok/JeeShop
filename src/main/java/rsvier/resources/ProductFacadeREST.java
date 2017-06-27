@@ -132,6 +132,6 @@ public class ProductFacadeREST {
         System.out.println("category send to facade: "+category.name());
         return facade.findByCategory(category);
        
-    }
+    } 
     
 }
