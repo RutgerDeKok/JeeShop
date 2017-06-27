@@ -10,7 +10,8 @@
 }
 body {
     background: rgba(0,100,150,0.5);
-
+    font: 14px Tahoma;
+   
 }
 
 #bodyRestLinks{
@@ -44,6 +45,8 @@ table {
     border-collapse: collapse;
     /*width: 500%;*/
     background: rgb(190,190,190);
+     -webkit-box-shadow: rgb(30,30,30) 5px 5px 5px;
+    -webkit-border-radius: 10px;
 }
 
 th, td {
@@ -102,4 +105,23 @@ label{
 #scroll75 {
  	height: 75vh;
     overflow-y: scroll;
+}
+
+#details{
+    
+    padding: 20px;
+    margin: 20px auto;
+    border-collapse: collapse;
+    width: 50%;
+    background: rgb(200,200,200);
+    border: 1px solid black;
+    -webkit-box-shadow: rgb(30,30,30) 5px 5px 5px;
+    -webkit-border-radius: 10px;
+}
+
+button {
+    padding: 7px;
+    margin: 5px;
+     -webkit-box-shadow: rgb(30,30,30) 5px 5px 5px;
+    -webkit-border-radius: 10px;
 }
