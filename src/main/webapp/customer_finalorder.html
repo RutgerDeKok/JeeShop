@@ -1,24 +1,16 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Kaas Shop</title>
+        <title>Order</title>
         <script src ="JS/jquery.js"></script>
         <script src ="JS/products.js"></script>
         <link href="CSS/simple.css" rel="stylesheet" />
     </head>
-
-    <body style="background:rgb(102, 255, 102)">
-        <h2 class="title">Confirmation</h2>
+    
+    <body style="background-image: url('Party_Hat.png'); background-size: 150px;">
+        <h2 class="title">FINAL ORDER!! GIVE THAT MONEY</h2>
         <br/><br/><br/><br/>
         
-        <form id="cartForm">
-                <label><b>Welke Cart Wil je </b></label> <input id="IdId" type="text"
-                                                         name="id" /><br /> 
-</form>
-                <button id="submitButton"> zet Cart </button>
-        
-      
-        <button> <a href="customer_cart.html">Back to Cart</a></button>
          <button> <a href="index.html">Back to Home</a></button>
         
          
@@ -46,15 +38,16 @@
                 <div id="city">City</div>
                 <div id="zip">Zip</div>
                 <br/>
-                <button><a  href="addresses.html">Verander Adres</a></button>
+                
+                
             </div>
        
-       <button id='confirmation_button'>ECHTE BEVESTIGING</button>
         <script>
             var id = 3;
-            var totalPrijs = 0;
+ 
               $(document).ready(function () {
              
+                 $(".title").fadeIn(); 
                  startCartInfoTable(id);
                  startSubOrderTable(id);
                 });
@@ -68,76 +61,7 @@
                 
             });
          
-            $("#confirmation_button").click(function(){
-                 id = $("#IdId").val();
-                 
-                 subOrderToFinalOrder();
-                 cartToOrder();
-                 
-            });
-            
-            function subOrderToFinalOrder(){
-                
-                  
-        cartUrl = "rest/carts/" + id;
-        cartSubOrderUrl = "rest/cartsuborders";
-        
-        $.getJSON(cartSubOrderUrl, function(cartSubOrders) {
-            $.getJSON(cartUrl, function(cart) {
-                console.log(id);
-                console.log(cart);
-                
-           var userId = cart.id;
-           userUrl = "rest/users/" + id;
-           
-        $.getJSON(userUrl, function(User) {
-            var subOrderList = [];
-             $.each(cartSubOrders, function (key, value) {
-                if (value.cart.id == userId){
-                    subOrderList.push(value);
-                }
-            });
-                var jsonData ={ 
-                        "city": cart.deliveryAddress.city,
-                        "familyName": cart.deliveryAddress.familyName,
-                        "firstName": cart.deliveryAddress.firstName,
-                        "insertion": cart.deliveryAddress.insertion,
-                        "numAddition": cart.deliveryAddress.numAddtion,
-                        "number": cart.deliveryAddress.number,
-                        "street": cart.deliveryAddress.street,
-                        "totalPrice": totalPrijs,
-                        "zipCode": cart.deliveryAddress.zipCode,
-                        "finalSuborderList":subOrderList,
-                        "user": User
-                    } 
-                       
-                      
-                        
-                $.ajax({
-                   type: "POST",
-                   url: "rest/finalsuborders",
-                   data: JSON.stringify(jsonData),
-                   contentType: "application/json",
-                   success: function () {
-                       console.log("finalsubOrder gelukt");
-                       
-                   },
-                   error: function () {
-                       console.log(jsonData);
-                       console.log(" /n/n/n");
-                       console.log(JSON.stringify(jsonData));
-                   }
-               });
-            });   
-        });
-    });
-}
-            
-            
-            function cartToOrder(){
-                
-                
-            }
+
             function startCartInfoTable(id){
                $(".table_info_content").remove();  
              var datarow = " ";
@@ -175,7 +99,7 @@
                 
                 $.getJSON('rest/cartsuborders', function (data) {
                    
-                    
+                    var totalPrijs = 0;
                     $.each(data, function (key, value) {
                         
                       
