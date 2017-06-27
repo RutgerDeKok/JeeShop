@@ -97,6 +97,7 @@ public class ProductFacadeREST {
     @Produces(MediaType.TEXT_PLAIN)
     @PermitAll
     public String countREST() {
+               
         return String.valueOf(facade.count());
     }
 
