@@ -1,3 +1,7 @@
+$("button").click(function(){
+    $("button").fadeToggle().fadeToggle();
+})
+
 function getCategories() {
 
     $.getJSON('rest/products/categories', function (data) {
