@@ -80,6 +80,7 @@
                  id = $("#IdId").val();
                  
                  cartToOrder();
+                  window.location.href = "customer_finalorder.html";
                    
                  
                  
@@ -174,6 +175,7 @@
                    contentType: "application/json",
                    success: function () {
                        console.log("finalsubOrder gelukt");
+                       
                        
                    },
                    error: function () {

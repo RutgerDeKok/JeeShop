@@ -42,12 +42,15 @@
                 
             </div>
        
+         <h2 class="title">Delivered by tomorrow!</h2>
         <script>
             var id = 3;
  
               $(document).ready(function () {
-             
-                 $(".title").fadeIn(); 
+                  $(".title").fadeToggle(2000).fadeToggle(2000).fadeToggle(2000).fadeToggle(2000)
+                  .fadeToggle(2000).fadeToggle(2000).fadeToggle(2000).fadeToggle(2000)
+                    .fadeToggle(2000).fadeToggle(2000).fadeToggle(2000).fadeToggle(2000);
+                
                  startCartInfoTable(id);
                  startSubOrderTable(id);
                 });
