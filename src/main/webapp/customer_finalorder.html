@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Order</title>
+        <script src ="JS/jquery.js"></script>
+        <script src ="JS/products.js"></script>
+        <link href="CSS/simple.css" rel="stylesheet" />
+    </head>
+    
+    <body style="background-image: url('Party_Hat.png'); background-size: 150px;">
+        <h2 class="title">FINAL ORDER!! GIVE THAT MONEY</h2>
+        <br/><br/><br/><br/>
+        
+         <button> <a href="index.html">Back to Home</a></button>
+        
+         
+
+        <table id="table_main" class="display" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th align="left">Id</th>
+                    <th align="left">SubOrderPrijs</th>   
+                    <th align="left">Product</th>
+                    <th align="left">Aantal</th>
+                    <th align="left">ProductPrijs</th>
+                </tr>
+            </thead>
+           <tfoot>
+                 <th align="left" id="footer">TotaalPrijs: </th>
+            </tfoot>
+          </table> 
+            
+            <div id="details">
+                <div id="first_name">Voornaam</div>
+                <div id="last_name">AchterNaam</div>
+                <div id="street">Street</div>
+                <div id="number">Number</div>
+                <div id="city">City</div>
+                <div id="zip">Zip</div>
+                <br/>
+                
+                
+            </div>
+       
+         <h2 class="title">Delivered by tomorrow!</h2>
+        <script>
+            var id = 3;
+ 
+              $(document).ready(function () {
+                  $(".title").fadeToggle(2000).fadeToggle(2000).fadeToggle(2000).fadeToggle(2000)
+                  .fadeToggle(2000).fadeToggle(2000).fadeToggle(2000).fadeToggle(2000)
+                    .fadeToggle(2000).fadeToggle(2000).fadeToggle(2000).fadeToggle(2000);
+                
+                 startCartInfoTable(id);
+                 startSubOrderTable(id);
+                });
+           
+            $("#submitButton").click(function(){
+               
+                id = $("#IdId").val();
+               
+                 startSubOrderTable(id);
+                  startCartInfoTable(id);
+                
+            });
+         
+
+            function startCartInfoTable(id){
+               $(".table_info_content").remove();  
+             var datarow = " ";
+             
+                $.getJSON('rest/carts/'+ id, function (cartData) {
+                        cartsData = cartData;
+                        $("#first_name").html("Voornaam: " + cartData.deliveryAddress.firstName );
+                        $("#last_name").html("Achternaam: " + cartData.deliveryAddress.familyName );
+                        $("#street").html("Straat: " + cartData.deliveryAddress.street );
+                        $("#number").html("Nummber: " + cartData.deliveryAddress.number + " " + cartData.deliveryAddress.numAddition  );
+                        $("#city").html("Stad: " + cartData.deliveryAddress.city );
+                        $("#zip").html("PostCode: " + cartData.deliveryAddress.zipCode );
+                        
+//                        datarow += ' <tr class="table_info_content">';
+//                        //datarow += ' <td align=/"left/">' + cartData.userId.email + ' </td>';//
+//                        datarow += ' <td align=/"left/">' + cartData.deliveryAddress.firstName + ' </td>';
+//                        datarow += ' <td align=/"left/">' + cartData.deliveryAddress.familyName + ' </td>';
+//                        datarow += ' <td align=/"left/">' + cartData.deliveryAddress.street + ' </td>';
+//                        datarow += ' <td align=/"left/">' + cartData.deliveryAddress.number + ' </td>';
+//                        datarow += ' <td align=/"left/">' + cartData.deliveryAddress.city + ' </td>';
+//                        datarow += ' <td align=/"left/">' + cartData.deliveryAddress.zipCode + ' </td>';
+
+                       // datarow += '</tr>';
+                        
+            $('#table_Cart_info').append(datarow) ;
+                    });
+ 
+               
+        }
+            function startSubOrderTable(id){
+                
+                $(".table_content").remove();
+
+                 var datarowSubOrder = " ";
+                
+                $.getJSON('rest/cartsuborders', function (data) {
+                   
+                    var totalPrijs = 0;
+                    $.each(data, function (key, value) {
+                        
+                      
+                      if (value.cart && value.cart.id==id  ){
+                        datarowSubOrder += ' <tr class="table_content">';
+                        datarowSubOrder += ' <td align=/"left/">' + value.id + ' </td>';
+                        datarowSubOrder += ' <td align=/"left/">' + value.subTotal + ' </td>';
+                        datarowSubOrder += ' <td align=/"left/">' + value.product.name + ' </td>';
+                        datarowSubOrder += ' <td align=/"left/">' + value.quantity + ' </td>';
+                        datarowSubOrder += ' <td align=/"left/">' + value.product.price + ' </td>';
+                        
+                        totalPrijs+= value.subTotal;
+                       
+                       }
+                    });
+                   
+                    $('#table_main').append(datarowSubOrder);
+                    $("#footer").text("TotaalPrijs: " + Math.round(totalPrijs*100)/100);
+                    
+                });
+         
+        }
+
+        </script>
+       
+        
+
+    </body>
+</html>
