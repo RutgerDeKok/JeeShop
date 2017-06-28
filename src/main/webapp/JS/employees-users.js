@@ -57,7 +57,7 @@ function startUserTable() {
             datarow += '<td id="adres">'+ address + ' </td>';
                                                    
             datarow += '<td id="editSave"><button id="edit" onclick="editRow(this,' + index + ')">Edit</button></td>';
-            datarow += ' <td align=/"left/" onclick=\"deleteRow(' + value.id + ')"> <div style="text-align:center; color:red;"> X <div></td> </tr>';
+            datarow += ' <<td style="padding-left: 35px;"><button onclick="deleteRow(' + value.id + ')"> <span style=" color:red;"> X <span></button></td> </tr>';
         });
         datarow += '</tbody>';
         $('#usersTable').append(datarow);

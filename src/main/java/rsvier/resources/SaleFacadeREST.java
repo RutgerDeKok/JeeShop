@@ -63,19 +63,20 @@ public class SaleFacadeREST {
     }
 
     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+//    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces( MediaType.APPLICATION_JSON)
     public List<Sale> findAll() {
         
-        //tijdelijke datum generator
-         List<Sale> list = facade.findAll();
-         int i = 0;
-         for(Sale sale : list){
-             LocalDate date = LocalDate.now().minusDays(i);
-             sale.setOrderDate(date);
-             facade.edit(sale);
-             i++;
-         }
-         // einde tijdelijke datum generator
+//        //tijdelijke datum generator
+//         List<Sale> list = facade.findAll();
+//         int i = 0;
+//         for(Sale sale : list){
+//             LocalDate date = LocalDate.now().minusDays(i);
+//             sale.setOrderDate(date);
+//             facade.edit(sale);
+//             i++;
+//         }
+//         // einde tijdelijke datum generator
          
         return facade.findAll();
     }
