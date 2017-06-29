@@ -10,49 +10,58 @@ $(document).ready(function () {
 
 function getTypes() {
     $.getJSON('../rest/users/types', function (data) {
-       types = data;
+        types = data;
         return types;
     });
 }
 
 
 function startUserTable() {
- 
+
     getTypes();
-    
+
     var typeFilter = window.location.search.substring(1);
-    if(typeFilter===""){
-        typeFilter="ALL";
+    if (typeFilter === "") {
+        typeFilter = "ALL";
     }
 
-    $.getJSON('../rest/users/type/'+typeFilter, function (data) {
+    $.getJSON('../rest/users/type/' + typeFilter, function (data) {
         var datarow = "<tbody>";
         $.each(data, function (index, value) {
             // create name string
-            var insertion = value.billingAddress.insertion;
-            if(insertion){
-                insertion += " ";
+            var address;
+            var name;
+            if (value.billingAddress) {
+                var insertion = value.billingAddress.insertion;
+                if (insertion) {
+                    insertion += " ";
+                } else {
+                    insertion = "";
+                }
+
+                name = value.billingAddress.firstName + ' ' + insertion + value.billingAddress.familyName;
+
+                // create address string          
+                var addition = value.billingAddress.numAddition;
+                if (addition) {
+                    addition = " " + addition;
+                } else {
+                    addition = "";
+                }
+                address = value.billingAddress.zipCode + ', ' + value.billingAddress.number + addition + ',  ' + value.billingAddress.city;
             }else{
-                insertion = "";
+                address = "";
+                name = "";
             }
-            var name = value.billingAddress.firstName +' '+ insertion + value.billingAddress.familyName;
-            
-            // create address string          
-            var addition = value.billingAddress.numAddition;
-            if(addition){
-                addition = " "+addition;
-            }else{
-                addition = "";
-            }
-            var address = value.billingAddress.zipCode +', '+ value.billingAddress.number +addition+ ',  '+value.billingAddress.city;
-                     
+
+
             datarow += '<tr>';
             datarow += '<td id="id" hidden>' + value.id + '</td>';
             datarow += '<td id="type">' + getType(value.type) + '</td>';
             datarow += '<td id="email">' + value.email + ' </td>';
-            datarow += '<td id="name">'+ name+ ' </td>';
-            datarow += '<td id="adres">'+ address + ' </td>';
-                                                   
+            datarow += '<td id="name">' + name + ' </td>';
+            datarow += '<td id="adres">' + address + ' </td>';
+
             datarow += '<td id="editSave"><button id="edit" onclick="editRow(' + value.id + ')">Edit</button></td>';
             datarow += '<td style="padding-left: 35px;"><button onclick="deleteRow(' + value.id + ')"> <span style=" color:red;"> X <span></button></td> </tr>';
         });
@@ -71,7 +80,7 @@ function deleteRow(id) {
         success: function () {
             console.log("Delete Succesful!");
             $('#usersTable').children('tbody').empty();
-            startUserTable() ;
+            startUserTable();
         },
         error: function () {
             alert("Error, ");
@@ -79,7 +88,6 @@ function deleteRow(id) {
     });
 
 }
-
 
 
 

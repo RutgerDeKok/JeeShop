@@ -19,7 +19,7 @@ function setupEditUser() {
 //    prefill the imput boxes with available product data
     $.getJSON('../rest/users/' + id, function (user) {
         $('#IdId').val(user.id);
-        $('#hashId').val(""+user.passHash);
+        $('#hashId').val(user.passHash);
         $('#addressIdId').val(user.billingAddress.id);
         $('#emailId').val(user.email);
         $('#firstNameId').val(user.billingAddress.firstName);
