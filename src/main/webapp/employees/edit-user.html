@@ -1,0 +1,70 @@
+<html>
+    <head>
+        <title>Edit Product</title>
+        <script src ="../JS/jquery.js"></script>
+        <script src ="../JS/edit-user.js"></script>
+        <link href="../CSS/form.css" rel="stylesheet" />
+
+
+    </head>
+
+
+
+    <body>
+
+        <div>
+
+
+            <form id="userForm">
+                <h2>Gebruiker aanpassen /toevoegen</h2>
+
+
+                <label hidden ><b>id</b></label> <input id="IdId" type="text"
+                                                        name="id" hidden ><br /> 
+
+                <label hidden ><b> adres id</b></label> <input id="addressIdId" type="text"
+                                                               name="id" hidden ><br />
+
+                <label  ><b> pass hash </b></label> <input id="hashId" type="text"
+                                                                  name="passHash" ><br />
+
+                <label class="vis"><b>Email </b></label> <input class="visin" id="emailId" type="text"
+                                                                name="email" required><br /> 
+
+                <label class="vis"><b>Voornaam </b></label> <input class="visin" id="firstNameId" type="text"
+                                                                   name="firstName" required><br /> 
+
+                <label class="vis"><b>Tussenvoegsel</b></label> <input class="visin" id="insertionId" type="text"
+                                                                       name="insertion"> <br /> 
+
+                <label class="vis"><b>Achternaam</b></label> <input class="visin" id="familyNameId" type="text"
+                                                                    name="familyName"> <br /> 
+                <label class="vis"><b>Straat</b></label><input class="visin" id="streetId" type="text"
+                                                               name="street" required><br /> 
+
+                <label class="vis"><b>Huisnummer</b></label><input class="visin" id="numberId" type="number"
+                                                                   name="number" required><br /> 
+
+                <label class="vis"><b>Toevoeging</b></label><input class="visin" id="additionId" type="text"
+                                                                   name="addition" ><br />
+
+                <label class="vis"><b>Postcode</b></label> <input class="visin" id="zipCodeId" type="text"
+                                                                  name="zipCode" required pattern="[1-9][0-9]{3}\s?[a-zA-Z]{2}" onchange="this.setCustomValidity(this.validity.patternMismatch ? this.title : '');" ><br />
+
+                <label class="vis"><b>Plaats</b></label> <input class="visin" id="cityId" type="text"
+                                                                name="city"  ><br />
+
+                <label class="vis"><b>Type</b></label> <select id="typeId"
+                                                               name="type" required> 
+                </select><br />
+
+                <br>
+                <br>
+
+                <button type="submit">  OK  </button>
+            </form> 
+        </div>
+
+
+    </body>
+</html>
