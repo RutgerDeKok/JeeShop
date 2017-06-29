@@ -8,6 +8,8 @@ package rsvier.model;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.CascadeType.PERSIST;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -65,7 +67,7 @@ public class User implements Serializable {
     private List<Sale> saleList;
     
     @JoinColumn(name = "address_id", referencedColumnName = "id")
-    @OneToOne
+    @OneToOne(cascade=ALL)
     private Address billingAddress;
 
     public User() {

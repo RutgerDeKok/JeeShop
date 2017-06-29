@@ -5,11 +5,11 @@ package rsvier.security;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import javax.ejb.EJB;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -18,25 +18,67 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import rsvier.model.UserType;
 
 /**
  *
  * @author HP
  */
-@WebFilter(filterName = "NewFilter", urlPatterns = {"/employees/", "/*"}, initParams = {
-    @WebInitParam(name = "UserType", value = "!CUSTOMER")})
-public class NewFilter implements Filter {
+@WebFilter(filterName = "EmployeesFilter", urlPatterns = {"/employees/"} )
+public class EmployeesFilter implements Filter {
     
+    @EJB
+    private TokenValidator tokenValidator;
+
     private static final boolean debug = true;
 
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured. 
     private FilterConfig filterConfig = null;
+
+    public EmployeesFilter() {
+    }
+
+    public void doFilter(ServletRequest request, ServletResponse response,
+            FilterChain chain)
+            throws IOException, ServletException {
+
+        if (debug) {
+            log("NewFilter:doFilter()");
+        }
+
+        HttpServletRequest hsr = (HttpServletRequest) request;
+        Cookie[] cookies = hsr.getCookies();
+        Cookie tokenCookie = null;
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("AccessToken")) {
+                tokenCookie = cookie;
+                break;
+            }
+        }
+        
+        if(!tokenValidator.validateToken(tokenCookie.getValue())){
+            
+            // delete cookie and redirect to error page code 401
+            
+        }else{
+            if(tokenValidator.getUserType(tokenCookie.getValue()).equals(UserType.EMPLOYEE.name())){
+                // not authorized redirect to error page code 403
+            }
+            // authorized
+            System.out.println("Authorized to go to page");
+            chain.doFilter(request, response);
+        }
+        
+    }
     
-    public NewFilter() {
-    }    
     
+    
+    
+
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
@@ -63,8 +105,8 @@ public class NewFilter implements Filter {
 	    log(buf.toString());
 	}
          */
-    }    
-    
+    }
+
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
@@ -99,42 +141,6 @@ public class NewFilter implements Filter {
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet error occurs
      */
-    public void doFilter(ServletRequest request, ServletResponse response,
-            FilterChain chain)
-            throws IOException, ServletException {
-        
-        if (debug) {
-            log("NewFilter:doFilter()");
-        }
-        
-        doBeforeProcessing(request, response);
-        
-        Throwable problem = null;
-        try {
-            chain.doFilter(request, response);
-        } catch (Throwable t) {
-            // If an exception is thrown somewhere down the filter chain,
-            // we still want to execute our after processing, and then
-            // rethrow the problem after that.
-            problem = t;
-            t.printStackTrace();
-        }
-        
-        doAfterProcessing(request, response);
-
-        // If there was a problem, we want to rethrow it if it is
-        // a known type, otherwise log it.
-        if (problem != null) {
-            if (problem instanceof ServletException) {
-                throw (ServletException) problem;
-            }
-            if (problem instanceof IOException) {
-                throw (IOException) problem;
-            }
-            sendProcessingError(problem, response);
-        }
-    }
-
     /**
      * Return the filter configuration object for this filter.
      */
@@ -154,16 +160,16 @@ public class NewFilter implements Filter {
     /**
      * Destroy method for this filter
      */
-    public void destroy() {        
+    public void destroy() {
     }
 
     /**
      * Init method for this filter
      */
-    public void init(FilterConfig filterConfig) {        
+    public void init(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
-            if (debug) {                
+            if (debug) {
                 log("NewFilter:Initializing filter");
             }
         }
@@ -182,20 +188,20 @@ public class NewFilter implements Filter {
         sb.append(")");
         return (sb.toString());
     }
-    
+
     private void sendProcessingError(Throwable t, ServletResponse response) {
-        String stackTrace = getStackTrace(t);        
-        
+        String stackTrace = getStackTrace(t);
+
         if (stackTrace != null && !stackTrace.equals("")) {
             try {
                 response.setContentType("text/html");
                 PrintStream ps = new PrintStream(response.getOutputStream());
-                PrintWriter pw = new PrintWriter(ps);                
+                PrintWriter pw = new PrintWriter(ps);
                 pw.print("<html>\n<head>\n<title>Error</title>\n</head>\n<body>\n"); //NOI18N
 
                 // PENDING! Localize this for next official release
-                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");                
-                pw.print(stackTrace);                
+                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");
+                pw.print(stackTrace);
                 pw.print("</pre></body>\n</html>"); //NOI18N
                 pw.close();
                 ps.close();
@@ -212,7 +218,7 @@ public class NewFilter implements Filter {
             }
         }
     }
-    
+
     public static String getStackTrace(Throwable t) {
         String stackTrace = null;
         try {
@@ -226,9 +232,9 @@ public class NewFilter implements Filter {
         }
         return stackTrace;
     }
-    
+
     public void log(String msg) {
-        filterConfig.getServletContext().log(msg);        
+        filterConfig.getServletContext().log(msg);
     }
-    
+
 }

@@ -28,7 +28,9 @@ and open the template in the editor.
                             Log in <span>&#x25BC;</span>
                         </a>
                         <div id="login-dropdown" style='display:none'>
-                            <form id="login" action="rest/users/login" method="post">                                <fieldset id="login-inputs">
+                            <!--<form id="login" action="rest/users/login" method="post">--> 
+                            <form id="login" >
+                                <fieldset id="login-inputs">
                                     <input id="login-username" type="email" name="email" placeholder="Uw emailadres" required>   
                                     <input id="login-password" type="password" name="passHash" placeholder="Wachtwoord" required>
                                 </fieldset>
@@ -44,7 +46,7 @@ and open the template in the editor.
                             Aanmelden <span>&#x25BC;</span>
                         </a>
                         <div id="signup-dropdown" style='display:none'>
-                            <form id="signup" action="rest/users" method="post">
+                            <form id="signup" >
                                 <fieldset id="signup-inputs">
                                     <input id="signup-username" type="email" name="email" placeholder="Uw emailadres" required>   
                                     <input id="signup-password" type="password" name="passHash" placeholder="Wachtwoord" required>

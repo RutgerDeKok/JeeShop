@@ -49,12 +49,16 @@ function slideUp(element) {
 
 $(document).ready(function(){
     $('#login-submit').click(function(e) {
+        
         e.preventDefault();
+        alert("submitting data");
         var jsonData = JSON.stringify($('#login').serializeArray()
             .reduce(function(dataObject, field) { 
                 dataObject[field.name] = field.value; return dataObject; 
             }, 
         {}));
+        console.log("login json: "+jsonData);
+        alert("login json: "+jsonData);
         $.ajax({
         url: 'rest/users/login',
         type: 'POST',
@@ -81,6 +85,7 @@ $(document).ready(function(){
                 dataObject[field.name] = field.value; return dataObject; 
             }, 
         {}));
+        alert(jsonData);
         $.ajax({
         url: 'rest/users',
         type: 'POST',

@@ -10,7 +10,7 @@ $(document).ready(function () {
 
 function getTypes() {
     $.getJSON('../rest/users/types', function (data) {
-       types = data;
+        types = data;
         return types;
     });
 }
@@ -19,50 +19,56 @@ function getTypes() {
 function startUserTable() {
 
     getTypes();
-    
+
     var typeFilter = window.location.search.substring(1);
-    if(typeFilter===""){
-        typeFilter="ALL";
+    if (typeFilter === "") {
+        typeFilter = "ALL";
     }
 
-    $.getJSON('../rest/users/type/'+typeFilter, function (data) {
+    $.getJSON('../rest/users/type/' + typeFilter, function (data) {
         var datarow = "<tbody>";
         $.each(data, function (index, value) {
             // create name string
-            var insertion = value.billingAddress.insertion;
-            if(insertion){
-                insertion += " ";
+            var address;
+            var name;
+            if (value.billingAddress) {
+                var insertion = value.billingAddress.insertion;
+                if (insertion) {
+                    insertion += " ";
+                } else {
+                    insertion = "";
+                }
+
+                name = value.billingAddress.firstName + ' ' + insertion + value.billingAddress.familyName;
+
+                // create address string          
+                var addition = value.billingAddress.numAddition;
+                if (addition) {
+                    addition = " " + addition;
+                } else {
+                    addition = "";
+                }
+                address = value.billingAddress.zipCode + ', ' + value.billingAddress.number + addition + ',  ' + value.billingAddress.city;
             }else{
-                insertion = "";
+                address = "";
+                name = "";
             }
-            var name = value.billingAddress.firstName +' '+ insertion + value.billingAddress.familyName;
-            
-            // create address string          
-            var addition = value.billingAddress.numAddition;
-            if(addition){
-                addition = " "+addition;
-            }else{
-                addition = "";
-            }
-            var address = value.billingAddress.zipCode +', '+ value.billingAddress.number +addition+ ',  '+value.billingAddress.city;
-                     
+
+
             datarow += '<tr>';
             datarow += '<td id="id" hidden>' + value.id + '</td>';
-//            datarow += '<td id="type">' + value.type + ' </td>';
-            datarow += '<td id="type"><span id="typeSpan' + index + '">' + getType(value.type) + '</span>';
-//            datarow += '<select id="typeSel' + index + '" hidden></select> \n\
-            datarow += ' </td>';
+            datarow += '<td id="type">' + getType(value.type) + '</td>';
             datarow += '<td id="email">' + value.email + ' </td>';
-            datarow += '<td id="name">'+ name+ ' </td>';
-            datarow += '<td id="adres">'+ address + ' </td>';
-                                                   
-            datarow += '<td id="editSave"><button id="edit" onclick="editRow(this,' + index + ')">Edit</button></td>';
-            datarow += ' <td align=/"left/" onclick=\"deleteRow(' + value.id + ')"> <div style="text-align:center; color:red;"> X <div></td> </tr>';
+            datarow += '<td id="name">' + name + ' </td>';
+            datarow += '<td id="adres">' + address + ' </td>';
+
+            datarow += '<td id="editSave"><button id="edit" onclick="editRow(' + value.id + ')">Edit</button></td>';
+            datarow += '<td style="padding-left: 35px;"><button onclick="deleteRow(' + value.id + ')"> <span style=" color:red;"> X <span></button></td> </tr>';
         });
         datarow += '</tbody>';
+//        alert(datarow);
         $('#usersTable').append(datarow);
     });
-
 }
 
 function deleteRow(id) {
@@ -74,7 +80,7 @@ function deleteRow(id) {
         success: function () {
             console.log("Delete Succesful!");
             $('#usersTable').children('tbody').empty();
-            startUserTable() ;
+            startUserTable();
         },
         error: function () {
             alert("Error, ");
@@ -85,29 +91,10 @@ function deleteRow(id) {
 
 
 
-//function editRow(button, index) {
-//    button.parentNode.parentNode.className = 'highlight';
-//    button.parentNode.parentNode.setAttribute("contenteditable", "true");
-//    button.parentNode.innerHTML = '<button id="save" onclick="saveRow(this,' + index + ')">Save</button>';
-////    button.parentNode.parentNode.find('.categorytext').hide();
-//    var $catSpan = $(document.getElementById('catSpan' + index));
-//    var $catSel = $(document.getElementById('catSel' + index));
-//
-//    //opties toevoegen aan <select> menu
-//    $catSel.html(' ');
-//    $.each(categories, function (i, cat) {
-//        if (getCategoryEnum($catSpan.text()) === cat.name) {
-//            $catSel.append('<option value="' + cat.name + '" selected="selected">' + cat.readableName + '</option>');
-//        } else {
-//            $catSel.append('<option value="' + cat.name + '">' + cat.readableName + '</option>');
-//        }
-//    });
-//    $catSel.show();
-//    $catSpan.hide();
-//
-//}
+function editRow(id) {
 
-
+    window.location.href = "edit-user.html?" + id;
+}
 
 
 function getType(type) {
@@ -132,54 +119,6 @@ function getTypeEnum(readableName) {
 
 
 
-//function saveRow(button, index) {
-//    button.parentNode.parentNode.className = '';
-////    button.parentNode.parentNode.removeClass("highlight");
-//    button.parentNode.parentNode.setAttribute("contenteditable", "false");
-//    var $row = jQuery(button).closest('tr');
-//    var $columns = $row.find('td').not(':last');
-//
-//    var $catSpan = $(document.getElementById('catSpan' + index));
-//    var $catSel = $(document.getElementById('catSel' + index));
-//    var catVal = $catSel.val();
-//    var catText = $catSel.find('option:selected').text();
-//
-//    $catSpan.text(catText);
-//    $catSel.hide();
-//    $catSpan.show();
-//    $catSel.html(' ');
-//    //    console.log("columns: " + $columns);
-//    var dataObject = {};
-//    jQuery.each($columns, function (i, item) {
-//
-//        if (item.value !== "") {
-//            if ($columns[i].id === "category") {
-//                dataObject[$columns[i].id] = catVal;
-//            } else {
-//                dataObject[$columns[i].id] = item.innerHTML;
-//            }
-//        }
-//    });
-//
-//    var id = dataObject.id;
-//    var jsonData = JSON.stringify(dataObject);
-//    //    alert("json: "+JSON.stringify(dataObject));
-//    $.ajax({
-//        type: "PUT",
-//        url: "../rest/products/" + id,
-//        data: jsonData,
-//        contentType: "application/json",
-//        success: function () {
-//            console.log("Save Succesful!");
-//        },
-//        error: function () {
-//            alert("Error, " + dataObject);
-//        }
-//    });
-//
-//    button.parentNode.innerHTML = '<button id="edit" onclick="editRow(this ,' + index + ')">Edit</button>';
-//// show edit button instead of save again
-//}
 
 function displayTypeFilters() {
     var typeFilter = window.location.search.substring(1);

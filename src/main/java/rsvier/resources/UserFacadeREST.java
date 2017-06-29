@@ -1,7 +1,10 @@
 package rsvier.resources;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -17,11 +20,15 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
-import rsvier.security.AuthToken;
+import rsvier.model.Cart;
+import rsvier.model.CartSuborder;
+import rsvier.security.TokenValidator;
 import rsvier.model.EnumWrap;
 import rsvier.model.User;
 import rsvier.model.UserType;
+import rsvier.persistence.CartFacade;
 import rsvier.persistence.UserFacade;
+import rsvier.security.scrypt.SCryptUtil;
 
 /**
  *
@@ -34,12 +41,52 @@ public class UserFacadeREST {
 
     @EJB
     UserFacade facade;
+    @EJB
+    CartFacade cartFacade;
+    @EJB
+    private TokenValidator tokenValidator;
 
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(User entity) {        
-        // entity.setPassHash(entity.getPassHash().hashPassword());
-        facade.create(entity);
+    public Response create(User registerData) {
+        System.out.println("email to check: " + registerData.getEmail());
+        User checkUser = null;
+
+        try {
+            checkUser = facade.findByEmail(registerData.getEmail());
+        } catch (Exception e) {
+            System.out.println("User not in use yet");
+        }
+
+        if (checkUser == null) {
+            System.out.println("Gebruiker wordt geregistreerd");
+            User newUser = new User();
+            newUser.setType(UserType.CUSTOMER);
+
+            String email = registerData.getEmail();
+            System.out.println("email: " + email);
+            newUser.setEmail(registerData.getEmail());
+
+            String passHash = SCryptUtil.scrypt(registerData.getPassHash(), 16384, 8, 1);
+            System.out.println("hash: " + passHash);
+            newUser.setPassHash(passHash);
+
+            facade.create(newUser);
+
+//            Cart newCart = new Cart();
+////            User temp = facade.findByEmail(newUser.getEmail());
+////            newCart.setId(temp.getId());
+//            newCart.setId(28L);
+////            User temp =  facade.find(28L)
+////            newCart.setUserId();
+//////            List<CartSuborder> subs = new ArrayList<>();
+////            newCart.setCartSuborderList(subs);
+//            cartFacade.create(newCart);
+            return Response.ok().build();
+        } else {
+            System.out.println("Onsuccesvolle authenticatie");
+            return Response.status(404).build();
+        }
     }
 
     @PUT
@@ -63,9 +110,11 @@ public class UserFacadeREST {
     }
 
     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+//    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces(MediaType.APPLICATION_JSON)
     public List<User> findAll() {
         return facade.findAll();
+
     }
 
     @GET
@@ -81,7 +130,7 @@ public class UserFacadeREST {
     public String countREST() {
         return String.valueOf(facade.count());
     }
-    
+
     @GET
     @Path("types")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -92,63 +141,65 @@ public class UserFacadeREST {
         }
         return categoryList;
     }
-    
-     @GET
+
+    @GET
     @Path("/type/{typeString}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @PermitAll
     public List<User> findByType(@PathParam("typeString") String typeString) {
 
         UserType type;
-        try{
-        type  = UserType.valueOf(typeString);
+        try {
+            type = UserType.valueOf(typeString);
         } catch (Exception e) {
             System.out.println("Using default category ALL");
             type = UserType.ALL;
         }
-        System.out.println("type send to facade: "+type.name());
+        System.out.println("type send to facade: " + type.name());
         return facade.findByType(type);
-       
+
     }
-    
-    
-    
-    
+
     @Path("{id}/addresses")
     public AddressFacadeREST getAddresses() {
         return new AddressFacadeREST();
     }
-    
+
     @Path("{id}/carts")
     public CartFacadeREST getCart() {
         return new CartFacadeREST();
     }
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/login")
-
-    public Response doLogin(User login) {   
-        User db = facade.findByEmail(login.getEmail());
-        if (db.getPassHash().equals(login.getPassHash())) {
+    public Response doLogin(User login) {
+        User dbUser = facade.findByEmail(login.getEmail());
+        boolean correctPass = SCryptUtil.check(login.getPassHash(), dbUser.getPassHash());
+        if (correctPass) {
             System.out.println("Succesvolle authenticatie");
-            return Response.ok().cookie(new NewCookie("cookieResponse", "cookieValueInReturn")).build();
+            String token = null;
+            try {
+                token = tokenValidator.createToken(dbUser);
+            } catch (IOException ex) {
+                Logger.getLogger(UserFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Onsuccesvolle authenticatie");
+                return Response.status(500).build();
+            }
+
+            // moet meegeven: tokenID, userId, userType,
+            return Response.ok().cookie(new NewCookie("AccessToken", token)).build();
         } else {
             System.out.println("Onsuccesvolle authenticatie");
             return Response.status(404).build();
         }
-    }    
-    
-  
-        // geef cookie mee met de token
+    }
+
+    // geef cookie mee met de token
 //        login.setJwt(authToken.createToken());
 //        // ophalen key uit cookie
 //        
 //        
-        
 //        authToken.verifyToken(login);
- 
-
-    
 }
