@@ -1,7 +1,10 @@
 package rsvier.resources;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -18,7 +21,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 import rsvier.model.Cart;
-import rsvier.security.AuthToken;
+import rsvier.model.CartSuborder;
+import rsvier.security.TokenValidator;
 import rsvier.model.EnumWrap;
 import rsvier.model.User;
 import rsvier.model.UserType;
@@ -39,6 +43,8 @@ public class UserFacadeREST {
     UserFacade facade;
     @EJB
     CartFacade cartFacade;
+    @EJB
+    private TokenValidator tokenValidator;
 
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -48,7 +54,6 @@ public class UserFacadeREST {
 
         try {
             checkUser = facade.findByEmail(registerData.getEmail());
-            System.out.println("User already use");
         } catch (Exception e) {
             System.out.println("User not in use yet");
         }
@@ -56,25 +61,28 @@ public class UserFacadeREST {
         if (checkUser == null) {
             System.out.println("Gebruiker wordt geregistreerd");
             User newUser = new User();
+            newUser.setType(UserType.CUSTOMER);
+
             String email = registerData.getEmail();
             System.out.println("email: " + email);
             newUser.setEmail(registerData.getEmail());
 
-            newUser.setType(UserType.CUSTOMER);
-            String password = registerData.getPassHash();
-            System.out.println("pw: " + password);
             String passHash = SCryptUtil.scrypt(registerData.getPassHash(), 16384, 8, 1);
             System.out.println("hash: " + passHash);
             newUser.setPassHash(passHash);
 
             facade.create(newUser);
 
-            Cart newCart = new Cart();
-            User temp = facade.findByEmail(newUser.getEmail());
-            newCart.setId(temp.getId());
-            cartFacade.create(newCart);
-
-            return Response.accepted().build();
+//            Cart newCart = new Cart();
+////            User temp = facade.findByEmail(newUser.getEmail());
+////            newCart.setId(temp.getId());
+//            newCart.setId(28L);
+////            User temp =  facade.find(28L)
+////            newCart.setUserId();
+//////            List<CartSuborder> subs = new ArrayList<>();
+////            newCart.setCartSuborderList(subs);
+//            cartFacade.create(newCart);
+            return Response.ok().build();
         } else {
             System.out.println("Onsuccesvolle authenticatie");
             return Response.status(404).build();
@@ -171,7 +179,17 @@ public class UserFacadeREST {
         boolean correctPass = SCryptUtil.check(login.getPassHash(), dbUser.getPassHash());
         if (correctPass) {
             System.out.println("Succesvolle authenticatie");
-            return Response.ok().cookie(new NewCookie("cookieResponse", "cookieValueInReturn")).build();
+            String token = null;
+            try {
+                token = tokenValidator.createToken(dbUser);
+            } catch (IOException ex) {
+                Logger.getLogger(UserFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Onsuccesvolle authenticatie");
+                return Response.status(500).build();
+            }
+
+            // moet meegeven: tokenID, userId, userType,
+            return Response.ok().cookie(new NewCookie("AccessToken", token)).build();
         } else {
             System.out.println("Onsuccesvolle authenticatie");
             return Response.status(404).build();

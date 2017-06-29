@@ -47,7 +47,7 @@ public class SCryptUtil {
             byte[] salt = new byte[16];
             SecureRandom.getInstance("SHA1PRNG").nextBytes(salt);
 
-            byte[] derived = SCrypt.scrypt(passwd.getBytes("UTF-8"), salt, N, r, p, 32);
+            byte[] derived = SCrypt.scrypt(passwd.getBytes("UTF-8"), salt, N, r, p, 28);
 
             String params = Long.toString(log2(N) << 16L | r << 8 | p, 16);
 
