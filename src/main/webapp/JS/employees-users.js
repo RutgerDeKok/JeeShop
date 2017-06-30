@@ -32,6 +32,7 @@ function startUserTable() {
             var address;
             var name;
             if (value.billingAddress) {
+                // create name string 
                 var insertion = value.billingAddress.insertion;
                 if (insertion) {
                     insertion += " ";
@@ -54,7 +55,7 @@ function startUserTable() {
                 name = "";
             }
 
-
+            // create table body row 
             datarow += '<tr>';
             datarow += '<td id="id" hidden>' + value.id + '</td>';
             datarow += '<td id="type">' + getType(value.type) + '</td>';

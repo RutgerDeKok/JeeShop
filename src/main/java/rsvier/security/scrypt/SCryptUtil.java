@@ -42,12 +42,15 @@ public class SCryptUtil {
      *
      * @return The hashed password.
      */
+    private static final int HASH_LENGTH = 28;
+    
+    
     public static String scrypt(String passwd, int N, int r, int p) {
         try {
             byte[] salt = new byte[16];
             SecureRandom.getInstance("SHA1PRNG").nextBytes(salt);
 
-            byte[] derived = SCrypt.scrypt(passwd.getBytes("UTF-8"), salt, N, r, p, 28);
+            byte[] derived = SCrypt.scrypt(passwd.getBytes("UTF-8"), salt, N, r, p, HASH_LENGTH);
 
             String params = Long.toString(log2(N) << 16L | r << 8 | p, 16);
 
@@ -88,7 +91,7 @@ public class SCryptUtil {
             int r = (int) params >> 8 & 0xff;
             int p = (int) params      & 0xff;
 
-            byte[] derived1 = SCrypt.scrypt(passwd.getBytes("UTF-8"), salt, N, r, p, 32);
+            byte[] derived1 = SCrypt.scrypt(passwd.getBytes("UTF-8"), salt, N, r, p, HASH_LENGTH);
 
             if (derived0.length != derived1.length) return false;
 

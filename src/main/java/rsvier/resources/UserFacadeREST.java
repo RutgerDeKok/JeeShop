@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -82,6 +81,7 @@ public class UserFacadeREST {
 //////            List<CartSuborder> subs = new ArrayList<>();
 ////            newCart.setCartSuborderList(subs);
 //            cartFacade.create(newCart);
+
             return Response.ok().build();
         } else {
             System.out.println("Onsuccesvolle authenticatie");
@@ -113,6 +113,23 @@ public class UserFacadeREST {
 //    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Produces(MediaType.APPLICATION_JSON)
     public List<User> findAll() {
+        
+//         //tijdelijke hashgenerator
+//         List<User> list = facade.findAll();
+//         int i = 0;
+//         String pass = "Aa1111";
+//         for(User user : list){
+//             String hash = SCryptUtil.scrypt(pass, 16384, 8, 1);
+//             System.out.println("hash: "+hash);
+//             user.setPassHash(hash);
+//             facade.edit(user);
+//             i++;
+//         }
+//         // einde tijdelijke datum generator
+        
+        
+        
+        
         return facade.findAll();
 
     }
@@ -187,7 +204,7 @@ public class UserFacadeREST {
                 System.out.println("Onsuccesvolle authenticatie");
                 return Response.status(500).build();
             }
-
+            System.out.println("token gemaakt terug in doLogin methode in REST facade");
             // moet meegeven: tokenID, userId, userType,
             return Response.ok().cookie(new NewCookie("AccessToken", token)).build();
         } else {

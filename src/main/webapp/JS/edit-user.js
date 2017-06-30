@@ -17,19 +17,24 @@ function setupEditUser() {
     $('#userForm').action = "../rest/users/" + id;
 
 //    prefill the imput boxes with available product data
+
     $.getJSON('../rest/users/' + id, function (user) {
+        var address = user.billingAddress;
+        if (!address) {
+            address = {};
+        }
         $('#IdId').val(user.id);
         $('#hashId').val(user.passHash);
-        $('#addressIdId').val(user.billingAddress.id);
         $('#emailId').val(user.email);
-        $('#firstNameId').val(user.billingAddress.firstName);
-        $('#insertionId').val(user.billingAddress.insertion);
-        $('#familyNameId').val(user.billingAddress.familyName);
-        $('#streetId').val(user.billingAddress.street);
-        $('#numberId').val(user.billingAddress.number);
-        $('#additionId').val(user.billingAddress.numAddition);
-        $('#zipCodeId').val(user.billingAddress.zipCode);
-        $('#cityId').val(user.billingAddress.city);
+        $('#addressIdId').val(address.id);
+        $('#firstNameId').val(address.firstName);
+        $('#insertionId').val(address.insertion);
+        $('#familyNameId').val(address.familyName);
+        $('#streetId').val(address.street);
+        $('#numberId').val(address.number);
+        $('#additionId').val(address.numAddition);
+        $('#zipCodeId').val(address.zipCode);
+        $('#cityId').val(address.city);
 
         var select = $('#typeId');
         $.getJSON('../rest/users/types', function (data) {
@@ -72,8 +77,9 @@ function putPostUser() {
     var userObject = {};
     var addressObject = {};
 
-
-    addressObject.id = $('#addressIdId').val();
+    if ($('#addressIdId').val()>0) {
+        addressObject.id = $('#addressIdId').val();
+    }
     addressObject.firstName = $('#firstNameId').val();
     addressObject.insertion = $('#insertionId').val();
     addressObject.familyName = $('#familyNameId').val();
@@ -84,7 +90,7 @@ function putPostUser() {
     addressObject.city = $('#cityId').val();
 
     userObject.id = $('#IdId').val();
-    alert("hash = "+ $('#hashId').val());
+    alert("hash = " + $('#hashId').val());
     userObject.passHash = $('#hashId').val();
     userObject.email = $('#emailId').val();
     userObject.type = $('#typeId').val();
@@ -94,7 +100,7 @@ function putPostUser() {
     var jsonData = JSON.stringify(userObject);
     console.log(jsonData);
     alert(jsonData);
-    
+
     var id = userObject.id;
 //    alert("id= " + id);
 
