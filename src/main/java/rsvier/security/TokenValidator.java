@@ -10,6 +10,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.impl.crypto.MacProvider;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,7 +27,7 @@ import rsvier.model.User;
 
 @Singleton
 public class TokenValidator {
-
+    
     private String propFile = "config.properties";
 
     public TokenValidator() {
@@ -38,15 +39,15 @@ public class TokenValidator {
     }
 
     public boolean validateToken(String token) {
-
         return unpackToken(token) != null;
     }
+    
 
     public String getUserType(String token) {
         Claims claim = unpackToken(token);
         return (String) claim.get("Type");
-
     }
+    
 
     private Claims unpackToken(String token) {
 
@@ -65,51 +66,57 @@ public class TokenValidator {
         }
         return null;
     }
+    
 
     public String createToken(User user) throws IOException {
 
         Map<String, Object> claims = new HashMap<>();
+        System.out.println("create token using " + user.getId() + "," + user.getType().name());
         claims.put("Type", user.getType().name());
-        claims.put("Id", user.getId());
+        claims.put("Id", user.getId());    
 
         String token = Jwts.builder().setClaims(claims)
                 .signWith(SignatureAlgorithm.HS512, getSigningKey())
                 .compact();
         return token;
     }
+    
 
     private byte[] getSigningKey() {
-        Properties prop = new Properties();
+        System.out.println("get Signing Key()");
+        Properties props = new Properties();
 
-        try (InputStream in = getClass().getClassLoader().getResourceAsStream(propFile)) {
-            if (in != null) {
-                prop.load(in);
-            }
+        try (FileInputStream in = new FileInputStream(propFile)) {
+            props.load(in);
         } catch (IOException ex) {
             Logger.getLogger(TokenValidator.class.getName()).log(Level.SEVERE, null, ex);
         }
-        byte[] signingKey = prop.getProperty("key").getBytes(StandardCharsets.UTF_8);
+       
+        byte[] signingKey = props.getProperty("key").getBytes(StandardCharsets.ISO_8859_1);
         if (signingKey.length > 0) {
             return signingKey;
         }
         return null;
     }
+    
 
     private byte[] createSigningKey() {
         SecretKey key = MacProvider.generateKey();
         byte[] signingKey = key.getEncoded();
-        Properties prop = new Properties();
+        Properties props = new Properties();
 
         try (FileOutputStream out = new FileOutputStream(propFile)) {
 
-            prop.setProperty("key", new String(signingKey));
-            prop.store(out, null);
-
+            props.setProperty("key", new String(signingKey,StandardCharsets.ISO_8859_1.name()));
+            props.store(out, null);
+            
         } catch (IOException ex) {
-            Logger.getLogger(TokenValidator.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TokenValidator.class.getName()).log(Level.SEVERE, " - failed to write properties file - ", ex);
         }
 
         return signingKey;
     }
+
+
 
 }

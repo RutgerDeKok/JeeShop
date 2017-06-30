@@ -51,23 +51,26 @@ $(document).ready(function(){
     $('#login-submit').click(function(e) {
         
         e.preventDefault();
-        alert("submitting data");
+//        alert("submitting data");
         var jsonData = JSON.stringify($('#login').serializeArray()
             .reduce(function(dataObject, field) { 
                 dataObject[field.name] = field.value; return dataObject; 
             }, 
         {}));
         console.log("login json: "+jsonData);
-        alert("login json: "+jsonData);
+//        alert("login json: "+jsonData);
         $.ajax({
         url: 'rest/users/login',
         type: 'POST',
         contentType: "application/json; charset=utf-8",
-        //dataType: "application/json; charset=utf-8",
+//        dataType: "application/json; charset=utf-8",
+        dataType: "text",
         data: jsonData,
-        success: function(data) {
+        success: function(token) {
+            document.cookie = "AccessToken=" + token;
+            console.log("retreived cookie infog= "+getCookie("AccessToken"));
             console.log("Cookie: " + document.cookie);
-            console.log(data);
+            console.log(token);
             console.log("Locatie: " + location.href);
         },
         error: function(data) {
@@ -100,3 +103,19 @@ $(document).ready(function(){
         });
    }); 
 });
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}

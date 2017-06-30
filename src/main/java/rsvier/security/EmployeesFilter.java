@@ -20,15 +20,16 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import rsvier.model.UserType;
 
 /**
  *
  * @author HP
  */
-@WebFilter(filterName = "EmployeesFilter", urlPatterns = {"/employees/"} )
+@WebFilter(filterName = "EmployeesFilter", urlPatterns = {"/employees/*"})
 public class EmployeesFilter implements Filter {
-    
+
     @EJB
     private TokenValidator tokenValidator;
 
@@ -42,9 +43,11 @@ public class EmployeesFilter implements Filter {
     public EmployeesFilter() {
     }
 
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
+        System.out.println("doFilter() draait!");
 
         if (debug) {
             log("NewFilter:doFilter()");
@@ -52,32 +55,37 @@ public class EmployeesFilter implements Filter {
 
         HttpServletRequest hsr = (HttpServletRequest) request;
         Cookie[] cookies = hsr.getCookies();
-        Cookie tokenCookie = null;
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("AccessToken")) {
-                tokenCookie = cookie;
-                break;
+        String tokenFromCookie = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("AccessToken")) {
+                    System.out.println("goede Cookie gevonden");
+                    Cookie tokenCookie = cookie;
+                    tokenFromCookie = tokenCookie.getValue();
+                    break;
+                }
+
             }
         }
-        
-        if(!tokenValidator.validateToken(tokenCookie.getValue())){
-            
+
+        if (tokenFromCookie == null || !tokenValidator.validateToken(tokenFromCookie)) {
+            System.out.println("User not allowed to go to /emlpoyees/*");
             // delete cookie and redirect to error page code 401
-            
-        }else{
-            if(tokenValidator.getUserType(tokenCookie.getValue()).equals(UserType.EMPLOYEE.name())){
+
+
+        } else {
+            String tokenUserType = tokenValidator.getUserType(tokenFromCookie);
+            System.out.println("token user type= " + tokenUserType);
+            if (tokenUserType.equals(UserType.EMPLOYEE.name())) {
                 // not authorized redirect to error page code 403
             }
             // authorized
             System.out.println("Authorized to go to page");
             chain.doFilter(request, response);
         }
-        
+
     }
-    
-    
-    
-    
 
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {

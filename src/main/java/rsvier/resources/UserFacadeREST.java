@@ -16,6 +16,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
@@ -199,14 +200,18 @@ public class UserFacadeREST {
             String token = null;
             try {
                 token = tokenValidator.createToken(dbUser);
+                System.out.println("Token received from generator: "+token);
             } catch (IOException ex) {
                 Logger.getLogger(UserFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
                 System.out.println("Onsuccesvolle authenticatie");
                 return Response.status(500).build();
             }
-            System.out.println("token gemaakt terug in doLogin methode in REST facade");
-            // moet meegeven: tokenID, userId, userType,
-            return Response.ok().cookie(new NewCookie("AccessToken", token)).build();
+            //Token uitpak test
+            System.out.println("valid token? "+tokenValidator.validateToken(token));     
+            
+//            return Response.ok().cookie(new NewCookie("AccessToken", token)).build();
+             return Response.ok().entity(token).build();
+            
         } else {
             System.out.println("Onsuccesvolle authenticatie");
             return Response.status(404).build();
