@@ -15,37 +15,39 @@ and open the template in the editor.
         <script src ="../JS/jquery.js"></script>
         <script src ="../JS/navbar.js"></script>
         <link href="../CSS/navbar.css" rel="stylesheet" />
-       
-           
-        
+
+
+
     </head>
     <body>
-        <div class="navbar">
+        <div class="navbar" id="navbar_customers">
             <nav>
                 <ul>
-                    <li>
-                        <a id="login-trigger" href="#">
-                            Log in <span>&#x25BC;</span>
-                        </a>
-                        <div id="login-dropdown" style='display:none'>
-                            <!--<form id="login" action="rest/users/login" method="post">--> 
-                            <form id="login" >
-                                <fieldset id="login-inputs">
-                                    <input id="login-username" type="email" name="email" placeholder="Uw emailadres" required>   
-                                    <input id="login-password" type="password" name="passHash" placeholder="Wachtwoord" required>
-                                </fieldset>
-                                <fieldset id="login-actions">
-                                    <input type="submit" id="login-submit" value="Log in">
-                                    <label><input type="checkbox" checked="checked">Onthoud mij</label>
-                                </fieldset>
-                            </form>
-                        </div>                     
+                    <li class="l">
+                        <a href="/Jee-Shop/">De Kaaswinkel!</a>
                     </li>
-                    <li>
-                        <a id="signup-trigger" href="#">
+                    
+                    <li class="l">
+                        
+                        <input type="submit" id="cookies" value="Show Cookies"  style=" margin: 5; font-size: 12px; padding:2px ; margin-top: 10px">
+                        
+                    </li>
+
+
+                    <li class ="r" id="signedin-list" hidden>
+                        <a id="signedin-trigger" href="#" >
+                            Welcome <span>&#x25BC;</span>
+                        </a>
+                        <div class="dropDown" id="signedin-dropdown" style='display:none' >
+                            <input type="submit" id="logout-submit" value="Log out">
+                        </div>   
+                    </li>
+
+                    <li class ="r" id="signup-list">
+                        <a id="signup-trigger" href="#" >
                             Aanmelden <span>&#x25BC;</span>
                         </a>
-                        <div id="signup-dropdown" style='display:none'>
+                        <div class="dropDown" id="signup-dropdown" style='display:none'>
                             <form id="signup" >
                                 <fieldset id="signup-inputs">
                                     <input id="signup-username" type="email" name="email" placeholder="Uw emailadres" required>   
@@ -59,6 +61,26 @@ and open the template in the editor.
                             </form>
                         </div>   
                     </li>
+
+                    <li class="r" id="login-list">
+                        <a id="login-trigger" href="#" >
+                            Log in <span>&#x25BC;</span>
+                        </a>
+                        <div class="dropDown" id="login-dropdown" style='display:none'>
+                            <!--<form id="login" action="rest/users/login" method="post">--> 
+                            <form id="login" >
+                                <fieldset id="login-inputs">
+                                    <input id="login-username" type="email" name="email" placeholder="Uw emailadres" required>   
+                                    <input id="login-password" type="password" name="passHash" placeholder="Wachtwoord" required>
+                                </fieldset>
+                                <fieldset id="login-actions">
+                                    <input type="submit" id="login-submit" value="Log in">
+                                    <label><input type="checkbox" checked="checked">Onthoud mij</label>
+                                </fieldset>
+                            </form>
+                        </div>                     
+                    </li>
+
                 </ul>
             </nav>
         </div>

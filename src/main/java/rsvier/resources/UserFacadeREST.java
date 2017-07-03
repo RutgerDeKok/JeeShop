@@ -2,7 +2,9 @@ package rsvier.resources;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.PermitAll;
@@ -20,6 +22,7 @@ import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
+import rsvier.security.MapToJson;
 import rsvier.model.Cart;
 import rsvier.model.CartSuborder;
 import rsvier.security.TokenValidator;
@@ -210,7 +213,19 @@ public class UserFacadeREST {
             System.out.println("valid token? "+tokenValidator.validateToken(token));     
             
 //            return Response.ok().cookie(new NewCookie("AccessToken", token)).build();
-             return Response.ok().entity(token).build();
+//             return Response.ok().entity(token).build();
+             
+             //probeersel
+             Map<String, String> map = new HashMap<>();
+             map.put("token", token);
+             map.put("email",dbUser.getEmail());
+             map.put("type",dbUser.getType().name());
+             map.put("id",dbUser.getId().toString());
+            return Response.ok().entity(MapToJson.mapToJson(map)).build();
+             
+             
+             
+             
             
         } else {
             System.out.println("Onsuccesvolle authenticatie");
