@@ -56,7 +56,7 @@ function startProductTable() {
             datarow += ' <td align=/"left/">' + value.price + ' </td>';
             datarow += ' <td align=/"left/">' + value.stockCount + ' </td>';
             datarow += ' <td align=/"left/">' + value.info + ' </td>';
-            datarow += ' <td align=/"left/" > <input class=/"quantity_field' + rowindex + ' /" type=/"number/"></input>'  
+            datarow += ' <td align=/"left/" > <input id="quantity_field' + rowindex + '" type="text"></input>';  
             datarow += ' <td align=/"left/" class="/click_button/" onclick=\"addProduct(' + rowindex + ',' + value.id + ',' + value.price + ')\"><strong>Voeg toe</strong></td>';
              
             datarow += '</tr>';
@@ -66,32 +66,23 @@ function startProductTable() {
     });
 }
 
-function addProduct(index, productId, prijs) {   
+function addProduct(index, productId, productPrijs) {   
        
        var cartId = getCookie("UserId");
        var quantity = $("#quantity_field"+index).val();
-        console.log(cartId);
-        
-      // var totalPrice = quantity* prijs;
-       console.log(quantity);
-               console.log(prijs);
-                       //console.log(totalPrice);
+       console.log("cart = " + cartId);
+       var totalPrice = quantity* productPrijs;
         productUrl = "rest/products/" + productId;
         cartUrl = "rest/carts/" + cartId;
         $.getJSON(productUrl, function(product) {
             $.getJSON(cartUrl, function(cart) {
                 
                 var jsonData = 
-//                        {"cartsuborder":{"quantity" : "1",
-//                        "subTotal": prijs,
-//                        "cart" : cart,
-//                        "product" : product
-//                        }};
                         { "cart":cart,
                           "id":"0",  
                           "product":product,
-                          "quantity":1,
-                          "subTotal":prijs }
+                          "quantity":quantity,
+                          "subTotal":totalPrice }
                       
                         
                 $.ajax({
@@ -100,8 +91,7 @@ function addProduct(index, productId, prijs) {
                    data: JSON.stringify(jsonData),
                    contentType: "application/json",
                    success: function () {
-
-                        window.location.href = "customer_cart.html?id=1";
+                      window.location.href = "customer_cart.html?id=" + cartId;
                    },
                    error: function () {
                        console.log(jsonData);
