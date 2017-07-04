@@ -1,3 +1,5 @@
+var scriptIsReady = false;
+var tableInfoTable = [];
 $(document).ready(function () {
     $.get("top-navbar.html", function (data) {
         $("#nav-placeholder").replaceWith(data);
@@ -35,7 +37,6 @@ function getCategory(cat) {
 
 
 function startProductTable() {
-    
     getCategories();
     $(".table_info_content").remove();
     var catFilter = window.location.search.substring(1);
@@ -49,7 +50,7 @@ function startProductTable() {
         var rowindex = 0;
 
         $.each(data, function (key, value) {
-            datarow += '<tr>';
+            datarow += '<tr class="tablerow" name=' + rowindex + ' >';
             datarow += ' <td align=/"left/">' + value.name + ' </td>';
             datarow += ' <td align=/"left/">' + getCategory(value.category) + ' </td>';
             datarow += ' <td align=/"left/">' + value.brand + ' </td>';
@@ -61,9 +62,12 @@ function startProductTable() {
              
             datarow += '</tr>';
             rowindex++;
+            
+            tableInfoTable.push(value.info);
         });
         $('#productsTable').append(datarow);
     });
+    scriptIsReady = true;
 }
 
 function addProduct(index, productId, productPrijs) {   
@@ -144,5 +148,20 @@ $(document).on("change", "input[type='radio']", function (event) {
 
 });
 
+$("#productsTable").mouseover(function(){
+    $(".tablerow").mouseover(function(){
+        $(this).css("background: rgb(252,150,150);");
+        var row = $(this).attr('name');
+        var rowInfo =  tableInfoTable[row];
+        $("#productInfo").html(rowInfo);
+        
+    console.log(rowInfo);
+    
+    });
+});
+ 
 
-
+         
+    
+    
+                
