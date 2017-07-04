@@ -9,12 +9,10 @@ and open the template in the editor.
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src ="JS/jquery.js"></script>
-        <script src ="JS/navbar.js"></script>
-        <link href="CSS/navbar.css" rel="stylesheet" />
-        <script src ="../JS/jquery.js"></script>
-        <script src ="../JS/navbar.js"></script>
-        <link href="../CSS/navbar.css" rel="stylesheet" />
+        <script src ="/Jee-Shop/JS/jquery.js"></script>
+        <script src ="/Jee-Shop/JS/navbar.js"></script>
+        <link href="/Jee-Shop/CSS/navbar.css" rel="stylesheet" />
+
 
 
 
@@ -24,13 +22,25 @@ and open the template in the editor.
             <nav>
                 <ul>
                     <li class="l">
-                        <a href="/Jee-Shop/">De Kaaswinkel!</a>
+                        <a href="/Jee-Shop/" >De Kaaswinkel!</a>
                     </li>
-                    
+
+                    <li class="emp" hidden>
+                        <a href="/Jee-Shop/employees/products.html" class="emp_links">Producten</a>
+                    </li>
+
+                    <li class="emp" hidden>
+                        <a href="/Jee-Shop/employees/users.html" class="emp_links">Gebruikers</a>
+                    </li>
+
+                    <li class="emp" hidden>
+                        <a href="/Jee-Shop/employees/orders.html" class="emp_links">Orders</a>
+                    </li>
+
                     <li class="l">
-                        
-                        <input type="submit" id="cookies" value="Show Cookies"  style=" margin: 5; font-size: 12px; padding:2px ; margin-top: 10px">
-                        
+
+                        <input type="submit" id="cookies" value="Show Cookies"  style=" margin: 5; font-size: 12px; padding:2px ; margin-top: 10px" hidden>
+
                     </li>
 
 
@@ -80,7 +90,13 @@ and open the template in the editor.
                             </form>
                         </div>                     
                     </li>
-
+                    
+                    <li class ="r" >
+                        <a  href="/Jee-Shop/customer_cart" >
+                            <img  src="/Jee-Shop/IMG/icon-cart.png" height="25" width="30" />
+                            <span></span></a>
+                    </li>
+ 
                 </ul>
             </nav>
         </div>

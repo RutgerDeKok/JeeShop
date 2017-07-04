@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <script src ="/Jee-Shop/JS/jquery.js"></script>
+        
+    </head>
+    <body>
+        <h1 align="center">Er is een fout opgetreden</h1>
+        <h2 align="center">Toegang geweigerd</h2>
+        <h2 align="center"id="message">code</h2>
+        <p align="center"> <a href="/Jee-Shop/">Terug naar de Kaaswinkel!</a></p>
+
+
+
+        <script>
+            $(document).ready(function () {
+                var message = window.location.search.substring(1);
+                 $('#message').html('Error Code: '+message);
+            });
+
+
+        </script>
+
+    </body>
+</html>

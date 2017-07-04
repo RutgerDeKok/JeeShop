@@ -1,6 +1,5 @@
 package rsvier.security;
 
-
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.Filter;
@@ -12,8 +11,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import rsvier.model.UserType;
-
 
 @WebFilter(filterName = "EmployeesFilter", urlPatterns = {"/employees/*"})
 public class EmployeesFilter implements Filter {
@@ -27,16 +26,16 @@ public class EmployeesFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
-            FilterChain chain)
-            throws IOException, ServletException {
+            FilterChain chain) throws IOException, ServletException {
         System.out.println("doFilter() draait!");
 
         if (debug) {
             log("NewFilter:doFilter()");
         }
 
-        HttpServletRequest hsr = (HttpServletRequest) request;
-        Cookie[] cookies = hsr.getCookies();
+        HttpServletRequest hsRequest = (HttpServletRequest) request;
+        HttpServletResponse hsResponse = (HttpServletResponse) response;
+        Cookie[] cookies = hsRequest.getCookies();
         String tokenFromCookie = null;
 
         if (cookies != null) {
@@ -54,22 +53,24 @@ public class EmployeesFilter implements Filter {
         if (tokenFromCookie == null || !tokenValidator.validateToken(tokenFromCookie)) {
             System.out.println("User not allowed to go to /emlpoyees/*");
             // delete cookie and redirect to error page code 401
-
+            hsResponse.sendRedirect("/Jee-Shop/error.html?Scheer&nbsp;weg&nbsp;jij&nbsp;deugniet!&nbsp;404");
+            chain.doFilter(request, response);
 
         } else {
             String tokenUserType = tokenValidator.getUserType(tokenFromCookie);
             System.out.println("token user type= " + tokenUserType);
-            if (tokenUserType.equals(UserType.EMPLOYEE.name())) {
+            if (tokenUserType.equals(UserType.CUSTOMER.name())) {
                 // not authorized redirect to error page code 403
+                hsResponse.sendRedirect("/Jee-Shop/error.html?Scheer&nbsp;weg&nbsp;jij&nbsp;deugniet!&nbsp;403");
+                chain.doFilter(request, response);
             }
-                // authorized
+            // authorized
             System.out.println("Authorized to go to page");
             chain.doFilter(request, response);
         }
 
     }
-  
-    
+
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured. 
@@ -88,7 +89,7 @@ public class EmployeesFilter implements Filter {
         }
     }
 
-     @Override
+    @Override
     public void destroy() {
     }
 
