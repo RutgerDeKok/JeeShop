@@ -69,6 +69,7 @@ function startProductTable() {
 function addProduct(index, productId, productPrijs) {   
        
        var cartId = getCookie("UserId");
+       if (!cartId == ""){ 
        var quantity = $("#quantity_field"+index).val();
        console.log("cart = " + cartId);
        var totalPrice = quantity* productPrijs;
@@ -101,52 +102,10 @@ function addProduct(index, productId, productPrijs) {
                });
             });   
         });
-          
-//    else 
-//        alert("you are not logged in, looser.. Log in first please");
+        }      
+        else 
+        alert("you are not logged in, looser.. Log in first please");
 }
-
-//                $.when(
-//                    $.getJSON(productUrl),
-//                    $.getJSON(cartUrl)
-//                    ).done(function(product, cart) {
-//                        
-//                    jsonData = {"cartsuborder":{"quantity" : "1",
-//                        "subTotal": prijs,
-//                        "cart" : cart,
-//                        "product" : product
-//                        }};
-//                        console.log(JSON.stringify(jsonData));
-                        
-              
-                
-
-        
-//           $.ajax({
-//            type: "GET",
-//            url: "rest/products/" + productId,
-//            contentType: "application/json",
-//            succes: function(productDB){
-//                product = productDB;
-//            }
-            
-               
-                
-//                   },
-//                   
-//             error: function () {
-//                   console.log("fail 1");
-//                      
-//                   }  
-//           });       
-               
-            
-        
-           
-       
-//    window.location.href = "edit-product.html?" + id;
-
-
 
 function displayCatFilters() {
     catFilter = window.location.search.substring(1);

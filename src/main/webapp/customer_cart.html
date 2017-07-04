@@ -44,6 +44,10 @@
             </tfoot>
 
         </table> 
+        
+        <div id="gets_deleted">
+            
+        </div>
         <button><a href="customer_confirmation.html">Bevestig</a></button>
         <script>
            
@@ -51,7 +55,7 @@
             
               $(document).ready(function () {
                  id =  getCookie("UserId");
-                 console.log(id);
+        
                  startCartInfoTable(id);
                  startSubOrderTable(id);
                 });
@@ -94,7 +98,7 @@
                         
                       
                       if (value.cart && value.cart.id==id  ){
-                        datarowSubOrder += ' <tr class="table_content">';
+                        datarowSubOrder += ' <tr class="table_content" id="' + value.id + '" >';
                         datarowSubOrder += ' <td align=/"left/">' + value.id + ' </td>';
                         datarowSubOrder += ' <td align=/"left/">' + value.subTotal + ' </td>';
                         datarowSubOrder += ' <td align=/"left/">' + value.product.name + ' </td>';
@@ -114,14 +118,15 @@
         }
             
             function deleteRow(id, cartId){
-                
+                $("#" + id).fadeOut(2000), function(){
+                    $("#" + id).remove();
+                };
                 $.ajax({
             type: "DELETE",
             url: "rest/cartsuborders/" + id,
-//            dataType: "json", alleen nodig als return data wordt 
             contentType: "application/json",
             success: function () {
-                startSubOrderTable(cartId);
+               console.log("succesvol verwijderd");
             },
             error: function () {
                console.log("mislukt,, sukkel");
