@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -39,7 +40,7 @@ import rsvier.security.scrypt.SCryptUtil;
  */
 @Stateless
 @Path("/users")
-@PermitAll
+@RolesAllowed( {"EMPLOYEE","ADMIN"} )
 public class UserFacadeREST {
 
     @EJB
@@ -50,6 +51,7 @@ public class UserFacadeREST {
     private TokenValidator tokenValidator;
 
     @POST
+    @PermitAll
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response create(User registerData) {
         System.out.println("email to check: " + registerData.getEmail());
@@ -107,6 +109,7 @@ public class UserFacadeREST {
     }
 
     @GET
+    @PermitAll
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public User find(@PathParam("id") Long id) {
@@ -114,8 +117,7 @@ public class UserFacadeREST {
     }
 
     @GET
-//    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<User> findAll() {
         
 //         //tijdelijke hashgenerator
@@ -130,9 +132,6 @@ public class UserFacadeREST {
 //             i++;
 //         }
 //         // einde tijdelijke datum generator
-        
-        
-        
         
         return facade.findAll();
 
@@ -194,6 +193,7 @@ public class UserFacadeREST {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
+    @PermitAll
     @Path("/login")
     public Response doLogin(User login) {
         User dbUser = facade.findByEmail(login.getEmail());

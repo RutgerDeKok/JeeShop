@@ -29,7 +29,7 @@ import rsvier.persistence.SaleFacade;
  */
 @Stateless
 @Path("/sales")
-//@RolesAllowed( {"EMPLOYEE","ADMIN"} )
+@RolesAllowed( {"EMPLOYEE","ADMIN"} )
 public class SaleFacadeREST {
 
     @EJB
@@ -37,7 +37,7 @@ public class SaleFacadeREST {
 
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-//    @PermitAll
+    @PermitAll
     public void create(Sale entity) {
         facade.create(entity);
     }
@@ -57,14 +57,14 @@ public class SaleFacadeREST {
 
     @GET
     @Path("{id}")
+    @PermitAll
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Sale find(@PathParam("id") Long id) {
         return facade.find(id);
     }
 
     @GET
-//    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Produces( MediaType.APPLICATION_JSON)
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Sale> findAll() {
         
 //        //tijdelijke datum generator
@@ -83,6 +83,7 @@ public class SaleFacadeREST {
 
     @GET
     @Path("{from}/{to}")
+    @PermitAll
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Sale> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return facade.findRange(new int[]{from, to});
@@ -90,12 +91,14 @@ public class SaleFacadeREST {
 
     @GET
     @Path("count")
+    @PermitAll
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
         return String.valueOf(facade.count());
     }
     
     @Path("{id}/suborders")
+    @PermitAll
     public FinalSuborderFacadeREST getSuborders() {
         return new FinalSuborderFacadeREST();
     }

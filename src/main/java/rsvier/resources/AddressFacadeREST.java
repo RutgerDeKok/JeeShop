@@ -35,12 +35,14 @@ public class AddressFacadeREST{
     private AddressFacade facade;    
 
     @POST
+    @PermitAll
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Address entity) {
         facade.create(entity);
     }
 
     @PUT
+    @PermitAll
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Long id, Address entity) {
@@ -55,18 +57,21 @@ public class AddressFacadeREST{
 
     @GET
     @Path("{id}")
+    @PermitAll
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Address find(@PathParam("id") Long id) {
         return facade.find(id);
     }
 
     @GET
+    @PermitAll
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Address> findAll() {
         return facade.findAll();
     }
 
     @GET
+    @PermitAll
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Address> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
@@ -74,6 +79,7 @@ public class AddressFacadeREST{
     }
 
     @GET
+    @PermitAll
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {

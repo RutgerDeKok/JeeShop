@@ -30,7 +30,8 @@ import rsvier.persistence.CartSuborderFacade;
 
 @Stateless
 @Path("/products")
-//@RolesAllowed( {"EMPLOYEE","ADMIN"} )
+@RolesAllowed( {"EMPLOYEE","ADMIN"} )
+
 public class ProductFacadeREST {
 
     @EJB
@@ -39,14 +40,12 @@ public class ProductFacadeREST {
     CartSuborderFacade csoFacade;
 
     @POST
-    @PermitAll
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Product entity) {
         facade.create(entity);
     }
 
     @PUT
-    @PermitAll
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Long id, Product entity) {
@@ -54,7 +53,6 @@ public class ProductFacadeREST {
     }
 
     @DELETE
-    @PermitAll
     @Path("{id}")
     public void remove(@PathParam("id") Long id) {
         System.out.println("rsvier.resources.ProductFacadeREST.remove() id: "+id);

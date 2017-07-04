@@ -61,7 +61,7 @@ function startProductTable() {
 
 function editRow(index, id) {
 //   index not used at the moment
-    window.location.href = "edit-product.html?" + id;
+    window.location.href = "employees/edit-product.html?" + id;
 
 }
 

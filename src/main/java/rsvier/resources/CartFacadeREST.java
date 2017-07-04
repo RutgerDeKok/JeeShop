@@ -7,6 +7,7 @@ package rsvier.resources;
 
 import java.util.List;
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -27,13 +28,15 @@ import rsvier.persistence.CartFacade;
  */
 @Stateless
 @Path("/carts")
-@PermitAll
+@RolesAllowed( {"EMPLOYEE","ADMIN"} )
+
 public class CartFacadeREST {
 
     @EJB
     private CartFacade facade;
 
     @POST
+    @PermitAll
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Cart entity) {
         facade.create(entity);
@@ -53,6 +56,7 @@ public class CartFacadeREST {
     }
 
     @GET
+    @PermitAll
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Cart find(@PathParam("id") Long id) {
@@ -60,12 +64,14 @@ public class CartFacadeREST {
     }
 
     @GET
+    @PermitAll
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Cart> findAll() {
         return facade.findAll();
     }
 
     @GET
+    @PermitAll
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Cart> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
@@ -73,6 +79,7 @@ public class CartFacadeREST {
     }
 
     @GET
+    @PermitAll
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
@@ -80,16 +87,19 @@ public class CartFacadeREST {
     }
     
     @Path("{id}/addresses")
+    @PermitAll
     public AddressFacadeREST getBillingAddress() {
         return new AddressFacadeREST();
     }
     
     @Path("{id}/suborders")
+    @PermitAll
     public CartSuborderFacadeREST getCartSubOrders() {
         return new CartSuborderFacadeREST();
     }
     
     @Path("{id}/sales")
+    @PermitAll
     public SaleFacadeREST getSale() {
         return new SaleFacadeREST();
     }
