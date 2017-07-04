@@ -1,23 +1,52 @@
 $(document).ready(function () {
+
+    // set click action on menu items
     $('#login-trigger').click(function () {
         toggleActive($('#login-list'));
         isActive($(this));
     });
-});
 
-$(document).ready(function () {
     $('#signup-trigger').click(function () {
         toggleActive($('#signup-list'));
         isActive($(this));
     });
-});
 
-$(document).ready(function () {
     $('#signedin-trigger').click(function () {
         toggleActive($('#signedin-list'));
         isActive($(this));
     });
+
+    // set login click function
+    $('#login-submit').click(function (e) {
+        e.preventDefault();
+        login();
+    });
+
+    // set logout click function
+    $('#logout-submit').click(function (e) {
+        e.preventDefault();
+        logout();
+    });
+
+    // sign up submit function
+    $('#signup-submit').click(function (e) {
+        e.preventDefault();
+        signup();
+    });
+
+    // show cookies button
+    $('#cookies').click(function (e) {
+        e.preventDefault();
+        console.log("Cookies: " + document.cookie);
+    });
+
+    // check for user cookie
+    if (getCookie("UserEmail")) {
+        ShowLogedInDetails(getCookie("UserEmail"), getCookie("UserType"));
+    }
+
 });
+
 
 // changes the class of the a tag in the list item
 function toggleActive(listItem) {
@@ -52,126 +81,101 @@ function slideUp(element) {
     $(element).find("div.dropDown").slideUp();
 }
 
-
-// login submit function
-$(document).ready(function () {
-    $('#login-submit').click(function (e) {
-
-        e.preventDefault();
-
-        var jsonData = JSON.stringify($('#login').serializeArray()
-                .reduce(function (dataObject, field) {
-                    dataObject[field.name] = field.value;
-                    return dataObject;
-                }, {}));
-        console.log("login json: " + jsonData);
-
-        $.ajax({
-            url: 'rest/users/login',
-            type: 'POST',
-            contentType: "application/json; charset=utf-8",
-
-            dataType: "text",
-            data: jsonData,
-            success: function (data) {
-
-                var dataObject = JSON.parse(data);
-
-                document.cookie = "AccessToken=" + dataObject.token;
-                document.cookie = "UserId=" + dataObject.id;
-                document.cookie = "UserEmail=" + dataObject.email;
-                document.cookie = "UserType=" + dataObject.type;
-
-                ShowUserDetails(dataObject.email);
-
-            },
-            error: function (data) {
-                alert("log in gegevens incorrect");
-                console.log(data);
-            }
-        });
-    });
-});
-
-function ShowUserDetails(email) {
+function ShowLogedInDetails(email, type) {
     $('#signedin-list').find('a').html('Welcome ' + email + '<span>&#x25BC;</span>');
-    $('signup-trigger').removeClass('active');
-    isActive($('signup-trigger'));
+    toggleActive($('#login-list'));
+    isActive($('#login-trigger'));
     $('#signedin-list').show();
     $('#login-list').hide();
     $('#signup-list').hide();
+
+    if (type !== 'CUSTOMER') {
+        $('.emp').show();
+    }
 }
 
-// check for user cookie
-$(document).ready(function () {
-    if (getCookie("UserEmail")) {
-        ShowUserDetails(getCookie("UserEmail"));
-    }
-});
 
+// login submit function
+function login() {
 
-// show cookies button
-$(document).ready(function () {
-    
-     $('#cookies').click(function (e) {
-        e.preventDefault();
-            console.log("Cookies: " + document.cookie);
+    var jsonData = JSON.stringify($('#login').serializeArray()
+            .reduce(function (dataObject, field) {
+                dataObject[field.name] = field.value;
+                return dataObject;
+            }, {}));
+    console.log("login json: " + jsonData);
+
+    $.ajax({
+        url: 'rest/users/login',
+        type: 'POST',
+        contentType: "application/json; charset=utf-8",
+        dataType: "text",
+        data: jsonData,
+        success: function (data) {
+            console.log(data);
+            var dataObject = JSON.parse(data);
+            document.cookie = "AccessToken=" + dataObject.token;
+            document.cookie = "UserId=" + dataObject.id;
+            document.cookie = "UserEmail=" + dataObject.email;
+            document.cookie = "UserType=" + dataObject.type;
+
+            ShowLogedInDetails(dataObject.email,dataObject.type);
+        },
+        error: function (data) {
+            alert("log in gegevens incorrect");
+            console.log(data);
+        }
     });
-    
-});
+}
 
 
 // logout submit function
-$(document).ready(function () {
-    $('#logout-submit').click(function (e) {
+function logout() {
 
-        e.preventDefault();
-        // cookie deleten
-        var cookies = document.cookie;
-        console.log("deleting cookies");
-        document.cookie = "AccessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-        document.cookie = "UserId=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-        document.cookie = "UserEmail=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-        document.cookie = "UserType=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+    // cookie deleten
+    console.log("deleting cookies");
+    document.cookie = "AccessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+    document.cookie = "UserId=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+    document.cookie = "UserEmail=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+    document.cookie = "UserType=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
 
-        // de-activate, slide up, etc
-        $('signup-trigger').removeClass('active');
-        isActive($('signup-trigger'));
-        $('#signedin-list').find('a').html('Welcome <span>&#x25BC;</span>');
-        $('#signedin-list').hide();
-        $('#login-list').show();
-        $('#signup-list').show();
-      
-    });
-});
+    // de-activate, slide up, etc
+    $('signup-trigger').removeClass('active');
+    isActive($('signup-trigger'));
+    $('#signedin-list').find('a').html('Welcome <span>&#x25BC;</span>');
+    $('#signedin-list').hide();
+    $('#login-list').show();
+    $('#signup-list').show();
+    $('.emp').hide();
+
+}
 
 
+// sign up submit function
+function signup() {
 
-$(document).ready(function () {
-    $('#signup-submit').click(function (e) {
-        e.preventDefault();
-        var jsonData = JSON.stringify($('#signup').serializeArray()
-                .reduce(function (dataObject, field) {
-                    dataObject[field.name] = field.value;
-                    return dataObject;
-                },
-                        {}));
-        alert(jsonData);
-        $.ajax({
-            url: 'rest/users',
-            type: 'POST',
-            contentType: "application/json; charset=utf-8",
-            data: jsonData,
-            success: function (data) {
-                console.log("Succes");
+    var jsonData = JSON.stringify($('#signup').serializeArray()
+            .reduce(function (dataObject, field) {
+                dataObject[field.name] = field.value;
+                return dataObject;
             },
-            error: function (data) {
-                console.log("Error");
-            }
-        });
-    }
-    );
-});
+                    {}));
+    alert(jsonData);
+    $.ajax({
+        url: 'rest/users',
+        type: 'POST',
+        contentType: "application/json; charset=utf-8",
+        data: jsonData,
+        success: function (data) {
+            console.log("Register Succes");
+        },
+        error: function (data) {
+            console.log("Error");
+        }
+    });
+}
+
+
 
 
 function getCookie(cname) {

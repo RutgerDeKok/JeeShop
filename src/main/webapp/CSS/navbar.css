@@ -18,9 +18,15 @@ li.r {
     float: right;
 }
 
+li.emp {
+    float: left;
+}
+
+
 li a {
     display: block;
     color: white;
+    font-size: 120%;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
@@ -28,6 +34,11 @@ li a {
 
 li a:hover:not(.active) {
     background-color: #111;
+}
+
+
+.emp_links{
+    color: #3366ff;
 }
 
 .active {
