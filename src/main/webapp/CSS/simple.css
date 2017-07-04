@@ -133,10 +133,11 @@ button {
 #productInfo{
     margin: 30px;
     text-align: center;
-    color: blue;
-    border: 1px solid black;
-    background: rgb(222,222,222);
+    font: 15px bold Tahoma;
+    color: black;
+    border: 2px solid blue;
+    background: rgb(222,100,100);
     width: 200px;
-    height: 200px;
+    height: 100px;
     padding: 20px;
 }

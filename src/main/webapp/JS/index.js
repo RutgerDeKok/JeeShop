@@ -58,7 +58,7 @@ function startProductTable() {
             datarow += ' <td align=/"left/">' + value.stockCount + ' </td>';
             datarow += ' <td align=/"left/">' + value.info + ' </td>';
             datarow += ' <td align=/"left/" > <input id="quantity_field' + rowindex + '" type="text"></input>';  
-            datarow += ' <td align=/"left/" class="/click_button/" onclick=\"addProduct(' + rowindex + ',' + value.id + ',' + value.price + ')\"><strong>Voeg toe</strong></td>';
+            datarow += ' <td align=/"left/" class="/click_button/" onclick=\"addProduct(' + rowindex + ',' + value.id + ',' + value.price + ')\"><button><strong>Voeg toe</strong></button></td>';
              
             datarow += '</tr>';
             rowindex++;
@@ -149,14 +149,11 @@ $(document).on("change", "input[type='radio']", function (event) {
 });
 
 $("#productsTable").mouseover(function(){
-    $(".tablerow").mouseover(function(){
-        $(this).css("background: rgb(252,150,150);");
-        var row = $(this).attr('name');
-        var rowInfo =  tableInfoTable[row];
-        $("#productInfo").html(rowInfo);
-        
-    console.log(rowInfo);
-    
+    $(".tablerow").mouseover(function(event){
+        //$(this).css("background", "rgb(252,150,150)");
+        $("#productInfo").css({"position":"absolute","top":event.clientY,"left":event.clientX});
+        $("#productInfo").html(tableInfoTable[$(this).attr('name')]);
+       
     });
 });
  
