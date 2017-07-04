@@ -11,18 +11,14 @@
         <title>Kaas Shop</title>
         <script src ="JS/jquery.js"></script>
         <script src ="JS/products.js"></script>
+        <script src ="JS/cookies.js"></script>
         <link href="CSS/simple.css" rel="stylesheet" />
     </head>
 
     <body id="bodyid">
         <h2 class="title">Confirmation</h2>
         <br/><br/><br/><br/>
-        
-        <form id="cartForm">
-                <label><b>Welke Cart Wil je </b></label> <input id="IdId" type="text"
-                                                         name="id" /><br /> 
-</form>
-                <button id="submitButton"> zet Cart </button>
+
         
       
         <button> <a href="customer_cart.html">Back to Cart</a></button>
@@ -59,22 +55,16 @@
        <button id='confirmation_button'>ECHTE BEVESTIGING</button>
         <script>
             var order_to_send;
-            var id = 3;
+            var id;
             var totalPrijs = 0;
+            
               $(document).ready(function () {
-             
+             id =  getCookie("UserId");
+                 console.log(id);
                  startCartInfoTable(id);
                  startSubOrderTable(id);
                 });
-           
-            $("#submitButton").click(function(){
-               
-                id = $("#IdId").val();
-               
-                 startSubOrderTable(id);
-                  startCartInfoTable(id);
-                
-            });
+
          
             $("#confirmation_button").click(function(){
                  id = $("#IdId").val();

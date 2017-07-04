@@ -66,10 +66,11 @@ function startProductTable() {
     });
 }
 
-function addProduct(index, productId, prijs) {       
-       var cartId = $("#IdId").val();
+function addProduct(index, productId, prijs) {   
+       
+       var cartId = getCookie("UserId");
        var quantity = $("#quantity_field"+index).val();
-        
+        console.log(cartId);
         
       // var totalPrice = quantity* prijs;
        console.log(quantity);
@@ -110,7 +111,11 @@ function addProduct(index, productId, prijs) {
                });
             });   
         });
-}    
+          
+//    else 
+//        alert("you are not logged in, looser.. Log in first please");
+}
+
 //                $.when(
 //                    $.getJSON(productUrl),
 //                    $.getJSON(cartUrl)

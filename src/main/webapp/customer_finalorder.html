@@ -4,6 +4,7 @@
         <title>Order</title>
         <script src ="JS/jquery.js"></script>
         <script src ="JS/products.js"></script>
+        <script src ="JS/cookies.js"></script>
         <link href="CSS/simple.css" rel="stylesheet" />
     </head>
     
@@ -44,9 +45,11 @@
        
          <h2 class="title">Delivered by tomorrow!</h2>
         <script>
-            var id = 3;
+            var id;
  
               $(document).ready(function () {
+                  id =  getCookie("UserId");
+                 console.log(id);
                   $(".title").fadeToggle(2000).fadeToggle(2000).fadeToggle(2000).fadeToggle(2000)
                   .fadeToggle(2000).fadeToggle(2000).fadeToggle(2000).fadeToggle(2000)
                     .fadeToggle(2000).fadeToggle(2000).fadeToggle(2000).fadeToggle(2000);
@@ -55,14 +58,7 @@
                  startSubOrderTable(id);
                 });
            
-            $("#submitButton").click(function(){
-               
-                id = $("#IdId").val();
-               
-                 startSubOrderTable(id);
-                  startCartInfoTable(id);
-                
-            });
+       
          
 
             function startCartInfoTable(id){

@@ -76,9 +76,9 @@ public class UserFacadeREST {
 
             facade.create(newUser);
 
-//            Cart newCart = new Cart();
-////            User temp = facade.findByEmail(newUser.getEmail());
-////            newCart.setId(temp.getId());
+            Cart newCart = new Cart();
+            User temp = facade.findByEmail(newUser.getEmail());
+            newCart.setId(temp.getId());
 //            newCart.setId(28L);
 ////            User temp =  facade.find(28L)
 ////            newCart.setUserId();

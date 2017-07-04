@@ -4,18 +4,13 @@
         <title>Kaas Shop</title>
         <script src ="JS/jquery.js"></script>
         <script src ="JS/products.js"></script>
+        <script src ="JS/cookies.js"></script>
         <link href="CSS/simple.css" rel="stylesheet" />
     </head>
 
     <body>
         <h2 class="title">Customer Cart</h2>
         <br/><br/><br/><br/>
-        
-        <form id="cartForm">
-                <label><b>Welke Cart Wil je </b></label> <input id="IdId" type="text"
-                                                         name="id" /><br /> 
-</form>
-                <button id="submitButton"> zet Cart </button>
         
       
         <button> <a href="index.html">Naar hoofdscherm</a></button>
@@ -51,23 +46,17 @@
         </table> 
         <button><a href="customer_confirmation.html">Bevestig</a></button>
         <script>
-            var id = 3;
- 
+           
+            var id;
+            
               $(document).ready(function () {
-             
+                 id =  getCookie("UserId");
+                 console.log(id);
                  startCartInfoTable(id);
                  startSubOrderTable(id);
                 });
            
-            $("#submitButton").click(function(){
-               
-                id = $("#IdId").val();
-               
-                 startSubOrderTable(id);
-                  startCartInfoTable(id);
-                
-            });
-         
+          
 
             function startCartInfoTable(id){
                $(".table_info_content").remove();  
@@ -125,6 +114,7 @@
         }
             
             function deleteRow(id, cartId){
+                
                 $.ajax({
             type: "DELETE",
             url: "rest/cartsuborders/" + id,
