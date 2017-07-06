@@ -40,7 +40,7 @@ import rsvier.security.scrypt.SCryptUtil;
  */
 @Stateless
 @Path("/users")
-@RolesAllowed( {"EMPLOYEE","ADMIN"} )
+@RolesAllowed({"EMPLOYEE", "ADMIN"})
 public class UserFacadeREST {
 
     @EJB
@@ -117,22 +117,10 @@ public class UserFacadeREST {
     }
 
     @GET
+    @PermitAll
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<User> findAll() {
-        
-//         //tijdelijke hashgenerator
-//         List<User> list = facade.findAll();
-//         int i = 0;
-//         String pass = "Aa1111";
-//         for(User user : list){
-//             String hash = SCryptUtil.scrypt(pass, 16384, 8, 1);
-//             System.out.println("hash: "+hash);
-//             user.setPassHash(hash);
-//             facade.edit(user);
-//             i++;
-//         }
-//         // einde tijdelijke datum generator
-        
+
         return facade.findAll();
 
     }
@@ -203,30 +191,25 @@ public class UserFacadeREST {
             String token = null;
             try {
                 token = tokenValidator.createToken(dbUser);
-                System.out.println("Token received from generator: "+token);
+                System.out.println("Token received from generator: " + token);
             } catch (IOException ex) {
                 Logger.getLogger(UserFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
                 System.out.println("Onsuccesvolle authenticatie");
                 return Response.status(500).build();
             }
             //Token uitpak test
-            System.out.println("valid token? "+tokenValidator.validateToken(token));     
-            
+            System.out.println("valid token? " + tokenValidator.validateToken(token));
+
 //            return Response.ok().cookie(new NewCookie("AccessToken", token)).build();
 //             return Response.ok().entity(token).build();
-             
-             //probeersel
-             Map<String, String> map = new HashMap<>();
-             map.put("token", token);
-             map.put("email",dbUser.getEmail());
-             map.put("type",dbUser.getType().name());
-             map.put("id",dbUser.getId().toString());
+            //probeersel
+            Map<String, String> map = new HashMap<>();
+            map.put("token", token);
+            map.put("email", dbUser.getEmail());
+            map.put("type", dbUser.getType().name());
+            map.put("id", dbUser.getId().toString());
             return Response.ok().entity(MapToJson.mapToJson(map)).build();
-             
-             
-             
-             
-            
+
         } else {
             System.out.println("Onsuccesvolle authenticatie");
             return Response.status(404).build();
