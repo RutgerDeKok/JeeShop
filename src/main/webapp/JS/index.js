@@ -1,4 +1,3 @@
-var scriptIsReady = false;
 var tableInfoTable = [];
 var cheese_name = "";
 
@@ -48,15 +47,16 @@ function startProductTable() {
 
     $.getJSON('rest/products/cat/'+catFilter, function (data) {
         
-        var datarow = " ";
+        var datarow = " "; 
         var rowindex = 0;
-
+        var substring = cheese_name;
         $.each(data, function (key, value) {
             var name = value.name;
-            var substring = cheese_name;
-//            console.log (name);
+
+//           console.log (name);
 //            console.log(substring);
-//            console.log(name.indexOf(substring) !== -1);
+            console.log(name.toLowerCase().indexOf(substring.toLowerCase()) !== -1)
+            if (name.toLowerCase().indexOf(substring.toLowerCase()) !== -1){
             datarow += '<tr class="table_info_content" class="tablerow" name=' + rowindex + ' >';
             datarow += ' <td align=/"left/">' + value.name + ' </td>';
             datarow += ' <td align=/"left/">' + getCategory(value.category) + ' </td>';
@@ -69,12 +69,13 @@ function startProductTable() {
              
             datarow += '</tr>';
             rowindex++;
-            
             tableInfoTable.push(value.info);
+         }
         });
+          cheese_name = "";
+          substring = "";
         $('#productsTable').append(datarow);
     });
-    scriptIsReady = true;
 }
 
 function addProduct(index, productId, productPrijs) {   
@@ -148,8 +149,9 @@ function displayCatFilters() {
 }
 
 function searchCheese(){
-    cheeseName = $("#cheese_name").val();
+    cheese_name = $("#cheese_name").val();
     startProductTable();
+  
     
 }
 
