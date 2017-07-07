@@ -44,3 +44,9 @@ li a:hover:not(.active) {
 .active {
     background-color: #4CAF50;
 }
+
+#signupText{
+    margin-left: 30px;
+    color: orange;
+    font-size: 120%;
+}

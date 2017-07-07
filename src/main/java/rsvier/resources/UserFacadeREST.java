@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.PermitAll;
@@ -19,9 +20,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 import rsvier.security.MapToJson;
 import rsvier.model.Cart;
@@ -50,49 +49,6 @@ public class UserFacadeREST {
     @EJB
     private TokenValidator tokenValidator;
 
-    @POST
-    @PermitAll
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response create(User registerData) {
-        System.out.println("email to check: " + registerData.getEmail());
-        User checkUser = null;
-
-        try {
-            checkUser = facade.findByEmail(registerData.getEmail());
-        } catch (Exception e) {
-            System.out.println("User not in use yet");
-        }
-
-        if (checkUser == null) {
-            System.out.println("Gebruiker wordt geregistreerd");
-            User newUser = new User();
-            newUser.setType(UserType.CUSTOMER);
-
-            String email = registerData.getEmail();
-            System.out.println("email: " + email);
-            newUser.setEmail(registerData.getEmail());
-
-            String passHash = SCryptUtil.scrypt(registerData.getPassHash(), 16384, 8, 1);
-            System.out.println("hash: " + passHash);
-            newUser.setPassHash(passHash);
-
-            facade.create(newUser);
-
-            Cart newCart = new Cart();
-            User temp = facade.findByEmail(newUser.getEmail());
-            newCart.setId(temp.getId());
-            newCart.setUser(temp);
-            List<CartSuborder> subs = new ArrayList<>();
-            newCart.setCartSuborderList(subs);
-            cartFacade.create(newCart);
-
-            return Response.ok().build();
-        } else {
-            System.out.println("Onsuccesvolle authenticatie");
-            return Response.status(404).build();
-        }
-    }
-
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -107,7 +63,6 @@ public class UserFacadeREST {
     }
 
     @GET
-    @PermitAll
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public User find(@PathParam("id") Long id) {
@@ -199,9 +154,6 @@ public class UserFacadeREST {
             //Token uitpak test
             System.out.println("valid token? " + tokenValidator.validateToken(token));
 
-//            return Response.ok().cookie(new NewCookie("AccessToken", token)).build();
-//             return Response.ok().entity(token).build();
-            //probeersel
             Map<String, String> map = new HashMap<>();
             map.put("token", token);
             map.put("email", dbUser.getEmail());
@@ -215,10 +167,45 @@ public class UserFacadeREST {
         }
     }
 
-    // geef cookie mee met de token
-//        login.setJwt(authToken.createToken());
-//        // ophalen key uit cookie
-//        
-//        
-//        authToken.verifyToken(login);
+    @POST
+    @PermitAll
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Response create(User registerData) {
+
+        // check if email is not already used
+        System.out.println("email to check: " + registerData.getEmail());
+        try {
+
+            System.out.println("Gebruiker wordt geregistreerd");
+            User newUser = new User();
+            newUser.setType(UserType.CUSTOMER);
+ 
+            String email = registerData.getEmail().trim();
+            System.out.println("email: " + email);
+            newUser.setEmail(registerData.getEmail());
+
+            String passHash = SCryptUtil.scrypt(registerData.getPassHash().trim(), 16384, 8, 1);
+            System.out.println("hash: " + passHash);
+            newUser.setPassHash(passHash);
+;
+            facade.create(newUser);
+
+            // Create a new cart for the new user      
+            User temp = facade.findByEmail(newUser.getEmail());
+            System.out.println("new user id: " + temp.getId());
+            Cart newCart = new Cart();
+            newCart.setId(temp.getId());
+            newCart.setUser(temp);
+            List<CartSuborder> subs = new ArrayList<>();
+            newCart.setCartSuborderList(subs);
+            cartFacade.create(newCart);
+
+            return Response.ok().entity("SUCCESS").build();
+        } catch (Exception e) {
+            return Response.ok().entity("EMAIL_IN_USE").build();
+        }
+    }
+
+
 }
