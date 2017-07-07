@@ -55,7 +55,7 @@ function startProductTable() {
 
 //           console.log (name);
 //            console.log(substring);
-            console.log(name.toLowerCase().indexOf(substring.toLowerCase()) !== -1)
+            console.log(name.toLowerCase().indexOf(substring.toLowerCase()) !== -1);
             if (name.toLowerCase().indexOf(substring.toLowerCase()) !== -1){
             datarow += '<tr class="table_info_content" class="tablerow" name=' + rowindex + ' >';
             datarow += ' <td align=/"left/">' + value.name + ' </td>';

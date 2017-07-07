@@ -7,6 +7,7 @@ package rsvier.resources;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
@@ -30,6 +31,7 @@ import rsvier.persistence.CartSuborderFacade;
 
 @Stateless
 @Path("/products")
+//@DeclareRoles({"CUSTOMER", "EMPLOYEE","ADMIN"})
 @RolesAllowed( {"EMPLOYEE","ADMIN"} )
 
 public class ProductFacadeREST {
@@ -40,6 +42,7 @@ public class ProductFacadeREST {
     CartSuborderFacade csoFacade;
 
     @POST
+    @PermitAll
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Product entity) {
         facade.create(entity);
@@ -47,6 +50,7 @@ public class ProductFacadeREST {
 
     @PUT
     @Path("{id}")
+    @PermitAll
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Long id, Product entity) {
         facade.edit(entity);
@@ -54,6 +58,7 @@ public class ProductFacadeREST {
 
     @DELETE
     @Path("{id}")
+    @PermitAll
     public void remove(@PathParam("id") Long id) {
         System.out.println("rsvier.resources.ProductFacadeREST.remove() id: "+id);
         //1. delete CartSubOrders that contain product to be deleted.

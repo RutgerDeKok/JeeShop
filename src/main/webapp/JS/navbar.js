@@ -29,19 +29,18 @@ $(document).ready(function () {
     });
 
 
-
 //      // sign up submit function
 //    $('#signup-submit').click(function (e) {
 //        e.preventDefault();
 //        signup();
 //    });
 
-    // show cookies button
-    $('#cookies').click(function (e) {
-        e.preventDefault();
-//        console.log("Cookies: " + document.cookie);
-        createUserTest();
-    });
+//    // show cookies button
+//    $('#cookies').click(function (e) {
+//        e.preventDefault();
+////        console.log("Cookies: " + document.cookie);
+//        createUserTest();
+//    });
 
     // check for user cookie
     if (getCookie("UserEmail")) {

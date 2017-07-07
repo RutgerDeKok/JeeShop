@@ -31,6 +31,7 @@ public class RestAuthenticationFilter implements ContainerRequestFilter {
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
+        System.out.println("***   RUNNING REST FILTER   ***");
         
         Cookie cookie = requestContext.getCookies().get("AccessToken");
         String token = cookie.getValue();

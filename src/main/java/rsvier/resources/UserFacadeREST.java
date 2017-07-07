@@ -3,9 +3,9 @@ package rsvier.resources;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.PermitAll;
@@ -22,7 +22,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import rsvier.security.MapToJson;
 import rsvier.model.Cart;
 import rsvier.model.CartSuborder;
 import rsvier.security.TokenValidator;
@@ -33,10 +32,7 @@ import rsvier.persistence.CartFacade;
 import rsvier.persistence.UserFacade;
 import rsvier.security.scrypt.SCryptUtil;
 
-/**
- *
- * @author HP
- */
+
 @Stateless
 @Path("/users")
 @RolesAllowed({"EMPLOYEE", "ADMIN"})
@@ -159,7 +155,7 @@ public class UserFacadeREST {
             map.put("email", dbUser.getEmail());
             map.put("type", dbUser.getType().name());
             map.put("id", dbUser.getId().toString());
-            return Response.ok().entity(MapToJson.mapToJson(map)).build();
+            return Response.ok().entity(mapToJson(map)).build();
 
         } else {
             System.out.println("Onsuccesvolle authenticatie");
@@ -173,38 +169,48 @@ public class UserFacadeREST {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response create(User registerData) {
 
-        // check if email is not already used
-        System.out.println("email to check: " + registerData.getEmail());
-        try {
-
+        try {  // try to store new user, will fail if email is not unique
             System.out.println("Gebruiker wordt geregistreerd");
             User newUser = new User();
             newUser.setType(UserType.CUSTOMER);
  
-            String email = registerData.getEmail().trim();
-            System.out.println("email: " + email);
-            newUser.setEmail(registerData.getEmail());
+            newUser.setEmail(registerData.getEmail().trim());
 
             String passHash = SCryptUtil.scrypt(registerData.getPassHash().trim(), 16384, 8, 1);
-            System.out.println("hash: " + passHash);
             newUser.setPassHash(passHash);
-;
+
             facade.create(newUser);
 
             // Create a new cart for the new user      
             User temp = facade.findByEmail(newUser.getEmail());
-            System.out.println("new user id: " + temp.getId());
             Cart newCart = new Cart();
             newCart.setId(temp.getId());
             newCart.setUser(temp);
             List<CartSuborder> subs = new ArrayList<>();
             newCart.setCartSuborderList(subs);
+            
             cartFacade.create(newCart);
 
             return Response.ok().entity("SUCCESS").build();
         } catch (Exception e) {
             return Response.ok().entity("EMAIL_IN_USE").build();
         }
+    }
+    
+    
+     private String mapToJson(Map<String, String> map) {
+        StringBuilder jsonString = new StringBuilder("{");
+        //{ "name":"John", "age":31, "city":"New York" }; json format
+
+        Iterator it = map.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            jsonString.append("\"").append(pair.getKey()).append("\":\"").append(pair.getValue()).append("\",");
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+        jsonString.setLength(jsonString.length() - 1);
+        jsonString.append("}");
+        return jsonString.toString();
     }
 
 

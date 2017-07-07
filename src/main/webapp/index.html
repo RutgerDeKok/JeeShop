@@ -6,9 +6,10 @@
         <script src ="JS/index.js"></script>
         <link href="CSS/grid.css" rel="stylesheet" />
         <link href="CSS/simple.css" rel="stylesheet" />
+
     </head>
 
-    <body>
+    <body  background="IMG/background-cheese.jpg">
         <div id="nav-placeholder">
         </div>
 
@@ -20,54 +21,65 @@
                 </div>
             </div>
 
-            <div id="productInfo"><p>INFO</p></div>
+            <!--            <div id="productInfo"><p>INFO</p></div>-->
 
-            <div class="search_bar">
-                <input type="text" id="cheese_name" />
-                <button onclick="searchCheese()"><img  src="/Jee-Shop/IMG/loop.png" height="25" width="30" /></button>
-                </div>
-            </div>
+            <!--            <div class="search_bar">
+                            <input type="text" id="cheese_name" />
+                            <button onclick="searchCheese()"><img  src="/Jee-Shop/IMG/loop.png" height="25" width="30" /></button>
+                            </div>
+                        </div>-->
             <br/>
-            
+
             <div class="row">
-                <div class="col-2">
+                <div class="col-2" >
+                    <div class="catbox">
 
-                    <h2>&emsp; Categorie: </h2><br>
+                        <h2>&emsp; Categorie: </h2><br>
 
 
-                    <form id="categories" >lijst</form>
-
+                        <form id="categories" >lijst</form>
+                        <br>
+                        <div class="search_bar">
+                            Zoek binnen selectie:
+                            <input type="text" id="cheese_name" />
+                            <button onclick="searchCheese()"><img  src="/Jee-Shop/IMG/loop.png" height="25" width="30" /></button>
+                        </div>
+                    </div><br>
+                    
+                    <div id="productInfo"><p>INFO</p></div>
                 </div>
+
                 <!--                <div class="col-1">
                                    
                                 </div>-->
-                <div class="col-10" id="scroll75" >
-                    <table id="productsTable" class="display" cellspacing="0" width="100%">
-                        <thead>
-                            <tr>
-                                <th>Naam</th>
-                                <th>Categorie</th>
-                                <th>Merk</th>
-                                <th>Prijs</th>
-                                <th>Voorraad</th>
-                                <th>Informatie</th>
-                                <th>Hoeveelheid</th>
-                                <th>Voeg toe aan winkelwagen</th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th>Naam</th>
-                                <th>Categorie</th>
-                                <th>Merk</th>
-                                <th>Prijs</th>
-                                <th>Voorraad</th>
-                                <th>Informatie</th>
-                                <th>Hoeveelheid</th>
-                                <th>Voeg toe aan winkelwagen</th>
-                            </tr>
-                        </tfoot>
-                    </table>
+                <div class="col-10" ><div id="scroll75" >
+                        <table id="productsTable" class="display" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Naam</th>
+                                    <th>Categorie</th>
+                                    <th>Merk</th>
+                                    <th>Prijs</th>
+                                    <th>Voorraad</th>
+                                    <th>Informatie</th>
+                                    <th>Hoeveelheid</th>
+                                    <th>Voeg toe aan winkelwagen</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Naam</th>
+                                    <th>Categorie</th>
+                                    <th>Merk</th>
+                                    <th>Prijs</th>
+                                    <th>Voorraad</th>
+                                    <th>Informatie</th>
+                                    <th>Hoeveelheid</th>
+                                    <th>Voeg toe aan winkelwagen</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
