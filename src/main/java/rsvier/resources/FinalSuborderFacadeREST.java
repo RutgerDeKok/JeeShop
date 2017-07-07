@@ -37,7 +37,6 @@ public class FinalSuborderFacadeREST{
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @PermitAll
-    @RolesAllowed( {"EMPLOYEE","ADMIN"} )
     public void create(FinalSuborder entity) {
         facade.create(entity);
     }

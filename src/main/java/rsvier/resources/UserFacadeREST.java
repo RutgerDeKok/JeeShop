@@ -81,12 +81,10 @@ public class UserFacadeREST {
             Cart newCart = new Cart();
             User temp = facade.findByEmail(newUser.getEmail());
             newCart.setId(temp.getId());
-//            newCart.setId(28L);
-////            User temp =  facade.find(28L)
-////            newCart.setUserId();
-//////            List<CartSuborder> subs = new ArrayList<>();
-////            newCart.setCartSuborderList(subs);
-//            cartFacade.create(newCart);
+            newCart.setUser(temp);
+            List<CartSuborder> subs = new ArrayList<>();
+            newCart.setCartSuborderList(subs);
+            cartFacade.create(newCart);
 
             return Response.ok().build();
         } else {
@@ -141,6 +139,7 @@ public class UserFacadeREST {
 
     @GET
     @Path("types")
+    @PermitAll
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<EnumWrap> getCategories() {
         List<EnumWrap> categoryList = new ArrayList<>();

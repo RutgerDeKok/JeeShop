@@ -45,7 +45,7 @@ table {
     margin: 20px;
     font: 14px Tahoma;
     border-collapse: collapse;
-    /*width: 500%;*/
+    width: 80%;
     background: rgb(190,190,190);
      -webkit-box-shadow: rgb(30,30,30) 5px 5px 5px;
     -webkit-border-radius: 10px;
@@ -131,6 +131,7 @@ button {
 }
 
 #productInfo{
+    z-index: 1;
     margin: 30px;
     text-align: center;
     font: 15px bold Tahoma;
@@ -140,4 +141,10 @@ button {
     width: 200px;
     height: 100px;
     padding: 20px;
+}
+.search_bar{
+    
+    text-align: center;
+    margin: auto;
+    width: 50%;
 }

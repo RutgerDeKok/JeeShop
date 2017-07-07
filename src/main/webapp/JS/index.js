@@ -1,5 +1,7 @@
 var scriptIsReady = false;
 var tableInfoTable = [];
+var cheese_name = "";
+
 $(document).ready(function () {
     $.get("top-navbar.html", function (data) {
         $("#nav-placeholder").replaceWith(data);
@@ -50,7 +52,12 @@ function startProductTable() {
         var rowindex = 0;
 
         $.each(data, function (key, value) {
-            datarow += '<tr class="tablerow" name=' + rowindex + ' >';
+            var name = value.name;
+            var substring = cheese_name;
+//            console.log (name);
+//            console.log(substring);
+//            console.log(name.indexOf(substring) !== -1);
+            datarow += '<tr class="table_info_content" class="tablerow" name=' + rowindex + ' >';
             datarow += ' <td align=/"left/">' + value.name + ' </td>';
             datarow += ' <td align=/"left/">' + getCategory(value.category) + ' </td>';
             datarow += ' <td align=/"left/">' + value.brand + ' </td>';
@@ -140,6 +147,12 @@ function displayCatFilters() {
 
 }
 
+function searchCheese(){
+    cheeseName = $("#cheese_name").val();
+    startProductTable();
+    
+}
+
 
 $(document).on("change", "input[type='radio']", function (event) {
 
@@ -149,7 +162,7 @@ $(document).on("change", "input[type='radio']", function (event) {
 });
 
 $("#productsTable").mouseover(function(){
-    $(".tablerow").mouseover(function(event){
+    $(".table_info_content").mouseover(function(event){
         //$(this).css("background", "rgb(252,150,150)");
         $("#productInfo").css({"position":"absolute","top":event.clientY,"left":event.clientX});
         $("#productInfo").html(tableInfoTable[$(this).attr('name')]);

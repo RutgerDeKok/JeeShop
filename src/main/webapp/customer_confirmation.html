@@ -12,10 +12,13 @@
         <script src ="JS/jquery.js"></script>
         <script src ="JS/products.js"></script>
         <script src ="JS/cookies.js"></script>
+         <script src ="JS/index.js"></script>
         <link href="CSS/simple.css" rel="stylesheet" />
     </head>
 
     <body id="bodyid">
+        <div id="nav-placeholder">
+        </div>
         <h2 class="title">Confirmation</h2>
         <br/><br/><br/><br/>
 
@@ -78,20 +81,21 @@
             
         function cartToOrder(){
                 
-               id = $("#IdId").val();
+               id = getCookie("UserId");
                   
         cartsUrl = "rest/carts/" + id;
         cartSubOrderUrl = "rest/cartsuborders";
         
         $.getJSON(cartSubOrderUrl, function(cartSubOrders) {
             $.getJSON(cartsUrl, function(cart) {
-   
            var userId = cart.id;
            userUrl = "rest/users/" + id;
            
         $.getJSON(userUrl, function(User) {
             var subOrderList = [];
              $.each(cartSubOrders, function (key, value) {
+                 console.log(value.cart.id);
+                 console.log(userId);
                 if (value.cart.id == userId){
                     subOrderList.push(value);
                 }
