@@ -39,7 +39,7 @@ and open the template in the editor.
 
                     <li class="l">
 
-                        <input type="submit" id="cookies" value="Show Cookies"  style=" margin: 5; font-size: 12px; padding:2px ; margin-top: 10px" hidden>
+                        <input type="submit" id="cookies" value="Test"  style=" margin: 5; font-size: 12px; padding:2px ; margin-top: 10px" >
 
                     </li>
 
@@ -58,14 +58,19 @@ and open the template in the editor.
                             Aanmelden <span>&#x25BC;</span>
                         </a>
                         <div class="dropDown" id="signup-dropdown" style='display:none'>
-                            <form id="signup" >
+                            <form id="signup" action="javascript:signup();" onsubmit="return checkForm(this);">
                                 <fieldset id="signup-inputs">
                                     <input id="signup-username" type="email" name="email" placeholder="Uw emailadres" required>   
-                                    <input id="signup-password" type="password" name="passHash" placeholder="Wachtwoord" required>
-                                    <input id="signup-passconf" type="password" name="passConf" placeholder="Herhaal wachtwoord" required>
+                                    <input id="signup-password" type="password" name="passHash" placeholder="Wachtwoord" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" 
+                                           onchange="this.setCustomValidity(this.validity.patternMismatch ? this.title : '');
+                        if (this.checkValidity())
+                            form.passConf.pattern = this.value;">
+                                    <input id="signup-passconf" type="password" name="passConf" placeholder="Herhaal wachtwoord" required onchange="
+                        this.setCustomValidity(this.validity.patternMismatch ? this.title : '');">
                                 </fieldset>
                                 <fieldset id="signup-actions">
-                                    <input type="submit" id="signup-submit" value="Aanmelden">
+                                    <div><input type="submit" id="signup-submit" value="Aanmelden"> 
+                                        <span id="signupText"> Kies email en paswoord </span></div>
                                 </fieldset>
                             </form>
                         </div>   
@@ -89,13 +94,13 @@ and open the template in the editor.
                             </form>
                         </div>                     
                     </li>
-                    
+
                     <li class ="r" >
                         <a  href="/Jee-Shop/customer_cart" >
                             <img  src="/Jee-Shop/IMG/icon-cart.png" height="25" width="30" />
                             <span></span></a>
                     </li>
- 
+
                 </ul>
             </nav>
         </div>

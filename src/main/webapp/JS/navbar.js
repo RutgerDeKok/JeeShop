@@ -28,16 +28,19 @@ $(document).ready(function () {
         logout();
     });
 
-    // sign up submit function
-    $('#signup-submit').click(function (e) {
-        e.preventDefault();
-        signup();
-    });
+
+
+//      // sign up submit function
+//    $('#signup-submit').click(function (e) {
+//        e.preventDefault();
+//        signup();
+//    });
 
     // show cookies button
     $('#cookies').click(function (e) {
         e.preventDefault();
-        console.log("Cookies: " + document.cookie);
+//        console.log("Cookies: " + document.cookie);
+        createUserTest();
     });
 
     // check for user cookie
@@ -119,7 +122,7 @@ function login() {
             document.cookie = "UserEmail=" + dataObject.email;
             document.cookie = "UserType=" + dataObject.type;
 
-            ShowLogedInDetails(dataObject.email,dataObject.type);
+            ShowLogedInDetails(dataObject.email, dataObject.type);
         },
         error: function (data) {
             alert("log in gegevens incorrect");
@@ -153,6 +156,8 @@ function logout() {
 
 // sign up submit function
 function signup() {
+    console.log("running signup");
+
 
     var jsonData = JSON.stringify($('#signup').serializeArray()
             .reduce(function (dataObject, field) {
@@ -160,14 +165,22 @@ function signup() {
                 return dataObject;
             },
                     {}));
-    alert(jsonData);
+    console.log("jsosn: " + jsonData);
     $.ajax({
         url: 'rest/users',
         type: 'POST',
+        dataType: "text",
         contentType: "application/json; charset=utf-8",
         data: jsonData,
         success: function (data) {
-            console.log("Register Succes");
+            console.log(data);
+            if (data === "EMAIL_IN_USE") {
+                console.log("adjusting message");
+                $('#signupText').html("Email reeds ingebruik, kies een andere.");
+            } else {
+                console.log("Register Succes");
+                $('#signupText').html("Aanmelden geslaagd! U kunt inloggen.");
+            }
         },
         error: function (data) {
             console.log("Error");
@@ -192,4 +205,25 @@ function getCookie(cname) {
         }
     }
     return "";
+}
+
+// test
+function createUserTest() {
+    console.log("create user test");
+    var data = {};
+    var jsonData = JSON.stringify(data);
+
+    console.log("jsosn: " + jsonData);
+    $.ajax({
+        url: 'rest/users/test',
+        type: 'POST',
+        contentType: "application/json; charset=utf-8",
+        data: jsonData,
+        success: function () {
+            console.log("success");
+        },
+        error: function (data) {
+            console.log("Error");
+        }
+    });
 }

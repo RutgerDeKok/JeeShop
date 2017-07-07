@@ -42,7 +42,7 @@ body {
 
 table {
     
-    margin: 20px;
+    margin: auto;
     font: 14px Tahoma;
     border-collapse: collapse;
     /*width: 500%;*/
@@ -107,6 +107,7 @@ label{
 #scroll75 {
  	height: 75vh;
     overflow-y: scroll;
+    
 }
 
 #details{
@@ -131,6 +132,7 @@ button {
 }
 
 #productInfo{
+    z-index: 1;
     margin: 30px;
     text-align: center;
     font: 15px bold Tahoma;
