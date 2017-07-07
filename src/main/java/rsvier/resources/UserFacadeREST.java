@@ -198,7 +198,7 @@ public class UserFacadeREST {
             System.out.println("new user id: " + temp.getId());
             Cart newCart = new Cart();
             newCart.setId(temp.getId());
-
+            newCart.setUser(temp);
             List<CartSuborder> subs = new ArrayList<>();
             newCart.setCartSuborderList(subs);
             cartFacade.create(newCart);
