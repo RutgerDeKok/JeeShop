@@ -43,9 +43,10 @@ function viewRow (button, index, value){
     button.parentNode.innerHTML = '<button id="unview" onclick="unviewRow(this,' + index + ')">Unview Details</button>';
     
   
-  geeftAdresWeer(index,value);
   
-  geeftWagenWeer(index,value);
+   
+  
+  //geeftWagenWeer(index);
   
   
   
@@ -63,31 +64,42 @@ function unviewRow(button,index){
 };
 
 
-function geeftAdresWeer(index,value){
-    //data nodig (altijd maar 1)
-    
-    
-    
-    //data vullen in table_viewAdres
-    
-    
-    
-};
 
-function geeftWagenWeer(index,value){ 
-   
-    //data nodige loop
-    
-    
-    //data vullen in table_viewWagen
-    
-    
-    
+
+ function geeftwagenWeer(id){
                 
-            
-};
+                $("#table_viewWagen").remove();
 
+                 var datarowSubOrder = " ";
+                
+                $.getJSON('rest/cartsuborders', function (data) {
+                   
+                    
+                    $.each(data, function (key, value) {
+                        
+                      
+                      if (value.cart && value.cart.id===id  ){
+                        
+                        datarowSubOrder += ' <tr class="table_content">';
+                        datarowSubOrder += ' <td align=/"left/">' + value.id + ' </td>';
+                        datarowSubOrder += ' <td align=/"left/">' + value.product.name + ' </td>';
+                        datarowSubOrder += ' <td align=/"left/">' + value.product.category + ' </td>';
+                        datarowSubOrder += ' <td align=/"left/">' + value.product.brand + ' </td>';
+                        datarowSubOrder += ' <td align=/"left/">' + value.product.price + ' </td>';
+                        datarowSubOrder += ' <td align=/"left/">' + value.quantity + ' </td>';
+                        datarowSubOrder += ' <td align=/"left/">' + value.subTotal + ' </td>';
+                        
+                        
+                        totalPrijs+= value.subTotal;
+                       
+                       } //einde if
+                    });
+                   
+                    $('#table_viewWagen').append(datarowSubOrder);
 
+                });
+                
+ };
 
 
 
