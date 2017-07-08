@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import rsvier.model.UserType;
 
-@WebFilter(filterName = "EmployeesFilter", urlPatterns = {"/employees/*"})
+@WebFilter(filterName = "EmployeesFilter", urlPatterns = {"/employees6646554/*"})
 public class EmployeesFilter implements Filter {
 
     @EJB
@@ -51,7 +51,7 @@ public class EmployeesFilter implements Filter {
         }
 
         if (tokenFromCookie == null || !tokenValidator.validateToken(tokenFromCookie)) {
-            System.out.println("User not allowed to go to /emlpoyees/*");
+            System.out.println("User not allowed to go to /employees/*");
             // delete cookie and redirect to error page code 401
             hsResponse.sendRedirect("/Jee-Shop/error.html?Scheer&nbsp;weg&nbsp;jij&nbsp;deugniet!&nbsp;404");
             chain.doFilter(request, response);
