@@ -40,8 +40,8 @@ function viewRow (button,order_id){
     
     
     button.parentNode.parentNode.className = 'highlight';
-
-    alert("order id is:" + order_id);
+    //dit gaat altijd goed nu.
+    //alert("order id is:" + order_id);
 
     geeftFinalSubordersWeer(order_id);
 
@@ -62,19 +62,29 @@ function unviewRow(button,order_id){
 
  function geeftFinalSubordersWeer(id) {
 
-   // $("#table_viewWagen").remove();
-
-    var datarowSubOrder = " ";
-
-    $.getJSON('/Jee-Shop/rest/finalsuborders/find_by_order_id/'+id, function (found_subordersData) {
+    //Dit gaat altijd goed.
+   //alert(id+"is de waarde die geeftFinalSuborderWeerKrijgt");
 
 
-        $.each(found_subordersData, function (value) {
 
-//dit is nog cheaten (id input) .(waarden 55-70 bestaan)
-            if (value.order && value.order.id == id) {
 
-                datarowSubOrder += ' <tr class="table_content">';
+    var datarowSubOrder = "<tbody>";
+    
+    $.getJSON('/Jee-Shop/rest/finalsuborders/find_by_order_id/'+id, function (data) {
+
+        $.each(data, function (key,value) {
+
+        alert("De id is = "+ id);
+        
+        
+        alert("value.order.id is : "+value.order.id);
+
+
+            if (value.order.id === id) {
+                
+                 alert("ze zijn inderdaad gelijk!");
+
+                datarowSubOrder += ' <tr >';
                 datarowSubOrder += ' <td align=/"left/">' + value.id + ' </td>';
                 datarowSubOrder += ' <td align=/"left/">' + value.product.name + ' </td>';
                 datarowSubOrder += ' <td align=/"left/">' + value.product.category + ' </td>';
@@ -82,16 +92,18 @@ function unviewRow(button,order_id){
                 datarowSubOrder += ' <td align=/"left/">' + value.product.price + ' </td>';
                 datarowSubOrder += ' <td align=/"left/">' + value.quantity + ' </td>';
                 datarowSubOrder += ' <td align=/"left/">' + value.subTotal + ' </td>';
-
-                totalPrijs += value.subTotal;
+                //dit gaat niet helemaal lekker.
+                
+                alert("komt niet aan, anders zie je dit wel.");
+                //totalPrijs += value.subTotal;
 
             } //einde if
             else {
                 alert("waarschijnelijk foute index waarde.");
             }
         });
-
-                    $('#table_viewFinalSubs').append(datarowSubOrder);
+                    datarowSubOrder += '</tbody>';
+                    $(".display").append(datarowSubOrder);
                     //$("#footer").text("TotaalPrijs: " + Math.round(totalPrijs*100)/100);
 
     });
