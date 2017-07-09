@@ -38,7 +38,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "FinalSuborder.findByPrdCategory", query = "SELECT f FROM FinalSuborder f WHERE f.prdCategory = :prdCategory")
     , @NamedQuery(name = "FinalSuborder.findByPrdName", query = "SELECT f FROM FinalSuborder f WHERE f.prdName = :prdName")
     , @NamedQuery(name = "FinalSuborder.findByQuantity", query = "SELECT f FROM FinalSuborder f WHERE f.quantity = :quantity")
-    , @NamedQuery(name = "FinalSuborder.findBySubTotal", query = "SELECT f FROM FinalSuborder f WHERE f.subTotal = :subTotal")})
+    , @NamedQuery(name = "FinalSuborder.findBySubTotal", query = "SELECT f FROM FinalSuborder f WHERE f.subTotal = :subTotal")
+    , @NamedQuery(name = "FinalSuborder.findBySaleId", query = "SELECT f FROM FinalSuborder f WHERE f.order.id = :order")})
 public class FinalSuborder implements Serializable {
 
     private static final long serialVersionUID = 1L;
