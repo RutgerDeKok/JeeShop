@@ -31,8 +31,7 @@ import rsvier.persistence.CartSuborderFacade;
 
 @Stateless
 @Path("/products")
-@DeclareRoles({"GUEST", "CUSTOMER", "EMPLOYEE","ADMIN"})
-//@RolesAllowed( {"EMPLOYEE","ADMIN"} )
+@DeclareRoles({"CUSTOMER", "EMPLOYEE","ADMIN"})
 
 public class ProductFacadeREST {
 

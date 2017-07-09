@@ -8,17 +8,13 @@ import javax.annotation.Priority;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Cookie;
-import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.ext.Provider;
-import rsvier.model.UserType;
 
 @Provider
 @Priority(Priorities.AUTHENTICATION)
@@ -29,9 +25,7 @@ public class RestAuthenticationFilter implements javax.ws.rs.container.Container
     @EJB
     private TokenValidator tokenValidator;
 
-    private static final String ACCESS_INVALID_TOKEN = "Token invalid. Please authenticate again!";
-    private static final String ACCESS_DENIED = "Not allowed to access this resource!";
-    private static final String ACCESS_FORBIDDEN = "Access forbidden!";
+
 
     @Override
     public void filter(ContainerRequestContext requestContext) {
