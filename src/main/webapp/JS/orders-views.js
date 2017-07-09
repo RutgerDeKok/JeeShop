@@ -69,10 +69,10 @@ function unviewRow(button,order_id){
     $.getJSON('/Jee-Shop/rest/finalsuborders/find_by_order_id/'+id, function (found_subordersData) {
 
 
-        $.each(found_subordersData, function (key, value) {
+        $.each(found_subordersData, function (value) {
 
 //dit is nog cheaten (id input) .(waarden 55-70 bestaan)
-            if (value.order && value.order.id === id) {
+            if (value.order && value.order.id == id) {
 
                 datarowSubOrder += ' <tr class="table_content">';
                 datarowSubOrder += ' <td align=/"left/">' + value.id + ' </td>';
@@ -91,7 +91,7 @@ function unviewRow(button,order_id){
             }
         });
 
-                    $('#table_viewWagen').append(datarowSubOrder);
+                    $('#table_viewFinalSubs').append(datarowSubOrder);
                     //$("#footer").text("TotaalPrijs: " + Math.round(totalPrijs*100)/100);
 
     });
