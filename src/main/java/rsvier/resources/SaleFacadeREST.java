@@ -64,6 +64,7 @@ public class SaleFacadeREST {
     }
 
     @GET
+    @PermitAll 
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Sale> findAll() {
         

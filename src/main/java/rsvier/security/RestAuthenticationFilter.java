@@ -1,49 +1,102 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package rsvier.security;
 
-import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import javax.annotation.Priority;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
-import javax.ws.rs.NotAuthorizedException;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.container.ContainerRequestFilter;
+import javax.ws.rs.container.ResourceInfo;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Cookie;
-import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.ext.Provider;
+import rsvier.model.UserType;
 
-/**
- *
- * @author J
- */
-@Authenticated
 @Provider
 @Priority(Priorities.AUTHENTICATION)
-public class RestAuthenticationFilter implements ContainerRequestFilter {
-    
+public class RestAuthenticationFilter implements javax.ws.rs.container.ContainerRequestFilter {
+
+    @Context
+    private ResourceInfo resourceInfo;
     @EJB
     private TokenValidator tokenValidator;
 
+    private static final String ACCESS_INVALID_TOKEN = "Token invalid. Please authenticate again!";
+    private static final String ACCESS_DENIED = "Not allowed to access this resource!";
+    private static final String ACCESS_FORBIDDEN = "Access forbidden!";
+
     @Override
-    public void filter(ContainerRequestContext requestContext) throws IOException {
-        System.out.println("***   RUNNING REST FILTER   ***");
-        
-        Cookie cookie = requestContext.getCookies().get("AccessToken");
-        String token = cookie.getValue();
-        
-        try {
-            tokenValidator.validateToken(token);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            requestContext.abortWith(
-                    Response.status(Response.Status.UNAUTHORIZED).build());
+    public void filter(ContainerRequestContext requestContext) {
+        System.out.println("REST FILTER METHOD RUNNING");
+        Method method = resourceInfo.getResourceMethod();
+        System.out.println("method: " + method.getName());
+        // everybody can access (e.g. user/create or user/authenticate)
+        if (!method.isAnnotationPresent(PermitAll.class)) {
+            System.out.println("Permit all annotation not present");
+
+            if (method.isAnnotationPresent(RolesAllowed.class)) {
+
+                // get annotated roles
+                RolesAllowed rolesAnnotation = method.getAnnotation(RolesAllowed.class);
+                Set<String> rolesSet = new HashSet<String>(Arrays.asList(rolesAnnotation.value()));
+                System.out.println("roles allowed: "+rolesSet);
+
+                // get role in token in cookie from logged in user
+                String tokenUserType = null;
+                String tokenFromCookie = null;
+                for (Cookie cookie : requestContext.getCookies().values()) {
+                    if (cookie.getName().equals("AccessToken")) {
+
+                        System.out.println("goede Cookie gevonden");
+                        tokenFromCookie = cookie.getValue();
+                        break;
+                    }
+                }
+
+               
+                if (tokenFromCookie == null || !tokenValidator.validateToken(tokenFromCookie)) {
+                    System.out.println("No (valid)token found");
+                    requestContext.abortWith(
+                            Response.status(Response.Status.BAD_REQUEST).entity("User must log in first").build()
+                    );
+                    return;
+
+                } else {
+                    tokenUserType = tokenValidator.getUserType(tokenFromCookie);
+                    System.out.println("token user type= " + tokenUserType);
+                }
+
+                // Compare allowed roles to user type from token
+                boolean allowed = false;
+                for(String role :rolesSet){
+                    if(role.equals(tokenUserType.trim())){
+                        System.out.println(role);
+                        allowed = true;
+                        break;
+                    }
+                }
+                System.out.println("allowed = "+allowed);
+                
+                if (!allowed) {
+                    requestContext.abortWith(
+                            Response.status(Response.Status.UNAUTHORIZED).entity("User unautorized to perform this action").build()
+                    );
+                    return;
+                }
+                
+            } 
+           
         }
+        // if PermitAll annotation IS present just continue
+        System.out.println("Access allowed");
     }
 
-   
 }

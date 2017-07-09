@@ -31,8 +31,8 @@ import rsvier.persistence.CartSuborderFacade;
 
 @Stateless
 @Path("/products")
-//@DeclareRoles({"CUSTOMER", "EMPLOYEE","ADMIN"})
-@RolesAllowed( {"EMPLOYEE","ADMIN"} )
+@DeclareRoles({"GUEST", "CUSTOMER", "EMPLOYEE","ADMIN"})
+//@RolesAllowed( {"EMPLOYEE","ADMIN"} )
 
 public class ProductFacadeREST {
 
@@ -58,7 +58,7 @@ public class ProductFacadeREST {
 
     @DELETE
     @Path("{id}")
-    @PermitAll
+    @RolesAllowed( {"EMPLOYEE","ADMIN"})
     public void remove(@PathParam("id") Long id) {
         System.out.println("rsvier.resources.ProductFacadeREST.remove() id: "+id);
         //1. delete CartSubOrders that contain product to be deleted.
@@ -98,7 +98,7 @@ public class ProductFacadeREST {
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
-    @PermitAll
+    @RolesAllowed( {"EMPLOYEE","ADMIN"})
     public String countREST() {
                
         return String.valueOf(facade.count());
