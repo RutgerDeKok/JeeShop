@@ -7,7 +7,6 @@ package rsvier.resources;
 
 import java.util.List;
 import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -21,6 +20,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import rsvier.model.FinalSuborder;
 import rsvier.persistence.FinalSuborderFacade;
+import rsvier.security.RolesAllowed;
 
 /**
  *
@@ -28,7 +28,6 @@ import rsvier.persistence.FinalSuborderFacade;
  */
 @Stateless
 @Path("/finalsuborders")
-@RolesAllowed( {"EMPLOYEE","ADMIN"} )
 public class FinalSuborderFacadeREST{
     
     @EJB

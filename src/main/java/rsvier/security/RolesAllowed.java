@@ -5,20 +5,16 @@
  */
 package rsvier.security;
 
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.TYPE;
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import javax.ws.rs.NameBinding;
 
-/**
- *
- * @author J
- */
 @NameBinding
-@Retention(RUNTIME)
-@Target({TYPE, METHOD})
-public @interface Authenticated {
+@Retention(value = RetentionPolicy.RUNTIME)
+//@Target(value = {ElementType.TYPE})
+public @interface RolesAllowed{
+    public String[] value();
     
 }

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
+//import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -27,12 +27,13 @@ import rsvier.model.ProductCategory;
 import rsvier.persistence.ProductFacade;
 import rsvier.model.EnumWrap;
 import rsvier.persistence.CartSuborderFacade;
+import rsvier.security.RolesAllowed;
 
 
 @Stateless
 @Path("/products")
 //@DeclareRoles({"CUSTOMER", "EMPLOYEE","ADMIN"})
-@RolesAllowed( {"EMPLOYEE","ADMIN"} )
+//@RolesAllowed( {"EMPLOYEE","ADMIN"} )
 
 public class ProductFacadeREST {
 
@@ -98,7 +99,7 @@ public class ProductFacadeREST {
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
-    @PermitAll
+    @RolesAllowed( {"EMPLOYEE","ADMIN"} )
     public String countREST() {
                
         return String.valueOf(facade.count());

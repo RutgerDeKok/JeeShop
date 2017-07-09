@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -31,11 +30,11 @@ import rsvier.model.UserType;
 import rsvier.persistence.CartFacade;
 import rsvier.persistence.UserFacade;
 import rsvier.security.scrypt.SCryptUtil;
+import rsvier.security.RolesAllowed;
 
 
 @Stateless
 @Path("/users")
-@RolesAllowed({"EMPLOYEE", "ADMIN"})
 public class UserFacadeREST {
 
     @EJB
