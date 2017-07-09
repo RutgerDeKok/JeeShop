@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import rsvier.model.UserType;
 
-@WebFilter(filterName = "EmployeesFilter", urlPatterns = {"/employees6646554/*"})
+@WebFilter(filterName = "EmployeesFilter", urlPatterns = {"/employees/*"})
 public class EmployeesFilter implements Filter {
 
     @EJB
