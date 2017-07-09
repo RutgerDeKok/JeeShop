@@ -40,30 +40,21 @@ function viewRow (button,order_id){
     
     
     button.parentNode.parentNode.className = 'highlight';
-    
-    
-  
-   
-   
-   alert("order id is:"  +order_id);
-   
-  
-  
-  geeftFinalSubordersWeer(order_id);
-  
-  
-  button.parentNode.innerHTML = '<button id="unview" onclick="unviewRow(this)">Unview Details</button>';
-  
-    
+
+    alert("order id is:" + order_id);
+
+    geeftFinalSubordersWeer(order_id);
+
+    button.parentNode.innerHTML = '<button id="unview" onclick="unviewRow(this,'+order_id+')">Unview Details</button>';
+
 };
 
-function unviewRow(button,index){
+function unviewRow(button,order_id){
     button.parentNode.parentNode.className = ''; 
-    button.parentNode.innerHTML = '<button id="view" onclick="viewRow(this,' + index + ')">Zie details opnieuw</button>';
+    button.parentNode.innerHTML = '<button id="view" onclick="viewRow(this,' + order_id + ')">Zie details opnieuw</button>';
     
     //liefst ook leeg halen viewtables.
-    
-    
+   
 };
 
 
@@ -71,17 +62,17 @@ function unviewRow(button,index){
 
  function geeftFinalSubordersWeer(id) {
 
-    $("#table_viewWagen").remove();
+   // $("#table_viewWagen").remove();
 
     var datarowSubOrder = " ";
 
-    $.getJSON('/Jee-Shop/rest/finalsuborders/find_by_order_id/'+id, function (found_suborders) {
+    $.getJSON('/Jee-Shop/rest/finalsuborders/find_by_order_id/'+id, function (found_subordersData) {
 
 
-        $.each(found_suborders, function (key, value) {
+        $.each(found_subordersData, function (key, value) {
 
 //dit is nog cheaten (id input) .(waarden 55-70 bestaan)
-            if (value.cart && value.cart.id === id) {
+            if (value.order && value.order.id === id) {
 
                 datarowSubOrder += ' <tr class="table_content">';
                 datarowSubOrder += ' <td align=/"left/">' + value.id + ' </td>';
