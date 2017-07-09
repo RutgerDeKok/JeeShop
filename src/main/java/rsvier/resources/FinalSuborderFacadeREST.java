@@ -20,6 +20,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import rsvier.model.FinalSuborder;
+
 import rsvier.persistence.FinalSuborderFacade;
 
 /**
@@ -84,5 +85,18 @@ public class FinalSuborderFacadeREST{
     public String countREST() {
         return String.valueOf(facade.count());
     }
+    
+    @GET
+    @Path("/find_by_order_id/{order_id}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @PermitAll
+    public List<FinalSuborder> findByOrder(@PathParam("order_id") Long orderId) {
+    
+    return facade.findByOrderId(orderId);
+    
+    
+            }
+    
+    
     
 }

@@ -5,6 +5,7 @@
  */
 package rsvier.persistence;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,5 +29,19 @@ public class FinalSuborderFacade extends AbstractFacade<FinalSuborder> {
     public FinalSuborderFacade() {
         super(FinalSuborder.class);
     }
+    
+    
+     public List<FinalSuborder> findByOrderId(Long orderId) {
+        System.out.println("Facade Finding FinalSubOrders by Product Id: " + orderId.toString());
+
+        return em.createNamedQuery("FinalSuborder.findBySaleId")
+                .setParameter("order", orderId)
+                .getResultList();
+    }
+    
+    
+    
+    
+    
     
 }

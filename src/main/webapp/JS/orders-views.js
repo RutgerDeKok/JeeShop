@@ -7,6 +7,8 @@ $(document).ready(function () {
 });
 
 
+
+
 function startOrderTable() {
     
     
@@ -16,7 +18,7 @@ function startOrderTable() {
             var datarow = "<tbody>";
                 $.each(data, function (index, value) {
             datarow += '<tr>';
-            datarow += '<td id="winkelwagenid"  hidden>' + value.id + '</td>';
+            datarow += '<td class="wwi"  hidden>' + value.id + '</td>';
             datarow += '<td >' + value.orderDate + ' </td>';
             datarow += '<td >' + value.totalPrice + ' </td>';
             datarow += '<td >' + value.firstName + '</td>';
@@ -25,7 +27,7 @@ function startOrderTable() {
             datarow += '<td >' + value.number + ' </td>';
             datarow += '<td >' + value.street + ' </td>';
             datarow += '<td >' + value.city + '</td>';
-            datarow += '<td ><button id="view" onclick="viewRow(this)">View</button></td>';
+            datarow += '<td ><button id="view" onclick="viewRow(this,'+value.id+')">View</button></td>';
             datarow += '</tr>';
             
         });
@@ -34,20 +36,20 @@ function startOrderTable() {
     });
 };
 
-function viewRow (button){
+function viewRow (button,order_id){
     
     
     button.parentNode.parentNode.className = 'highlight';
     
     
-    
   
-  //hier moet code zodat de juiste waarde (winkelwagen id ) door gegeven wordt ipv 0-35.
-   var wwi = $("#winkelwagenid").val();
    
-   alert("wwi is" +wwi);
+   
+   alert("order id is:"  +order_id);
+   
   
-  geeftWagenWeer(wwi);
+  
+  geeftFinalSubordersWeer(order_id);
   
   
   button.parentNode.innerHTML = '<button id="unview" onclick="unviewRow(this)">Unview Details</button>';
@@ -67,19 +69,19 @@ function unviewRow(button,index){
 
 
 
- function geeftwagenWeer(id) {
+ function geeftFinalSubordersWeer(id) {
 
     $("#table_viewWagen").remove();
 
     var datarowSubOrder = " ";
 
-    $.getJSON('rest/cartsuborders', function (data) {
+    $.getJSON('/Jee-Shop/rest/finalsuborders/find_by_order_id/'+id, function (found_suborders) {
 
 
-        $.each(data, function (key, value) {
+        $.each(found_suborders, function (key, value) {
 
 //dit is nog cheaten (id input) .(waarden 55-70 bestaan)
-            if (value.cart && value.cart.id == 60) {
+            if (value.cart && value.cart.id === id) {
 
                 datarowSubOrder += ' <tr class="table_content">';
                 datarowSubOrder += ' <td align=/"left/">' + value.id + ' </td>';
@@ -104,7 +106,8 @@ function unviewRow(button,index){
     });
 
 }
-;
+
+
 
 
 
