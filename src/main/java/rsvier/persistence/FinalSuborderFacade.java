@@ -30,7 +30,6 @@ public class FinalSuborderFacade extends AbstractFacade<FinalSuborder> {
         super(FinalSuborder.class);
     }
     
-    
      public List<FinalSuborder> findByOrderId(Long orderId) {
         System.out.println("Facade Finding FinalSubOrders by Product Id: " + orderId.toString());
 
