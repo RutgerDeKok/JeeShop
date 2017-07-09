@@ -7,7 +7,6 @@ package rsvier.resources;
 
 import java.util.List;
 import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -21,6 +20,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import rsvier.model.Address;
 import rsvier.persistence.AddressFacade;
+import rsvier.security.RolesAllowed;
 
 /**
  *

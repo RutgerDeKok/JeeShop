@@ -8,7 +8,6 @@ package rsvier.resources;
 import java.time.LocalDate;
 import java.util.List;
 import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -22,6 +21,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import rsvier.model.Sale;
 import rsvier.persistence.SaleFacade;
+import rsvier.security.RolesAllowed;
 
 /**
  *
@@ -29,8 +29,6 @@ import rsvier.persistence.SaleFacade;
  */
 @Stateless
 @Path("/sales")
-//@PermitAll
-@RolesAllowed( {"EMPLOYEE","ADMIN"} )
 public class SaleFacadeREST {
 
     @EJB
@@ -65,7 +63,7 @@ public class SaleFacadeREST {
     }
 
     @GET
-    @PermitAll    //<-------- HIER OOK EEN @PERMIT ALL!
+    @PermitAll
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Sale> findAll() {
         

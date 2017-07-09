@@ -20,6 +20,7 @@ public class EmployeesFilter implements Filter {
     @EJB
     private TokenValidator tokenValidator;
     private static final boolean debug = true;
+    private FilterConfig filterConfig = null;
 
     public EmployeesFilter() {
     }
@@ -70,11 +71,6 @@ public class EmployeesFilter implements Filter {
         }
 
     }
-
-    // The filter configuration object we are associated with.  If
-    // this value is null, this filter instance is not currently
-    // configured. 
-    private FilterConfig filterConfig = null;
 
     /**
      * Init method for this filter
