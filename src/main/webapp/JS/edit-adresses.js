@@ -14,12 +14,18 @@ $(document).on("submit", "form#adresForm", function (event) {
 function setupEditAdres() {
 
     var id = window.location.search.substring(1);
+    
+alert("id"+id);
 
-    $('#adresForm').action = "/Jee-Shop/rest/addresses/" + id;
+   // $('#adresForm').action = "/Jee-Shop/rest/addresses/" + id;
 
 //    prefill the input boxes with available product data
 
-    $.getJSON('/Jee-Shop/rest/adresses/' + id, function (address) {
+    $.getJSON('/Jee-Shop/rest/addresses/' + id, function (address) {
+        
+        
+        
+        alert("value data: " +address.firstName);
 //        NIET NODIG! ADres ziet al alles! User niet, dus die gebruikte een var om onnodig typen te voorkomen.
 //        var address = user.billingAddress; <------compleet onnodig hier.
 //        if (!address) {
