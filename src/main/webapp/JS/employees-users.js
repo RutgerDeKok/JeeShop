@@ -75,6 +75,7 @@ function startUserTable() {
         datarow += '</tbody>';
 //        alert(datarow);
         $('#usersTable').append(datarow);
+        $("#scroll75").scrollTop($("#scroll75")[0].scrollHeight);
     });
 }
 
@@ -179,7 +180,7 @@ function popitup2(url) {
 
 function popitup(url) {
   var w = 600;
-  var h = 500;
+  var h = 650;
   var title = "Edit User";
   var left = (screen.width/2)-(w/2);
   var top = (screen.height/2)-(h/2);

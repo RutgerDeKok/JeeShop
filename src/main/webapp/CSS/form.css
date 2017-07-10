@@ -43,6 +43,7 @@ tr{
 }
 td{
     padding: 5px;
+    align: left;
 }
 
 button {
@@ -53,4 +54,13 @@ button {
     float: right;
     -webkit-box-shadow: rgb(80,80,80) 1px 1px 1px;
     -webkit-border-radius: 7px;
+}
+
+input:checked {
+    height: 50px;
+    width: 50px;
+}
+input[type='checkbox'] {
+    height: 20px;
+    width: 20px;
 }

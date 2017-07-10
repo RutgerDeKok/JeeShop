@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Edit Product</title>
+        <title>Edit User</title>
         <script src ="/Jee-Shop/JS/jquery.js"></script>
         <script src ="/Jee-Shop/JS/edit-user.js"></script>
         <link href="/Jee-Shop/CSS/form.css" rel="stylesheet" />
@@ -18,92 +18,116 @@
             <form id="userForm">
                 <h2>Gebruiker aanpassen /toevoegen</h2>
 
-                <TABLE class='formTable'>
-                    <TR hidden>
-                        <TD><b>id</b></TD>
-                        <TD>
+                <table class='formTable'>
+                    <tr hidden>
+                        <td><b>id</b></td>
+                        <td>
                             <input id="IdId" type="text" name="id" >
-                        </TD>
-                    </TR>
-                    <TR hidden>
-                        <TD><b>address id</b></TD>
-                        <TD>
+                        </td>
+                    </tr>
+                    <tr hidden>
+                        <td><b>address id</b></td>
+                        <td>
                             <input id="addressIdId" type="text" name="id">
-                        </TD>
-                    </TR>
-                    <TR hidden>
-                        <TD><b>pass hash</b></TD>
-                        <TD>
+                        </td>
+                    </tr>
+                    <tr hidden>
+                        <td><b>pass hash</b></td>
+                        <td>
                             <input id="hashId" type="text" name="passHash" >
-                        </TD>
-                    </TR>
-                    <TR>
-                        <TD><b>Email</b></TD>
-                        <TD>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Email</b></td>
+                        <td>
                             <input id="emailId" type="text" name="email" required>
-                        </TD>
-                    </TR>
-                    <TR>
-                        <TD><b>Voornaam</b></TD>
-                        <TD>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Voornaam</b></td>
+                        <td>
                             <input id="firstNameId" type="text" name="firstName" required>
-                        </TD>
-                    </TR>
-                    <TR>
-                        <TD><b>Tussenvoegsel</b></TD>
-                        <TD>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Tussenvoegsel</b></td>
+                        <td>
                             <input id="insertionId" type="text" name="insertion">
-                        </TD>
-                    </TR>
-                    <TR>
-                        <TD><b>Achternaam</b></TD>
-                        <TD>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Achternaam</b></td>
+                        <td>
                             <input id="familyNameId" type="text" name="familyName">
-                        </TD>
-                    </TR>
-                    <TR>
-                        <TD><b>Straat</b></TD>
-                        <TD>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Straat</b></td>
+                        <td>
                             <input id="streetId" type="text" name="street" required>
-                        </TD>
-                    </TR>
-                    <TR>
-                        <TD><b>Huisnummer</b></TD>
-                        <TD>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Huisnummer</b></td>
+                        <td>
                             <input id="numberId" type="number" name="number" required>
-                        </TD>
-                    </TR>
-                    <TR>
-                        <TD><b>Toevoeging</b></TD>
-                        <TD>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Toevoeging</b></td>
+                        <td>
                             <input id="additionId" type="text" name="addition" >
-                        </TD>
-                    </TR>
-                    <TR>
-                        <TD><b>Postcode</b></TD>
-                        <TD>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Postcode</b></td>
+                        <td>
                             <input id="zipCodeId" type="text" name="zipCode" 
                                    required pattern="[1-9][0-9]{3}\s?[a-zA-Z]{2}" 
                                    onchange="this.setCustomValidity(this.validity.patternMismatch ? this.title : '');" >
-                        </TD>
-                    </TR>
-                    <TR>
-                        <TD><b>Plaats</b></TD>
-                        <TD>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Plaats</b></td>
+                        <td>
                             <input id="cityId" type="text" name="city"  >
-                        </TD>
-                    </TR>
-                    <TR>
-                        <TD><b>Type</b></TD>
-                        <TD>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Type</b></td>
+                        <td>
                             <select id="typeId" name="type" required></select>                        
-                        </TD>
-                    </TR>
+                        </td>
+                    </tr>
+                     <tr>
+                        <td class="passOption"><b>Wijzig <br>paswoord?</b></td>
+                        <td class="passOption" align="left">
+                            <input type="checkbox" id="myCheck" onclick="toggle_vis();"  >                      
+                        </td>
+                    </tr>
+                    
+                    <tr class="passRow"  hidden>
+                        <td><b>Paswoord</b></td>
+                        <td>
+                            <input id="pass" type="password" name="pass" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
+                                   onchange="
+                                           this.setCustomValidity(this.validity.patternMismatch ? this.title : '');
+                                           if (this.checkValidity())
+                                               form.passCheck.pattern = this.value;">
+                        </td>     
+                    </tr>
+                    <tr class="passRow"  hidden>
+                        <td><b>Paswoord<br>herhaling</b></td>
+                        <td>
+                            <input id="passCheck" type="password" name="passCheck"  >
+                        </td>     
+                    </tr>
                 </table>
 
                 <br>
+                <span id="feedbackText"></span>
 
-                <button type="submit" >  OK  </button>
+                <button type="submit" >  Gegevens Opslaan  </button>
             </form> 
         </div>
 

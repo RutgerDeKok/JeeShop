@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Cart.findAll", query = "SELECT c FROM Cart c")
     , @NamedQuery(name = "Cart.findById", query = "SELECT c FROM Cart c WHERE c.id = :id")
     , @NamedQuery(name = "Cart.findByTotalPrice", query = "SELECT c FROM Cart c WHERE c.totalPrice = :totalPrice")
-    , @NamedQuery(name = "Cart.findUser", query = "SELECT c FROM Cart c WHERE c.user = :user")
+    , @NamedQuery(name = "Cart.findByUser", query = "SELECT c FROM Cart c WHERE c.user.id = :userid")
 })
 
 public class Cart implements Serializable {

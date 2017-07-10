@@ -38,5 +38,13 @@ public class CartSuborderFacade extends AbstractFacade<CartSuborder> {
                 .setParameter("productid", productId)
                 .getResultList();
     }
+     
+      public List<CartSuborder> findByCartId(Long cartId) {
+        System.out.println("Facade Finding SubOrders by Cart Id: " + cartId.toString());
+
+        return em.createNamedQuery("CartSuborder.findByCartId")
+                .setParameter("cartid", cartId)
+                .getResultList();
+    }
     
 }

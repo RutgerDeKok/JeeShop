@@ -15,10 +15,6 @@ function setupEditUser() {
 
     var id = window.location.search.substring(1);
 
-    $('#userForm').action = "/Jee-Shop/rest/users/" + id;
-
-//    prefill the imput boxes with available product data
-
     $.getJSON('/Jee-Shop/rest/users/' + id, function (user) {
         var address = user.billingAddress;
         if (!address) {
@@ -36,7 +32,15 @@ function setupEditUser() {
         $('#additionId').val(address.numAddition);
         $('#zipCodeId').val(address.zipCode);
         $('#cityId').val(address.city);
-
+        if (!id > 0) {
+            // show the password boxes
+            toggle_vis();
+            //hide the checkbox to choose password options
+            $('#passOption').each(function (i, obj) {
+                $(obj).hide();
+            }); 
+        }
+        //populate pulldown menu for User Type
         var select = $('#typeId');
         $.getJSON('/Jee-Shop/rest/users/types', function (data) {
             $.each(data, function (key, value) {
@@ -48,6 +52,7 @@ function setupEditUser() {
                 }
             });
         });
+
 
     });
 }
@@ -91,33 +96,31 @@ function putPostUser() {
     addressObject.city = $('#cityId').val();
 
     userObject.id = $('#IdId').val();
-    alert("hash = " + $('#hashId').val());
     userObject.passHash = $('#hashId').val();
+    userObject.pass = $('#pass').val();
     userObject.email = $('#emailId').val();
-    userObject.type = $('#typeId').val();
+    userObject.type = $('#typeId').val().trim();
+    
+    
     userObject.billingAddress = addressObject;
 
 
     var jsonData = JSON.stringify(userObject);
-    console.log(jsonData);
     alert(jsonData);
-
     var id = userObject.id;
-//    alert("id= " + id);
-
-    if (id !== undefined) {
-//        alert("PUT");
+   
+    if (id&&id.length>0) {
+        alert("PUT");
         $.ajax({
             type: "PUT",
             url: "/Jee-Shop/rest/users/" + id,
             data: jsonData,
-//            dataType: "json", alleen nodig als return data wordt 
             contentType: "application/json",
             success: function () {
                 window.opener.location.reload(true);
                 setTimeout(function () {
                     window.close();
-                }, 200);
+                }, 100);
 //                window.location.href = "/Jee-Shop/employees/users.html";
             },
             error: function () {
@@ -125,23 +128,67 @@ function putPostUser() {
             }
         });
     } else {
-//        alert("POST");
+        alert("POST");
         $.ajax({
             type: "POST",
-            url: "../rest/users/",
+            url: "/Jee-Shop/rest/users/employees/",
             data: jsonData,
-            //      dataType: "json", alleen nodig als return data wordt 
+            dataType: "text",
             contentType: "application/json",
-            success: function () {
+            success: function (data) {
 
-                window.location.href = "/Jee-Shop/employees/users.html";
+                console.log(data);
+                if (data === "EMAIL_IN_USE") {
+                    console.log("adjusting message");
+                    $('#feedbackText').html("Email reeds ingebruik,<br> kies een andere.");
+                } else {
+                    console.log("Registered Succesfully");
+                    window.opener.location.reload(true);
+                    setTimeout(function () {
+                        window.close();
+                    }, 100);
+                }
             },
             error: function () {
                 alert("Error, " + jsonData);
             }
         });
+
     }
 
+}
+
+function toggle_vis() {
+    console.log("toggle visability of pasword imputs");
+    var pattern = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}";
+    $('.passRow').each(function (i, obj) {
+        console.log("checking row: " + (i + 1));
+        var row = $(obj);
+        if (row.is(":visible")) {
+            row.hide();
+            row.find('input').removeAttr("required");
+            row.find('input').removeAttr("pattern");
+            row.find('input').val("");
+        } else {
+
+            row.show();
+            row.find('input').attr("required", );
+            row.find('input').attr("pattern", pattern);
+
+        }
+
+//         getAttributes(row.find('input'));
+
+    });
+}
+
+function getAttributes($node) {
+    var attrs = {};
+    $.each($node[0].attributes, function (index, attribute) {
+        console.log("name: " + attribute.name + " , value: " + attribute.value);
+    });
+
+    return attrs;
 }
 
 
