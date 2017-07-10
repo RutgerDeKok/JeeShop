@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+ <head>
+        <title>Edit Product</title>
+        <script src ="/Jee-Shop/JS/jquery.js"></script>
+        <script src ="/Jee-Shop/JS/edit-adresses.js"></script>
+        <link href="/Jee-Shop/CSS/form.css" rel="stylesheet" />
+
+
+    </head>
+
+
+
+     <body>
+
+        <div>
+
+
+            <form id="adresForm">
+                <h2>Adres aanpassen /toevoegen</h2>
+
+                <TABLE class='formTable'>
+                   
+                    <TR hidden>
+                        <TD><b>address id</b></TD>
+                        <TD>
+                            <input id="addressIdId" type="text" name="id">
+                        </TD>
+                    </TR>
+                   
+                    <TR>
+                        <TD><b>Voornaam</b></TD>
+                        <TD>
+                            <input id="voornaamId" type="text" name="voornaam" required>
+                        </TD>
+                    </TR>
+                    <TR>
+                        <TD><b>Achternaam</b></TD>
+                        <TD>
+                            <input id="achternaamId" type="text" name="achternaam" required>
+                        </TD>
+                    </TR>
+                    <TR>
+                        <TD><b>Straat</b></TD>
+                        <TD>
+                            <input id="straatId" type="text" name="straat">
+                        </TD>
+                    </TR>
+                    <TR>
+                        <TD><b>Nummer</b></TD>
+                        <TD>
+                            <input id="nummerId" type="number" name="nummer">
+                        </TD>
+                    </TR>
+                    <TR>
+                        <TD><b>Stad</b></TD>
+                        <TD>
+                            <input id="stadId" type="text" name="stad" required>
+                        </TD>
+                    </TR>
+                    <TR>
+                        <TD><b>Postcode</b></TD>
+                        <TD>
+                            <input id="zipCodeId" type="text" name="zipCode" 
+                                   required pattern="[1-9][0-9]{3}\s?[a-zA-Z]{2}" 
+                                   onchange="this.setCustomValidity(this.validity.patternMismatch ? this.title : '');" >
+                        </TD>
+                    </TR>
+                    <TR>
+                        <TD><b>huisnummer toevoeging</b></TD>
+                        <TD>
+                            <input id="additionId" type="text" name="add"  >
+                        </TD>
+                    </TR>
+                    <TR>
+                        <TD><b>tussenvoegsels</b></TD>
+                        <TD>
+                            <input id="insertionId" type="text" name="insertion" >                        
+                        </TD>
+                    </TR>
+                </table>
+
+                    <br>
+                   
+                    <button type="submit" >  OK  </button>
+            </form> 
+        </div>
+
+
+    </body>
+</html>

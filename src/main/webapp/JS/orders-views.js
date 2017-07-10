@@ -51,7 +51,7 @@ function viewRow(button, order_id) {
 
 function unviewRow(button, order_id) {
     button.parentNode.parentNode.className = '';
-    button.parentNode.innerHTML = '<button id="view" onclick="viewRow(this,' + order_id + ')">Zie details opnieuw</button>';
+    button.parentNode.innerHTML = '<button id="view" onclick="viewRow(this,' + order_id + ')">View</button>';
 
     //liefst ook leeg halen viewtables.
     $("#table_viewFinalSubs").children("tbody").empty();
