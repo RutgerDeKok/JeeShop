@@ -74,9 +74,10 @@
             console.log(id);
             startCartInfoTable(id);
             startSubOrderTable(id);
-            startAdresInfoTable(id);
+           
+            
         });
-
+         $("#goToEdit").click(editAdres(adresId));
 
         $("#confirmation_button").click(function () {
             id = $("#IdId").val();
@@ -201,8 +202,7 @@
 
             $(".table_info_content").remove();
 
-            var datarow = " ";
-
+            
 
 
             $.getJSON('rest/carts/' + id, function (dataCarts) {
@@ -218,18 +218,20 @@
 
 
 
-                $('#table_Cart_info').append(datarow);
+                adresId=dataCarts.deliveryAddress.id;
 
 
-                $("#goToEdit").click(editAdres(dataCarts.deliveryAddress.id));
-
-
-
-
+                
+               $("#goToEdit").click(editAdres(dataCarts.deliveryAddress.id));
+               
             });
 
-
+            
         }
+        
+        var adresId;
+        
+        
 
         function editAdres(id) {
 

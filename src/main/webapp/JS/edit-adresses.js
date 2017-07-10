@@ -150,7 +150,12 @@ function putPostAdresUser() {
             contentType: "application/json",
             success: function () {
 
-                window.location.href = "/Jee-Shop/customer_confirmation.html";
+               
+                
+                window.opener.location.reload(true);
+                setTimeout(function () {
+                    window.close();
+                }, 100);
             },
             error: function () {
                 alert("Error, " + jsonData);
