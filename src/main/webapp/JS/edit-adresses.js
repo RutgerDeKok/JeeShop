@@ -1,17 +1,17 @@
 $(document).ready(function () {
-    setupEditUser();
+    setupEditAdres();
 
 });
 
 $(document).on("submit", "form#adresForm", function (event) {
     event.preventDefault();
 //    alert("submit event");
-    putPostUser();
+    putPostAdresUser();
 });
 
 
 
-function setupEditUser() {
+function setupEditAdres() {
 
     var id = window.location.search.substring(1);
 
@@ -34,18 +34,18 @@ function setupEditUser() {
         $('#additionId').val(address.numAddittion);
         $('#insertionId').val(address.insertion);
        
-
-        var select = $('#typeId');
-        $.getJSON('/Jee-Shop/rest/users/types', function (data) {
-            $.each(data, function (key, value) {
-
-                if (user.type === value.name) {
-                    $('<option value="' + value.name + '" selected="selected">' + value.readableName + '</option>').appendTo(select);
-                } else {
-                    $('<option value="' + value.name + '">' + value.readableName + '</option>').appendTo(select);
-                }
-            });
-        });
+//NIET NODIG!
+//        var select = $('#typeId');
+//        $.getJSON('/Jee-Shop/rest/users/types', function (data) {
+//            $.each(data, function (key, value) {
+//
+//                if (user.type === value.name) {
+//                    $('<option value="' + value.name + '" selected="selected">' + value.readableName + '</option>').appendTo(select);
+//                } else {
+//                    $('<option value="' + value.name + '">' + value.readableName + '</option>').appendTo(select);
+//                }
+//            });
+//        });
 
     });
 }
@@ -71,7 +71,7 @@ function setupEditUser() {
 
 
 
-function putPostUser() {
+function putPostAdresUser() {
 
     var userObject = {};
     var addressObject = {};
