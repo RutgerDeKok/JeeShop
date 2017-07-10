@@ -50,12 +50,10 @@ function startProductTable() {
         var datarow = " "; 
         var rowindex = 0;
         var substring = cheese_name;
+        console.log(substring);
         $.each(data, function (key, value) {
             var name = value.name;
 
-//           console.log (name);
-//            console.log(substring);
-            console.log(name.toLowerCase().indexOf(substring.toLowerCase()) !== -1);
             if (name.toLowerCase().indexOf(substring.toLowerCase()) !== -1){
             datarow += '<tr class="table_info_content" class="tablerow" name=' + rowindex + ' >';
             datarow += ' <td align=/"left/">' + value.name + ' </td>';
@@ -151,8 +149,6 @@ function displayCatFilters() {
 function searchCheese(){
     cheese_name = $("#cheese_name").val();
     startProductTable();
-  
-    
 }
 
 
@@ -165,7 +161,6 @@ $(document).on("change", "input[type='radio']", function (event) {
 
 $("#productsTable").mouseover(function(){
     $(".table_info_content").hover(function(event){
-        //$(this).css("background", "rgb(252,150,150)");
         $("#productInfo").css({"top":event.clientY,"left":event.clientX});
         $("#productInfo").html(tableInfoTable[$(this).attr('name')]);
        

@@ -138,14 +138,16 @@ button {
 }
 
 #productInfo{
-    position: static;
+    -webkit-box-shadow: rgb(80,80,80) 1px 1px 1px;
+    -webkit-border-radius: 7px;
+    position: fixed;
     z-index: 1;
     margin: 30px;
     text-align: center;
-    font: 15px bold Tahoma;
+    font: 15x bold Tahoma;
     color: black;
-    border: 2px solid blue;
-    background: rgb(222,100,100);
+    border: 2px solid black;
+    background: rgb(100,100,100);
     width: 200px;
     height: 100px;
     padding: 20px;
@@ -167,6 +169,16 @@ button {
     -webkit-border-radius: 5px;
 
 
+}
+
+#foutmelding{
+    font: 14px Tahoma;
+    padding: 10px;
+    background-color: #ffcc99;
+    border-collapse: collapse;
+    width: 80%;
+    -webkit-box-shadow: rgb(30,30,30) 5px 5px 5px;
+    -webkit-border-radius: 5px;
 }
 
 /*div {

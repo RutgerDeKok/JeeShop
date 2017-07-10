@@ -47,13 +47,21 @@
 
         </table> 
         
+        <div id="foutmelding">
+            
+        </div>
+        
         <div id="gets_deleted">
             
         </div>
-        <button><a href="customer_confirmation.html">Bevestig</a></button>
+        <button id="confirmation_button">Bevestig</button>
         <script>
-           
-            var id;
+            var amount_of_products = 0;
+            var totalPrice;
+            var id ;
+            var firstName = "";
+            var zipCode=""
+            eenProduct=false;
             
               $(document).ready(function () {
                  id =  getCookie("UserId");
@@ -62,7 +70,15 @@
                  startSubOrderTable(id);
                 });
            
-          
+          $("#confirmation_button").on('click',function(){
+              if(firstName!="" && zipCode!="" && amount_of_products>0){ 
+              window.location.href = "customer_confirmation.html";
+            }
+              else{
+                  $("#foutmelding").html("geen producten of geen adress, looser");
+                  
+              }
+          });
 
             function startCartInfoTable(id){
                $(".table_info_content").remove();  
@@ -70,7 +86,7 @@
              
                 $.getJSON('rest/carts/'+ id, function (cartData) {
                         cartsData = cartData;
-                        
+                        if(cartsData.deliveryAddress){
                         datarow += ' <tr class="table_info_content">';
                         //datarow += ' <td align=/"left/">' + cartData.userId.email + ' </td>';//
                         datarow += ' <td align=/"left/">' + cartData.deliveryAddress.firstName + ' </td>';
@@ -82,6 +98,9 @@
 
                         datarow += '</tr>';
                         
+                        zipCode = cartData.deliveryAddress.zipCode;
+                        firstName = cartData.deliveryAddress.firstName;
+                    }
             $('#table_Cart_info').append(datarow) ;
                     });
  
@@ -95,7 +114,7 @@
                 
                 $.getJSON('rest/cartsuborders', function (data) {
                    
-                    var totalPrijs = 0;
+                    totalPrijs = 0;
                     $.each(data, function (key, value) {
                         
                       
@@ -106,9 +125,9 @@
                         datarowSubOrder += ' <td align=/"left/">' + value.product.name + ' </td>';
                         datarowSubOrder += ' <td align=/"left/">' + value.quantity + ' </td>';
                         datarowSubOrder += ' <td align=/"left/">' + value.product.price + ' </td>';
-                        datarowSubOrder += ' <td align=/"left/" onclick=\"deleteRow(' + value.id + ',' + id + ')\"> <button><div style="text-align:center; color:red;"> X <div></button></td> </tr>';
-                        totalPrijs+= value.subTotal;
-                       
+                        datarowSubOrder += ' <td align=/"left/" onclick=\"deleteRow(' + value.id + ',' + id + ',' + value.quantity + ',' + value.subTotal + ')\"> <button><div style="text-align:center; color:red;"> X <div></button></td> </tr>';
+                        totalPrijs+= value.subTotal*value.quantity;
+                        amount_of_products++;
                        }
                     });
                    
@@ -119,7 +138,12 @@
          
         }
             
-            function deleteRow(id, cartId){
+            function deleteRow(id, cartId, quantity, subTotal){
+                amount_of_products--;
+                totalPrijs -= subTotal*quantity;
+                $("#footer").text("TotaalPrijs: " + Math.round(totalPrijs*100)/100);
+                
+                
                 $("#" + id).fadeOut(2000), function(){
                     $("#" + id).remove();
                 };
