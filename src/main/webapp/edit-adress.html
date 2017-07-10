@@ -4,52 +4,98 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<html>
-    <head>
+ <head>
         <title>Edit Product</title>
-        <script src ="../JS/jquery.js"></script>
-        <script src ="../JS/edit-adresses.js"></script>
-        <link href="../CSS/form.css" rel="stylesheet" />
+        <script src ="/Jee-Shop/JS/jquery.js"></script>
+        <script src ="/Jee-Shop/JS/edit-adresses.js"></script>
+        <link href="/Jee-Shop/CSS/form.css" rel="stylesheet" />
 
 
     </head>
 
 
 
-    <body>
+     <body>
 
         <div>
 
 
-            <form id="AdresForm">
-                <h2>Nieuw Adres Toevoegen</h2>
+            <form id="userForm">
+                <h2>Adres aanpassen /toevoegen</h2>
 
-                <label  hidden><b>id</b></label> <input id="IdId" type="text"
-                                               name="id"  hidden><br /> 
+                <TABLE class='formTable'>
+                   
+                    <TR hidden>
+                        <TD><b>address id</b></TD>
+                        <TD>
+                            <input id="addressIdId" type="text" name="id">
+                        </TD>
+                    </TR>
+                   
+                    <TR>
+                        <TD><b>Voornaam</b></TD>
+                        <TD>
+                            <input id="voornaamId" type="text" name="voornaam" required>
+                        </TD>
+                    </TR>
+                    <TR>
+                        <TD><b>Voornaam</b></TD>
+                        <TD>
+                            <input id="achternaamId" type="text" name="achternaam" required>
+                        </TD>
+                    </TR>
+                    <TR>
+                        <TD><b>Straat</b></TD>
+                        <TD>
+                            <input id="straatId" type="text" name="straat">
+                        </TD>
+                    </TR>
+                    <TR>
+                        <TD><b>Nummer</b></TD>
+                        <TD>
+                            <input id="nummerId" type="number" name="nummer">
+                        </TD>
+                    </TR>
+                    <TR>
+                        <TD><b>Straat</b></TD>
+                        <TD>
+                            <input id="straatId" type="text" name="street" required>
+                        </TD>
+                    </TR>
+                    <TR>
+                        <TD><b>Stad</b></TD>
+                        <TD>
+                            <input id="stadId" type="text" name="stad" required>
+                        </TD>
+                    </TR>
+                    <TR>
+                        <TD><b>Postcode</b></TD>
+                        <TD>
+                            <input id="zipCodeId" type="text" name="zipCode" 
+                                   required pattern="[1-9][0-9]{3}\s?[a-zA-Z]{2}" 
+                                   onchange="this.setCustomValidity(this.validity.patternMismatch ? this.title : '');" >
+                        </TD>
+                    </TR>
+                    <TR>
+                        <TD><b>huisnummer toevoeging</b></TD>
+                        <TD>
+                            <input id="additionId" type="text" name="add"  >
+                        </TD>
+                    </TR>
+                    <TR>
+                        <TD><b>Voorzetsels van achternaam</b></TD>
+                        <TD>
+                            <select id="insertionId" name="insertion" required></select>                        
+                        </TD>
+                    </TR>
+                </table>
 
-                <label class="vis"><b>Voornaam </b></label> <input class="visin" id="name" type="text"
-                                                   name="name" required><br /> 
 
-                <label class="vis"<b>Achternaam</b></label> <input class="visin" id="lastname" type="text"
-                                                  name="brand"> <br /> 
 
-                <label class="vis"<b>Straat</b></label> <input class="visin" id="Street" type="text"
-                                                   name="price"> <br /> 
+                    <br>
+                   
 
-                <label class="vis"<b>Nummer</b></label><input class="visin" id="stockId" type="number"
-                                                     name="stockCount" required><br /> 
-
-                <label class="vis"<b>Stad</b></label> <input class="visin" id="city" type="text"
-                                                        name="info"  ><br />
-
-                <label class="vis"<b>Postcode</b></label> <input class="visin" id="zipCode"
-                                                        name="category" required> 
-                </select><br />
-
-                <br>
-                <br>
-
-                <button type="submit">  OK  </button>
+                    <button type="submit" >  OK  </button>
             </form> 
         </div>
 
