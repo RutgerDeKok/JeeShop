@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $.get("../top-navbar.html", function (data) {
+    $.get("Jee-Shop/top-navbar.html", function (data) {
         $("#nav-placeholder").replaceWith(data);
     });
 
@@ -9,9 +9,7 @@ $(document).ready(function () {
 
 function startOrderTable() {
 
-
-    $.getJSON('../rest/sales', function (data) {
-
+    $.getJSON('/Jee-Shop/rest/sales', function (data) {
 
         var datarow = "<tbody>";
         $.each(data, function (index, value) {
@@ -33,21 +31,18 @@ function startOrderTable() {
         $('#table_order').append(datarow);
     });
 }
-;
+
 
 function viewRow(button, order_id) {
-
 
     button.parentNode.parentNode.className = 'highlight';
     //dit gaat altijd goed nu.
     //alert("order id is:" + order_id);
 
     geeftFinalSubordersWeer(order_id);
-
     button.parentNode.innerHTML = '<button id="unview" onclick="unviewRow(this,' + order_id + ')">Unview Details</button>';
-
 }
-;
+
 
 function unviewRow(button, order_id) {
     button.parentNode.parentNode.className = '';
@@ -57,22 +52,17 @@ function unviewRow(button, order_id) {
     $("#table_viewFinalSubs").children("tbody").empty();
     
     
-};
+}
 
 
 function geeftFinalSubordersWeer(id) {
 
-
     getCategories();
-
-    
-
     var datarowSubOrder = "<tbody >";
 
     $.getJSON('/Jee-Shop/rest/finalsuborders/find_by_order_id/' + id, function (data) {
 
         $.each(data, function (key, value) {
-
 
             if (value.order.id === id) {
 
@@ -95,7 +85,7 @@ function geeftFinalSubordersWeer(id) {
         datarowSubOrder += '</tbody>';
         $("#table_viewFinalSubs").append(datarowSubOrder);
         //$("#footer").text("TotaalPrijs: " + Math.round(totalPrijs*100)/100);
-
+        window.location.hash = "lookhere";
     });
 
 
