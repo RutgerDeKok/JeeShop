@@ -21,6 +21,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import rsvier.model.Address;
 import rsvier.model.Cart;
 import rsvier.model.CartSuborder;
 import rsvier.security.TokenValidator;
@@ -28,10 +29,10 @@ import rsvier.model.EnumWrap;
 import rsvier.model.User;
 import rsvier.model.UserType;
 import rsvier.persistence.CartFacade;
+import rsvier.persistence.CartSuborderFacade;
 import rsvier.persistence.UserFacade;
 import rsvier.security.scrypt.SCryptUtil;
 import rsvier.security.RolesAllowed;
-
 
 @Stateless
 @Path("/users")
@@ -42,19 +43,36 @@ public class UserFacadeREST {
     @EJB
     CartFacade cartFacade;
     @EJB
+    CartSuborderFacade csoFacade;
+    @EJB
     private TokenValidator tokenValidator;
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Long id, User entity) {
+
+        if (entity.getPass().length() > 0) {
+            entity.setPassHash(SCryptUtil.scrypt(entity.getPass(), 16384, 8, 1));
+            System.out.println("password updated");
+        }
         facade.edit(entity);
     }
 
     @DELETE
     @Path("{id}")
+//    @RolesAllowed({"EMPLOYEE", "ADMIN"})
+    @PermitAll
     public void remove(@PathParam("id") Long id) {
+        System.out.println("Deleting user: " + id);
+        List<CartSuborder> csoList = csoFacade.findByCartId(id);
+        for(CartSuborder cso : csoList){
+            csoFacade.remove(cso);
+        }
+        Cart temp = cartFacade.find(id);
         facade.remove(facade.find(id));
+        cartFacade.remove(temp);
+
     }
 
     @GET
@@ -132,9 +150,9 @@ public class UserFacadeREST {
     @Produces(MediaType.TEXT_PLAIN)
     @PermitAll
     @Path("/login")
-    public Response doLogin(User login) {
-        User dbUser = facade.findByEmail(login.getEmail());
-        boolean correctPass = SCryptUtil.check(login.getPassHash(), dbUser.getPassHash());
+    public Response doLogin(User loginData) {
+        User dbUser = facade.findByEmail(loginData.getEmail());
+        boolean correctPass = SCryptUtil.check(loginData.getPass(), dbUser.getPassHash());
         if (correctPass) {
             System.out.println("Succesvolle authenticatie");
             String token = null;
@@ -163,23 +181,41 @@ public class UserFacadeREST {
     }
 
     @POST
-    @PermitAll
+    @Path("/employees")
+    @RolesAllowed({"EMPLOYEE", "ADMIN"})
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response create(User registerData) {
+    public Response createAnyUser(User tempUser) {
+        System.out.println("New user type= "+tempUser.getType().name());
+//        User newUser = new User();
+//        newUser.setType(registerData.getType());
+//        newUser.setBillingAddress(registerData.getBillingAddress());
+        
+        return createUser(tempUser);
+    }
 
+    @POST
+    @PermitAll  //this method can only create CUSTOMERs
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Response createCustomer(User tempUser) {
+
+//        User newUser = new User();
+        tempUser.setType(UserType.CUSTOMER);
+        return createUser(tempUser);
+    }
+
+    private Response createUser(User newUser) {
         try {  // try to store new user, will fail if email is not unique
             System.out.println("Gebruiker wordt geregistreerd");
-            User newUser = new User();
-            newUser.setType(UserType.CUSTOMER);
- 
-            newUser.setEmail(registerData.getEmail().trim());
 
-            String passHash = SCryptUtil.scrypt(registerData.getPassHash().trim(), 16384, 8, 1);
+            newUser.setEmail(newUser.getEmail().trim());
+
+            String passHash = SCryptUtil.scrypt(newUser.getPass().trim(), 16384, 8, 1);
             newUser.setPassHash(passHash);
 
             facade.create(newUser);
-
+            System.out.println("Gebruiker succesvol opgeslagen");
             // Create a new cart for the new user      
             User temp = facade.findByEmail(newUser.getEmail());
             Cart newCart = new Cart();
@@ -187,7 +223,7 @@ public class UserFacadeREST {
             newCart.setUser(temp);
             List<CartSuborder> subs = new ArrayList<>();
             newCart.setCartSuborderList(subs);
-            
+
             cartFacade.create(newCart);
 
             return Response.ok().entity("SUCCESS").build();
@@ -195,9 +231,8 @@ public class UserFacadeREST {
             return Response.ok().entity("EMAIL_IN_USE").build();
         }
     }
-    
-    
-     private String mapToJson(Map<String, String> map) {
+
+    private String mapToJson(Map<String, String> map) {
         StringBuilder jsonString = new StringBuilder("{");
         //{ "name":"John", "age":31, "city":"New York" }; json format
 
@@ -211,6 +246,5 @@ public class UserFacadeREST {
         jsonString.append("}");
         return jsonString.toString();
     }
-
 
 }

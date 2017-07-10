@@ -22,6 +22,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -69,6 +70,9 @@ public class User implements Serializable {
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     @OneToOne(cascade=ALL)
     private Address billingAddress;
+    
+    @Transient
+    private String pass;
 
     public User() {
     }
@@ -121,6 +125,14 @@ public class User implements Serializable {
 
     public void setBillingAddress(Address billingAddress) {
         this.billingAddress = billingAddress;
+    }
+    
+    public void setPass(String pass){
+        this.pass = pass;
+    }
+    
+    public String getPass(){
+        return pass;
     }
 
     @Override

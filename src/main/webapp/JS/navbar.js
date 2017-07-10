@@ -27,21 +27,7 @@ $(document).ready(function () {
         e.preventDefault();
         logout();
     });
-
-
-//      // sign up submit function
-//    $('#signup-submit').click(function (e) {
-//        e.preventDefault();
-//        signup();
-//    });
-
-//    // show cookies button
-//    $('#cookies').click(function (e) {
-//        e.preventDefault();
-////        console.log("Cookies: " + document.cookie);
-//        createUserTest();
-//    });
-
+//
     // check for user cookie
     if (getCookie("UserEmail")) {
         ShowLogedInDetails(getCookie("UserEmail"), getCookie("UserType"));
@@ -124,7 +110,7 @@ function login() {
             ShowLogedInDetails(dataObject.email, dataObject.type);
         },
         error: function (data) {
-            alert("log in gegevens incorrect");
+            alert("Error log in gegevens incorrect");
             console.log(data);
         }
     });

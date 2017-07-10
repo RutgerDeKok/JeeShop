@@ -63,7 +63,7 @@ and open the template in the editor.
                             <form id="signup" action="javascript:signup();" onsubmit="return checkForm(this);">
                                 <fieldset id="signup-inputs">
                                     <input id="signup-username" type="email" name="email" placeholder="Uw emailadres" required>   
-                                    <input id="signup-password" type="password" name="passHash" placeholder="Wachtwoord" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" 
+                                    <input id="signup-password" type="password" name="pass" placeholder="Wachtwoord" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" 
                                            onchange="this.setCustomValidity(this.validity.patternMismatch ? this.title : '');
                         if (this.checkValidity())
                             form.passConf.pattern = this.value;">
@@ -87,7 +87,7 @@ and open the template in the editor.
                             <form id="login" >
                                 <fieldset id="login-inputs">
                                     <input id="login-username" type="email" name="email" placeholder="Uw emailadres" required>   
-                                    <input id="login-password" type="password" name="passHash" placeholder="Wachtwoord" required>
+                                    <input id="login-password" type="password" name="pass" placeholder="Wachtwoord" required>
                                 </fieldset>
                                 <fieldset id="login-actions">
                                     <input type="submit" id="login-submit" value="Log in">

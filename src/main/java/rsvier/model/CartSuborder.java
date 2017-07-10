@@ -33,6 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "CartSuborder.findById", query = "SELECT c FROM CartSuborder c WHERE c.id = :id")
     , @NamedQuery(name = "CartSuborder.findByQuantity", query = "SELECT c FROM CartSuborder c WHERE c.quantity = :quantity")
     , @NamedQuery(name = "CartSuborder.findByProductId", query = "SELECT c FROM CartSuborder c WHERE c.product.id = :productid")
+    , @NamedQuery(name = "CartSuborder.findByCartId", query = "SELECT c FROM CartSuborder c WHERE c.cart.id = :cartid")
     , @NamedQuery(name = "CartSuborder.findBySubTotal", query = "SELECT c FROM CartSuborder c WHERE c.subTotal = :subTotal")})
 public class CartSuborder implements Serializable {
 
