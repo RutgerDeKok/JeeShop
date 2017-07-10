@@ -1,12 +1,15 @@
-body{background:#59ABE3;margin:0}
+
+body{background:#fafa9e;margin:0}
+/*#59ABE3 blue   #ffcc99; salmon*/
 
 
 form{
+
     width:600px;
-    background:#e6e6e6;
-    border-radius:4px;
-    box-shadow:0 0 40px -10px #000;
-    margin:calc(50vh - 220px) auto;
+    background:#fafa9e;
+    /*border-radius:4px;*/
+    /*box-shadow:0 0 40px -10px #000;*/
+    margin: auto;
     padding:20px 30px;
     max-width:calc(100vw - 40px);
     box-sizing:border-box;
@@ -19,16 +22,35 @@ label {
   width: 7em;
   
 }
-.vis{
+/*.vis{
     display: inline-block;
-}
+}*/
 
 
 input {
-    width: 30em;
+    width: 29em;
+    padding-left: 5px;
 }
 
 select {
     
-    width: 30em;
+    width: 29em;
+    padding: 5px;
+}
+
+tr{
+    margin-top: 3px;
+}
+td{
+    padding: 5px;
+}
+
+button {
+
+    padding-right: 20px;
+    padding-left: 25px;
+    font-size: 130%;
+    float: right;
+    -webkit-box-shadow: rgb(80,80,80) 1px 1px 1px;
+    -webkit-border-radius: 7px;
 }

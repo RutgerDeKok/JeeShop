@@ -1,11 +1,14 @@
 package rsvier.security;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.Method;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Priority;
 import javax.annotation.security.PermitAll;
 //import javax.annotation.security.RolesAllowed;
@@ -43,6 +46,13 @@ public class RestAuthenticationFilter implements javax.ws.rs.container.Container
             boolean rolesAnnoPresent = method.isAnnotationPresent(RolesAllowed.class);
             System.out.println("roles allowed annotation: " + rolesAnnoPresent);
             if (method.isAnnotationPresent(RolesAllowed.class)) {
+                
+                URI redirectUri =null;
+                    try {
+                        redirectUri = new URI("/Jee-Shop/error.html?Scheer&nbsp;weg&nbsp;jij&nbsp;deugniet!&nbsp;403");
+                    } catch (URISyntaxException ex) {
+                        Logger.getLogger(RestAuthenticationFilter.class.getName()).log(Level.SEVERE, null, ex);
+                    }
 
                 // get annotated roles
                 RolesAllowed rolesAnnotation = method.getAnnotation(RolesAllowed.class);
@@ -63,9 +73,10 @@ public class RestAuthenticationFilter implements javax.ws.rs.container.Container
 
                 if (tokenFromCookie == null || !tokenValidator.validateToken(tokenFromCookie)) {
                     System.out.println("No (valid)token found");
-                    requestContext.abortWith(
-                            Response.status(Response.Status.BAD_REQUEST).entity("User must log in first").build()
-                    );
+                    
+                    requestContext.abortWith(Response.temporaryRedirect(redirectUri).build());
+//                            Response.status(Response.Status.BAD_REQUEST).entity("User must log in first").build()
+//                    );
                     return;
 
                 } else {
@@ -85,9 +96,10 @@ public class RestAuthenticationFilter implements javax.ws.rs.container.Container
                 System.out.println("allowed = " + allowed);
 
                 if (!allowed) {
-                    requestContext.abortWith(
-                            Response.status(Response.Status.UNAUTHORIZED).entity("User unautorized to perform this action").build()
-                    );
+                    requestContext.abortWith(Response.temporaryRedirect(redirectUri).build());
+//                    requestContext.abortWith(
+//                            Response.status(Response.Status.UNAUTHORIZED).entity("User unautorized to perform this action").build()
+//                    );
                     return;
                 }
 

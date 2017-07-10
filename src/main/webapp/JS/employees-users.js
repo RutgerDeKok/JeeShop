@@ -5,6 +5,12 @@ $(document).ready(function () {
 
     startUserTable();
     displayTypeFilters();
+    
+     $('#newButton').click(function (e) {
+        e.preventDefault();
+        newUser();
+    });
+    
 });
 
 
@@ -90,11 +96,17 @@ function deleteRow(id) {
 
 }
 
+function newUser() {
+    
+    popitup( "edit-user.html");
+
+}
 
 
 function editRow(id) {
-
-    window.location.href = "edit-user.html?" + id;
+    
+    popitup( "edit-user.html?" + id);
+//    window.location.href = "edit-user.html?" + id;
 }
 
 
@@ -157,6 +169,22 @@ $(document).on("change", "input[type='radio']", function (event) {
 
 });
 
+function popitup2(url) {
+    newwindow = window.open(url, 'name', 'height=600px,width=700px');
+    if (window.focus) {
+        newwindow.focus();
+    }
+    return false;
+}
+
+function popitup(url) {
+  var w = 600;
+  var h = 500;
+  var title = "Edit User";
+  var left = (screen.width/2)-(w/2);
+  var top = (screen.height/2)-(h/2);
+  return window.open(url, title, 'titlebar= no, toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=yes, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+} 
 
 
 

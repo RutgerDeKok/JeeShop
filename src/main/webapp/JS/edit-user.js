@@ -1,5 +1,6 @@
 $(document).ready(function () {
     setupEditUser();
+
 });
 
 $(document).on("submit", "form#userForm", function (event) {
@@ -14,11 +15,11 @@ function setupEditUser() {
 
     var id = window.location.search.substring(1);
 
-    $('#userForm').action = "../rest/users/" + id;
+    $('#userForm').action = "/Jee-Shop/rest/users/" + id;
 
 //    prefill the imput boxes with available product data
 
-    $.getJSON('../rest/users/' + id, function (user) {
+    $.getJSON('/Jee-Shop/rest/users/' + id, function (user) {
         var address = user.billingAddress;
         if (!address) {
             address = {};
@@ -37,7 +38,7 @@ function setupEditUser() {
         $('#cityId').val(address.city);
 
         var select = $('#typeId');
-        $.getJSON('../rest/users/types', function (data) {
+        $.getJSON('/Jee-Shop/rest/users/types', function (data) {
             $.each(data, function (key, value) {
 
                 if (user.type === value.name) {
@@ -53,7 +54,7 @@ function setupEditUser() {
 
 
 function getTypes() {
-    $.getJSON('../rest/users/types', function (types) {
+    $.getJSON('/Jee-Shop/rest/users/types', function (types) {
         return types;
     });
 }
@@ -77,7 +78,7 @@ function putPostUser() {
     var userObject = {};
     var addressObject = {};
 
-    if ($('#addressIdId').val()>0) {
+    if ($('#addressIdId').val() > 0) {
         addressObject.id = $('#addressIdId').val();
     }
     addressObject.firstName = $('#firstNameId').val();
@@ -108,13 +109,16 @@ function putPostUser() {
 //        alert("PUT");
         $.ajax({
             type: "PUT",
-            url: "../rest/users/" + id,
+            url: "/Jee-Shop/rest/users/" + id,
             data: jsonData,
 //            dataType: "json", alleen nodig als return data wordt 
             contentType: "application/json",
             success: function () {
-
-                window.location.href = "../employees/users.html";
+                window.opener.location.reload(true);
+                setTimeout(function () {
+                    window.close();
+                }, 200);
+//                window.location.href = "/Jee-Shop/employees/users.html";
             },
             error: function () {
                 alert("Error, " + jsonData);
@@ -130,7 +134,7 @@ function putPostUser() {
             contentType: "application/json",
             success: function () {
 
-                window.location.href = "../employees/users.html";
+                window.location.href = "/Jee-Shop/employees/users.html";
             },
             error: function () {
                 alert("Error, " + jsonData);
@@ -139,4 +143,6 @@ function putPostUser() {
     }
 
 }
+
+
 
