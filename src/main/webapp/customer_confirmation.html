@@ -147,7 +147,7 @@
             });
         }
 
-       
+
 
 
 
@@ -198,15 +198,15 @@
         }
 
         function startCartInfoTable(id) {
-            
+
             $(".table_info_content").remove();
 
             var datarow = " ";
-      
+
 
 
             $.getJSON('rest/carts/' + id, function (dataCarts) {
-               
+
 
                 $("#Hadres").html(dataCarts.deliveryAddress.id);
                 $("#first_name").html("Voornaam: " + dataCarts.deliveryAddress.firstName);
@@ -226,11 +226,6 @@
 
 
 
-
-
-
-
-
             });
 
 
@@ -238,11 +233,21 @@
 
         function editAdres(id) {
 
-            window.location.href = "edit-adress.html?" + id;
+            // window.location.href = "edit-adress.html?" + id;
+
+            popitup("edit-adress.html?" + id);
+
         }
 
 
-
+        function popitup(url) {
+            var w = 700;
+            var h = 750;
+            var title = "Edit Adres";
+            var left = (screen.width / 2) - (w / 2);
+            var top = (screen.height / 2) - (h / 2);
+            return window.open(url, title, 'titlebar= no, toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=yes, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+        }
 
 
         function startSubOrderTable(id) {

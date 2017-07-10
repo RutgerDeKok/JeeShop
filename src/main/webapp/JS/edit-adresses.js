@@ -15,7 +15,7 @@ function setupEditAdres() {
 
     var id = window.location.search.substring(1);
     
-alert("id"+id);
+
 
    // $('#adresForm').action = "/Jee-Shop/rest/addresses/" + id;
 
@@ -25,7 +25,7 @@ alert("id"+id);
         
         
         
-        alert("value data: " +address.firstName);
+        
 //        NIET NODIG! ADres ziet al alles! User niet, dus die gebruikte een var om onnodig typen te voorkomen.
 //        var address = user.billingAddress; <------compleet onnodig hier.
 //        if (!address) {
@@ -90,7 +90,7 @@ function putPostAdresUser() {
         addressObject.id = $('#addressIdId').val();
     }
     else{
-     alert("dit gaat helemaal niet goed!")   ;
+    // alert("dit gaat helemaal niet goed!")   ;
     }
     addressObject.firstName = $('#voornaamId').val();
     addressObject.insertion = $('#insertionId').val();
@@ -118,7 +118,7 @@ function putPostAdresUser() {
     alert(jsonData);
 
     var id = addressObject.id;
-    alert("id= " + id);
+   // alert("id= " + id);
 
     if (id !== undefined) {
         alert("PUT");
