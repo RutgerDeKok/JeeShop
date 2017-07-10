@@ -139,6 +139,28 @@
                  
 }
             
+            function updateStock(product, quantity){
+                product.stockCount -= quantity;
+                productId = product.id;
+                $.ajax({
+            type: "PUT",
+            url: "rest/products/" + productId,
+            data: JSON.stringify(product),
+            //      dataType: "json", alleen nodig als return data wordt 
+            contentType: "application/json",
+            success: function () {
+                    console.log("product aangepast");
+               
+            },
+            error: function () {
+                console.log(productId);
+                console.log(product);
+            }
+        });
+            }
+            
+            
+            
             
             function subOrderToFinalOrder(id, order_to_send){
                 
@@ -147,6 +169,7 @@
         $.getJSON(cartSubOrderUrl, function(cartSubOrders) {     
              $.each(cartSubOrders, function (key, value) {
                 if (value.cart.id == id){
+                    updateStock(value.product, value.quantity);
                 var jsonData ={ 
                         "itemPrice": value.product.price,
                         "prdBrand": value.product.brand,
@@ -156,7 +179,7 @@
                         "subTotal": value.subTotal,
                         "order": order_to_send 
                     }; 
-                        
+                   
                 $.ajax({
                    type: "POST",
                    url: "rest/finalsuborders",
@@ -249,7 +272,7 @@
                          });
                           }                   
                        });
-                      window.location.href = "customer_finalorder.html";
+                     // window.location.href = "customer_finalorder.html";
                      });
                   }
 
