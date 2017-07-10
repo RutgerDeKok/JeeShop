@@ -164,9 +164,9 @@ $(document).on("change", "input[type='radio']", function (event) {
 });
 
 $("#productsTable").mouseover(function(){
-    $(".table_info_content").mouseover(function(event){
+    $(".table_info_content").hover(function(event){
         //$(this).css("background", "rgb(252,150,150)");
-        $("#productInfo").css({"position":"absolute","top":event.clientY,"left":event.clientX});
+        $("#productInfo").css({"position":"fixed","top":event.clientY,"left":event.clientX});
         $("#productInfo").html(tableInfoTable[$(this).attr('name')]);
        
     });

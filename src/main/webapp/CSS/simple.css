@@ -138,6 +138,7 @@ button {
 }
 
 #productInfo{
+    position: static;
     z-index: 1;
     margin: 30px;
     text-align: center;
