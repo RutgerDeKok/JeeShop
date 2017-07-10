@@ -56,12 +56,14 @@
        
        <button id='confirmation_button'>ECHTE BEVESTIGING</button>
         <script>
+            var subOrderList = [];
             var order_to_send;
             var id;
             var totalPrijs = 0;
+            var customer_cart;
             
               $(document).ready(function () {
-             id =  getCookie("UserId");
+                id =  getCookie("UserId");
                  console.log(id);
                  startCartInfoTable(id);
                  startSubOrderTable(id);
@@ -69,13 +71,8 @@
 
          
             $("#confirmation_button").click(function(){
-                 id = $("#IdId").val();
-                 
                  cartToOrder();
-                  window.location.href = "customer_finalorder.html";
-                   
-                 
-                 
+
             });
             
         function cartToOrder(){
@@ -88,17 +85,17 @@
         $.getJSON(cartSubOrderUrl, function(cartSubOrders) {
             $.getJSON(cartsUrl, function(cart) {
            var userId = cart.id;
+           customer_cart = cart;
            userUrl = "rest/users/" + id;
            
         $.getJSON(userUrl, function(User) {
-            var subOrderList = [];
+            subOrderList = [];
              $.each(cartSubOrders, function (key, value) {
-                 console.log(value.cart.id);
-                 console.log(userId);
                 if (value.cart.id == userId){
                     subOrderList.push(value);
                 }
             });
+            
                  order_to_send ={ 
                         "city": cart.deliveryAddress.city,
                         "familyName": cart.deliveryAddress.familyName,
@@ -123,7 +120,8 @@
                    success: function () {
                        
                        console.log("order gelukt");
-                       subOrderToFinalOrder(id, order_to_send);  
+                       subOrderToFinalOrder(id, order_to_send);
+                       
                       
                    },
                    error: function () {
@@ -132,20 +130,18 @@
                        console.log(JSON.stringify(jsonData));
                    }
                });
+               
             });   
         });
     });
+    
+                 
+                 
 }
             
             
             function subOrderToFinalOrder(id, order_to_send){
                 
-//                var userId;
-//                cartUrl = "rest/carts";
-//                $.getJSON(cartUrl, function(cart){
-//                userId = cart.id;   
-//            });
-        
             cartSubOrderUrl = "rest/cartsuborders";
              productUrl = "rest/products";
         $.getJSON(cartSubOrderUrl, function(cartSubOrders) {     
@@ -167,9 +163,7 @@
                    data: JSON.stringify(jsonData),
                    contentType: "application/json",
                    success: function () {
-                       console.log("finalsubOrder gelukt");
-                       
-                       
+                       console.log("finalsubOrder gelukt");   
                    },
                    error: function () {
                        console.log(jsonData);
@@ -180,6 +174,9 @@
                 }   
              });
             });
+            console.log("komen we hier?");
+               deleteCartProducts();
+               console.log("komen we hier?");
            }           
            
             function startCartInfoTable(id){
@@ -194,42 +191,23 @@
                         $("#number").html("Nummber: " + cartData.deliveryAddress.number + " " + cartData.deliveryAddress.numAddition  );
                         $("#city").html("Stad: " + cartData.deliveryAddress.city );
                         $("#zip").html("PostCode: " + cartData.deliveryAddress.zipCode );
-                        
-//                        datarow += ' <tr class="table_info_content">';
-//                        //datarow += ' <td align=/"left/">' + cartData.userId.email + ' </td>';//
-//                        datarow += ' <td align=/"left/">' + cartData.deliveryAddress.firstName + ' </td>';
-//                        datarow += ' <td align=/"left/">' + cartData.deliveryAddress.familyName + ' </td>';
-//                        datarow += ' <td align=/"left/">' + cartData.deliveryAddress.street + ' </td>';
-//                        datarow += ' <td align=/"left/">' + cartData.deliveryAddress.number + ' </td>';
-//                        datarow += ' <td align=/"left/">' + cartData.deliveryAddress.city + ' </td>';
-//                        datarow += ' <td align=/"left/">' + cartData.deliveryAddress.zipCode + ' </td>';
 
-                       // datarow += '</tr>';
-                        
             $('#table_Cart_info').append(datarow) ;
+            
                     });
  
                
-        }
-            function startSubOrderTable(id){
+        };
+       function startSubOrderTable(id){
                 
                 $(".table_content").remove();
 
                  var datarowSubOrder = " ";
                 
                 $.getJSON('rest/cartsuborders', function (data) {
-                   
-                    
-                    $.each(data, function (key, value) {
-                        
-                      
+                   $.each(data, function (key, value) {
+  
                       if (value.cart && value.cart.id==id  ){
-                          
-                          
-                          
-                          
-                          
-                          
                         datarowSubOrder += ' <tr class="table_content">';
                         datarowSubOrder += ' <td align=/"left/">' + value.id + ' </td>';
                         datarowSubOrder += ' <td align=/"left/">' + value.subTotal + ' </td>';
@@ -247,7 +225,34 @@
                     
                 });
          
-        }
+        }     
+        
+        function deleteCartProducts(){
+  
+                $.getJSON('rest/cartsuborders', function (data) {
+                   $.each(data, function (key, value) {
+  
+                      if (value.cart && value.cart.id==id  ){
+                            subOrderId = value.id;
+                            
+                        $.ajax({
+                               type: "DELETE",
+                               url: "rest/cartsuborders/" + subOrderId,
+                               contentType: "application/json",
+                               success: function () {
+                                 console.log("product succesvol verwijderd");
+                               },
+                               error: function () {
+                                   console.log("Niet verwijderd");
+                                  
+                               }
+                         });
+                          }                   
+                       });
+                      window.location.href = "customer_finalorder.html";
+                     });
+                  }
+
 
         </script>
        

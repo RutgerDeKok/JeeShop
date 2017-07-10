@@ -98,19 +98,19 @@
 
                  var datarowSubOrder = " ";
                 
-                $.getJSON('rest/cartsuborders', function (data) {
+                $.getJSON('rest/finalsuborders', function (data) {
                    
                     var totalPrijs = 0;
                     $.each(data, function (key, value) {
-                        
-                      
-                      if (value.cart && value.cart.id==id  ){
+                            console.log(value);
+                      if (value.order && value.order.user && value.order.user.id==id  ){
+                          console.log("komen we hier?");
                         datarowSubOrder += ' <tr class="table_content">';
                         datarowSubOrder += ' <td align=/"left/">' + value.id + ' </td>';
-                        datarowSubOrder += ' <td align=/"left/">' + value.subTotal + ' </td>';
-                        datarowSubOrder += ' <td align=/"left/">' + value.product.name + ' </td>';
+                        datarowSubOrder += ' <td align=/"left/">' + value.itemPrice + ' </td>';
+                        datarowSubOrder += ' <td align=/"left/">' + value.prdName + ' </td>';
                         datarowSubOrder += ' <td align=/"left/">' + value.quantity + ' </td>';
-                        datarowSubOrder += ' <td align=/"left/">' + value.product.price + ' </td>';
+                        datarowSubOrder += ' <td align=/"left/">' + value.subTotal + ' </td>';
                         
                         totalPrijs+= value.subTotal;
                        
