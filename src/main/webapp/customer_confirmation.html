@@ -51,7 +51,7 @@
                 <div id="city">City</div>
                 <div id="zip">Zip</div>
                 <br/>
-                <button><a  href="edit-adress.html">Verander Adres</a></button>
+                <button id="goToEdit" ><a  href="edit-adress.html">Verander Adres</a></button>
             </div>
        
        <button id='confirmation_button'>ECHTE BEVESTIGING</button>
@@ -136,6 +136,15 @@
         });
     });
 }
+            
+            function editRow(id) {
+    
+    popitup( "edit-adress.html?" + id);
+//    window.location.href = "edit-user.html?" + id;
+}
+            
+            
+            
             
             
             function subOrderToFinalOrder(id, order_to_send){

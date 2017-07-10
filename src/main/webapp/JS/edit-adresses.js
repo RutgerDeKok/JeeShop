@@ -1,8 +1,8 @@
 $(document).ready(function () {
     setupEditAdres();
-
+//triggerd DIRECT
 });
-
+//triggerd op submit! Gaat goed.
 $(document).on("submit", "form#adresForm", function (event) {
     event.preventDefault();
 //    alert("submit event");
