@@ -3,7 +3,7 @@ $(document).ready(function () {
 
 });
 
-$(document).on("submit", "form#userForm", function (event) {
+$(document).on("submit", "form#adresForm", function (event) {
     event.preventDefault();
 //    alert("submit event");
     putPostUser();
@@ -15,27 +15,25 @@ function setupEditUser() {
 
     var id = window.location.search.substring(1);
 
-    $('#userForm').action = "/Jee-Shop/rest/users/" + id;
+    $('#adresForm').action = "/Jee-Shop/rest/addresses/" + id;
 
-//    prefill the imput boxes with available product data
+//    prefill the input boxes with available product data
 
-    $.getJSON('/Jee-Shop/rest/users/' + id, function (user) {
+    $.getJSON('/Jee-Shop/rest/adresses/' + id, function (address) {
         var address = user.billingAddress;
         if (!address) {
             address = {};
         }
-        $('#IdId').val(user.id);
-        $('#hashId').val(user.passHash);
-        $('#emailId').val(user.email);
         $('#addressIdId').val(address.id);
-        $('#firstNameId').val(address.firstName);
-        $('#insertionId').val(address.insertion);
-        $('#familyNameId').val(address.familyName);
-        $('#streetId').val(address.street);
-        $('#numberId').val(address.number);
-        $('#additionId').val(address.numAddition);
+        $('#voornaamId').val(address.firstName);
+        $('#achternaamId').val(address.familyName);
+        $('#straatId').val(address.street);
+        $('#nummerId').val(address.number);
+        $('#stadId').val(address.city);
         $('#zipCodeId').val(address.zipCode);
-        $('#cityId').val(address.city);
+        $('#additionId').val(address.numAddittion);
+        $('#insertionId').val(address.insertion);
+       
 
         var select = $('#typeId');
         $.getJSON('/Jee-Shop/rest/users/types', function (data) {
@@ -52,23 +50,23 @@ function setupEditUser() {
     });
 }
 
+//NIET nodig!
+//function getTypes() {
+//    $.getJSON('/Jee-Shop/rest/users/types', function (types) {
+//        return types;
+//    });
+//}
 
-function getTypes() {
-    $.getJSON('/Jee-Shop/rest/users/types', function (types) {
-        return types;
-    });
-}
-
-function getTypeEnum(readableName) {
-    var types = getTypes();
-    var result = "";
-    $.each(types, function (key, value) {
-        if (value.readableName === readableName.trim()) {
-            result = value.name;
-        }
-    });
-    return result;
-}
+//function getTypeEnum(readableName) {
+//    var types = getTypes();
+//    var result = "";
+//    $.each(types, function (key, value) {
+//        if (value.readableName === readableName.trim()) {
+//            result = value.name;
+//        }
+//    });
+//    return result;
+//}
 
 
 
