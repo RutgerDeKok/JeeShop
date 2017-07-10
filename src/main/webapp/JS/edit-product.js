@@ -1,6 +1,6 @@
 
 $(document).ready(function () {
-      setupEditProduct();
+    setupEditProduct();
 });
 
 $(document).on("submit", "form#productForm", function (event) {
@@ -82,7 +82,6 @@ function putPostProduct() {
 //            dataType: "json", alleen nodig als return data wordt 
             contentType: "application/json",
             success: function () {
-
                 window.location.href = "index.html";
             },
             error: function () {
@@ -99,7 +98,10 @@ function putPostProduct() {
             contentType: "application/json",
             success: function () {
 
-                window.location.href = "../employees/products.html";
+                window.opener.location.reload(true);
+                setTimeout(function () {
+                    window.close();
+                }, 200);
             },
             error: function () {
                 alert("Error, " + jsonData);

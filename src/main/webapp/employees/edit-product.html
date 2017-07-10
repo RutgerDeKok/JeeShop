@@ -17,30 +17,75 @@
 
             <form id="productForm">
                 <h2>Nieuw Product Toevoegen</h2>
+                
+                <TABLE class='formTable'>
+                    <TR hidden>
+                        <TD><b>id</b></TD>
+                        <TD>
+                            <input id="IdId" type="text" name="id" >
+                        </TD>
+                    </TR>
+                    <TR >
+                        <TD><b>Naam</b></TD>
+                        <TD>
+                            <input id="nameId" type="text"  name="name" required>
+                        </TD>
+                    </TR>
+                    <TR >
+                        <TD><b>Merk</b></TD>
+                        <TD>
+                            <input id="brandId" type="text" name="brand">
+                        </TD>
+                    </TR>
+                    <TR >
+                        <TD><b>Prijs</b></TD>
+                        <TD>
+                            <input id="priceId" type="text" name="price">
+                        </TD>
+                    </TR>
+                      <TR >
+                        <TD><b>Voorraad</b></TD>
+                        <TD>
+                            <input id="stockId" type="number" name="stockCount" required>
+                        </TD>
+                    </TR>
+                    <TR >
+                        <TD><b>Informatie</b></TD>
+                        <TD>
+                             <input id="infoId" type="text" name="info"  >
+                        </TD>
+                    </TR>
+                     <TR >
+                        <TD><b>Categorie</b></TD>
+                        <TD>
+                             <select id="categoryId" name="category" required></select>                        
+                        </TD>
+                    </TR>
+                </table>
 
-                <label  hidden><b>id</b></label> <input id="IdId" type="text"
-                                               name="id"  hidden><br /> 
+<!--                <label  hidden><b>id</b></label> <input id="IdId" type="text"
+                                               name="id"  hidden><br /> -->
 
-                <label class="vis"><b>Naam </b></label> <input class="visin" id="nameId" type="text"
-                                                   name="name" required><br /> 
+<!--                <label class="vis"><b>Naam </b></label> <input class="visin" id="nameId" type="text"
+                                                   name="name" required><br /> -->
 
-                <label class="vis"<b>Merk</b></label> <input class="visin" id="brandId" type="text"
-                                                  name="brand"> <br /> 
+<!--                <label class="vis"<b>Merk</b></label> <input class="visin" id="brandId" type="text"
+                                                  name="brand"> <br /> -->
 
-                <label class="vis"<b>Prijs</b></label> <input class="visin" id="priceId" type="text"
-                                                   name="price"> <br /> 
+<!--                <label class="vis"<b>Prijs</b></label> <input class="visin" id="priceId" type="text"
+                                                   name="price"> <br /> -->
 
-                <label class="vis"<b>voorraad</b></label><input class="visin" id="stockId" type="number"
+<!--                <label class="vis"<b>voorraad</b></label><input class="visin" id="stockId" type="number"
                                                      name="stockCount" required><br /> 
 
                 <label class="vis"<b>informatie</b></label> <input class="visin" id="infoId" type="text"
-                                                        name="info"  ><br />
+                                                        name="info"  ><br />-->
 
-                <label class="vis"<b>Categorie</b></label> <select id="categoryId"
+<!--                <label class="vis"<b>Categorie</b></label> <select id="categoryId"
                                                         name="category" required> 
-                </select><br />
+                </select><br />-->
 
-                <br>
+                <!--<br>-->
                 <br>
 
                 <button type="submit">  OK  </button>

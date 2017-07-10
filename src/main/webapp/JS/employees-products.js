@@ -1,15 +1,25 @@
 $(document).ready(function () {
-    $.get("../top-navbar.html", function (data) {
+    $.get("/Jee-Shop/top-navbar.html", function (data) {
         $("#nav-placeholder").replaceWith(data);
     });
 
     startProductTable();
     displayCatFilters();
+
+    $('#newButton').click(function (e) {
+        e.preventDefault();
+        newProduct();
+    });
+
+
 });
 
+function newProduct() {
+    popitup("edit-product.html");
+}
 
 function getCategories() {
-    $.getJSON('../rest/products/categories', function (data) {
+    $.getJSON('/Jee-Shop/rest/products/categories', function (data) {
         categories = data;
         return categories;
     });
@@ -19,14 +29,14 @@ function getCategories() {
 function startProductTable() {
 
     getCategories();
-    
+
 //    $(".table_info_content").remove();
     var catFilter = window.location.search.substring(1);
-    if(catFilter===""){
-        catFilter="ALL";
+    if (catFilter === "") {
+        catFilter = "ALL";
     }
 
-    $.getJSON('../rest/products/cat/'+catFilter, function (data) {
+    $.getJSON('../rest/products/cat/' + catFilter, function (data) {
         var datarow = "<tbody>";
         $.each(data, function (index, value) {
             datarow += '<tr>';
@@ -43,7 +53,10 @@ function startProductTable() {
         });
         datarow += '</tbody>';
         $('#productsTable').append(datarow);
+//        $("#scroll75").scrollTop($("#scroll75")[0].scrollHeight);
     });
+
+
 
 }
 
@@ -56,7 +69,7 @@ function deleteRow(id) {
         success: function () {
             console.log("Delete Succesful!");
             $('#productsTable').children('tbody').empty();
-            startProductTable() ;
+            startProductTable();
         },
         error: function () {
             alert("Error, ");
@@ -198,6 +211,15 @@ $(document).on("change", "input[type='radio']", function (event) {
     window.location.href = "products.html?" + selection;
 
 });
+
+function popitup(url) {
+    var w = 600;
+    var h = 500;
+    var title = "Edit Product";
+    var left = (screen.width / 2) - (w / 2);
+    var top = (screen.height / 2) - (h / 2);
+    return window.open(url, title, 'titlebar= no, toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=yes, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+}
 
 
 
