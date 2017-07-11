@@ -41,39 +41,10 @@ function setupEditAdres() {
         $('#additionId').val(address.numAddittion);
         $('#insertionId').val(address.insertion);
        
-//NIET NODIG!
-//        var select = $('#typeId');
-//        $.getJSON('/Jee-Shop/rest/users/types', function (data) {
-//            $.each(data, function (key, value) {
-//
-//                if (user.type === value.name) {
-//                    $('<option value="' + value.name + '" selected="selected">' + value.readableName + '</option>').appendTo(select);
-//                } else {
-//                    $('<option value="' + value.name + '">' + value.readableName + '</option>').appendTo(select);
-//                }
-//            });
-//        });
+
 
     });
 }
-
-//NIET nodig!
-//function getTypes() {
-//    $.getJSON('/Jee-Shop/rest/users/types', function (types) {
-//        return types;
-//    });
-//}
-
-//function getTypeEnum(readableName) {
-//    var types = getTypes();
-//    var result = "";
-//    $.each(types, function (key, value) {
-//        if (value.readableName === readableName.trim()) {
-//            result = value.name;
-//        }
-//    });
-//    return result;
-//}
 
 
 
@@ -101,21 +72,11 @@ function putPostAdresUser() {
     addressObject.zipCode = $('#zipCodeId').val();
     addressObject.city = $('#stadId').val();
 
-//NU heb ik hopelijk een addressObject die naar de Database Kan!
-
-
-//twijfel of dit nodig is.
-//    userObject.id = $('#IdId').val();
-//    alert("hash = " + $('#hashId').val());
-//    userObject.passHash = $('#hashId').val();
-//    userObject.email = $('#emailId').val();
-//    userObject.type = $('#typeId').val();
-//    userObject.billingAddress = addressObject; <-- sneaky zin
 
 
     var jsonData = JSON.stringify(addressObject);
     console.log(jsonData);
-    alert(jsonData);
+//    alert(jsonData);
 
     var id = addressObject.id;
    // alert("id= " + id);

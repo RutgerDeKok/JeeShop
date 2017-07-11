@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $.get("Jee-Shop/top-navbar.html", function (data) {
+    $.get("/Jee-Shop/top-navbar.html", function (data) {
         $("#nav-placeholder").replaceWith(data);
     });
 

@@ -8,10 +8,11 @@
             }
 
         </style>
-        <title>Kaas Shop</title>
+        <title>Order Bevestiging</title>
         <script src ="JS/jquery.js"></script>
         <script src ="JS/cookies.js"></script>
-        <script src ="JS/index.js"></script>
+        <!--<script src ="JS/index.js"></script>-->
+        <script src ="JS/customer-confirmation.js"></script>
         <link href="CSS/simple.css" rel="stylesheet" />
     </head>
 
@@ -53,7 +54,7 @@
         <div id="city">City</div>
         <div id="zip">Zip</div>
         <br/>
-        <button id="goToEdit"  >Verander Adres</button>
+        <button id="goToEdit" onclick="editAddress()" >Verander Adres</button>
 
 
 
@@ -64,226 +65,6 @@
     <button id='confirmation_button'>ECHTE BEVESTIGING</button>
     <script>
 
-
-        var order_to_send;
-        var id;
-        var totalPrijs = 0;
-
-        $(document).ready(function () {
-            id = getCookie("UserId");
-            console.log(id);
-            startCartInfoTable(id);
-            startSubOrderTable(id);
-           
-            
-        });
-         $("#goToEdit").click(editAdres(adresId));
-
-        $("#confirmation_button").click(function () {
-            id = $("#IdId").val();
-
-            cartToOrder();
-            window.location.href = "customer_finalorder.html";
-
-
-
-        });
-
-        function cartToOrder() {
-
-            id = getCookie("UserId");
-
-            cartsUrl = "rest/carts/" + id;
-            cartSubOrderUrl = "rest/cartsuborders";
-
-            $.getJSON(cartSubOrderUrl, function (cartSubOrders) {
-                $.getJSON(cartsUrl, function (cart) {
-                    var userId = cart.id;
-                    userUrl = "rest/users/" + id;
-
-                    $.getJSON(userUrl, function (User) {
-                        var subOrderList = [];
-                        $.each(cartSubOrders, function (key, value) {
-                            console.log(value.cart.id);
-                            console.log(userId);
-                            if (value.cart.id == userId) {
-                                subOrderList.push(value);
-                            }
-                        });
-                        order_to_send = {
-                            "city": cart.deliveryAddress.city,
-                            "familyName": cart.deliveryAddress.familyName,
-                            "firstName": cart.deliveryAddress.firstName,
-                            "insertion": cart.deliveryAddress.insertion,
-                            "numAddition": cart.deliveryAddress.numAddtion,
-                            "number": cart.deliveryAddress.number,
-                            "street": cart.deliveryAddress.street,
-                            "totalPrice": totalPrijs,
-                            "zipCode": cart.deliveryAddress.zipCode,
-                            "finalSuborderList": subOrderList,
-                            "user": User
-                        };
-
-                        console.log(order_to_send);
-
-                        $.ajax({
-                            type: "POST",
-                            url: "rest/sales",
-                            data: JSON.stringify(order_to_send),
-                            contentType: "application/json",
-                            success: function () {
-
-                                console.log("order gelukt");
-                                subOrderToFinalOrder(id, order_to_send);
-
-                            },
-                            error: function () {
-                                console.log(jsonData);
-                                console.log(" /n/n/n");
-                                console.log(JSON.stringify(jsonData));
-                            }
-                        });
-                    });
-                });
-            });
-        }
-
-
-
-
-
-
-
-        function subOrderToFinalOrder(id, order_to_send) {
-
-//                var userId;
-//                cartUrl = "rest/carts";
-//                $.getJSON(cartUrl, function(cart){
-//                userId = cart.id;   
-//            });
-
-            cartSubOrderUrl = "rest/cartsuborders";
-            productUrl = "rest/products";
-            $.getJSON(cartSubOrderUrl, function (cartSubOrders) {
-                $.each(cartSubOrders, function (key, value) {
-                    if (value.cart.id == id) {
-                        var jsonData = {
-                            "itemPrice": value.product.price,
-                            "prdBrand": value.product.brand,
-                            "prdCategory": value.product.category,
-                            "prdName": value.product.name,
-                            "quantity": value.quantity,
-                            "subTotal": value.subTotal,
-                            "order": order_to_send
-                        };
-
-                        $.ajax({
-                            type: "POST",
-                            url: "rest/finalsuborders",
-                            data: JSON.stringify(jsonData),
-                            contentType: "application/json",
-                            success: function () {
-                                console.log("finalsubOrder gelukt");
-
-
-                            },
-                            error: function () {
-                                console.log(jsonData);
-                                console.log(" /n/n/n");
-                                console.log(JSON.stringify(jsonData));
-                            }
-                        });
-                    }
-                });
-            });
-        }
-
-        function startCartInfoTable(id) {
-
-            $(".table_info_content").remove();
-
-            
-
-
-            $.getJSON('rest/carts/' + id, function (dataCarts) {
-
-
-                $("#Hadres").html(dataCarts.deliveryAddress.id);
-                $("#first_name").html("Voornaam: " + dataCarts.deliveryAddress.firstName);
-                $("#last_name").html("Achternaam: " + dataCarts.deliveryAddress.familyName);
-                $("#street").html("Straat: " + dataCarts.deliveryAddress.street);
-                $("#number").html("Nummber: " + dataCarts.deliveryAddress.number + " " + dataCarts.deliveryAddress.numAddition);
-                $("#city").html("Stad: " + dataCarts.deliveryAddress.city);
-                $("#zip").html("PostCode: " + dataCarts.deliveryAddress.zipCode);
-
-
-
-                adresId=dataCarts.deliveryAddress.id;
-
-
-                
-               $("#goToEdit").click(editAdres(dataCarts.deliveryAddress.id));
-               
-            });
-
-            
-        }
-        
-        var adresId;
-        
-        
-
-        function editAdres(id) {
-
-            // window.location.href = "edit-adress.html?" + id;
-
-            popitup("edit-adress.html?" + id);
-
-        }
-
-
-        function popitup(url) {
-            var w = 700;
-            var h = 750;
-            var title = "Edit Adres";
-            var left = (screen.width / 2) - (w / 2);
-            var top = (screen.height / 2) - (h / 2);
-            return window.open(url, title, 'titlebar= no, toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=yes, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
-        }
-
-
-        function startSubOrderTable(id) {
-
-            $(".table_content").remove();
-
-            var datarowSubOrder = " ";
-
-            $.getJSON('rest/cartsuborders', function (data) {
-
-
-                $.each(data, function (key, value) {
-
-
-                    if (value.cart && value.cart.id == id) {
-
-                        datarowSubOrder += ' <tr class="table_content">';
-                        datarowSubOrder += ' <td align=/"left/">' + value.id + ' </td>';
-                        datarowSubOrder += ' <td align=/"left/">' + value.subTotal + ' </td>';
-                        datarowSubOrder += ' <td align=/"left/">' + value.product.name + ' </td>';
-                        datarowSubOrder += ' <td align=/"left/">' + value.quantity + ' </td>';
-                        datarowSubOrder += ' <td align=/"left/">' + value.product.price + ' </td>';
-
-                        totalPrijs += value.subTotal;
-
-                    }
-                });
-
-                $('#table_main').append(datarowSubOrder);
-                $("#footer").text("TotaalPrijs: " + Math.round(totalPrijs * 100) / 100);
-
-            });
-        }
-//         
 
 
     </script>
